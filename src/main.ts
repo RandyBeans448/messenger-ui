@@ -4,7 +4,7 @@ import { AppModule } from './app/app.module';
 import { EnvironmentNamespace } from './environments/interfaces/environment.namespace';
 import { APP_CONFIG } from './injectors';
 
-fetch('./config.json')
+fetch('/assets/config.json')
     .then(response => response.json())
     .then((config: EnvironmentNamespace.BaseConfig) => {
         if (config.production) {
@@ -17,6 +17,7 @@ fetch('./config.json')
             .bootstrapModule(AppModule)
             .then(() => {
                 // Display current version
+                console.log(config)
                 console.log(`Current version: ${config.version}`)
             })
             .catch(err => console.error(err));
