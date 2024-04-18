@@ -23,7 +23,6 @@ export class AppConfigService {
         this.authClientConfig = _authClientConfig;
     }
 
-
     loadConfig() {
         const baseUrl: string = this.appConfig.baseUrl;
         return new Promise<void>((resolve, reject) => {
@@ -57,8 +56,6 @@ export class AppConfigService {
                             ],
                         },
                     });
-
-                    console.log(this._authClientConfig)
 
                     resolve();
                 })

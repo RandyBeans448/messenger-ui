@@ -9,9 +9,7 @@ import { AuthModule } from '@auth0/auth0-angular';
 
 export function initializeApp(appConfigService: AppConfigService) {
   return (): Promise<any> => {
-      const app = appConfigService.loadConfig();
-      console.log(app);
-      return app
+      return appConfigService.loadConfig();
   }
 }
 
