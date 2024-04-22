@@ -3,7 +3,7 @@ import { Inject, Injectable } from "@angular/core";
 import { AuthClientConfig } from "@auth0/auth0-angular";
 import { EnvironmentNamespace } from "../interfaces/environment.namespace";
 import { APP_CONFIG } from "../../injectors";
-import { firstValueFrom, lastValueFrom } from "rxjs";
+import { lastValueFrom } from "rxjs";
 
 @Injectable()
 export class AppConfigService {
@@ -25,12 +25,13 @@ export class AppConfigService {
 
     loadConfig() {
         const baseUrl: string = this.appConfig.baseUrl;
+        console.log(baseUrl);
         return new Promise<void>((resolve, reject) => {
             this.httpClient = new HttpClient(this.handler);
 
             return lastValueFrom(this.httpClient.get(`${baseUrl}/ui-env/main_ui`))
                 .then((response: Object | undefined) => {
-                    console.log(response)
+                    console.log(response);
                     AppConfigService.env = {
                         ...<EnvironmentNamespace.MainConfig>response,
                         version: this.appConfig.version,
@@ -40,7 +41,7 @@ export class AppConfigService {
                         clientId: AppConfigService.env.auth0.clientId,
                         domain: AppConfigService.env.auth0.domain,
                         authorizationParams: {
-                            audience: '/messenger-two',
+                            audience: 'messenger-two',
                             redirect_uri: `${window.location.origin}`,
                         },
                         httpInterceptor: {
@@ -49,7 +50,7 @@ export class AppConfigService {
                                     uri: `${baseUrl}/*`,
                                     tokenOptions: {
                                         authorizationParams: {
-                                            audience: '/messenger-two',
+                                            audience: 'messenger-two',
                                         },
                                     },
                                 },
@@ -60,8 +61,9 @@ export class AppConfigService {
                     resolve();
                 })
                 .catch((error) => {
-                    window.location.href = '/error.html';
-                    reject(`Could not load the config file: ${error}`);
+                    console.log(error);
+                    // window.location.href = '/error.html';
+                    // reject(`Could not load the config file: ${error}`);
                 });
         });
     }

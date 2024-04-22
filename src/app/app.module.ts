@@ -4,8 +4,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
-import { AppConfigService } from '../environments/services/config.service';
 import { AuthModule } from '@auth0/auth0-angular';
+import { AppConfigService } from '../environments/services/config.service';
 
 export function initializeApp(appConfigService: AppConfigService) {
   return (): Promise<any> => {
