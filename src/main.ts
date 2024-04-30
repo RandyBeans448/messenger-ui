@@ -17,7 +17,6 @@ fetch('/assets/config.json')
             .bootstrapModule(AppModule)
             .then(() => {
                 // Display current version
-                console.log(config)
                 console.log(`Current version: ${config.version}`)
             })
             .catch(err => console.error(err));

@@ -12,7 +12,12 @@ const routes: Routes = [
     path: 'home',
     canActivate: [AuthGuard],
     loadChildren: () => import('./home/home.module').then(m => m.HomeModule),
-},
+  },
+  {
+    path: 'chat-room',
+    canActivate: [AuthGuard],
+    loadChildren: () => import('./chat-room/chat-room.module').then(m => m.ChatRoomModule),
+  },
 ];
 
 @NgModule({

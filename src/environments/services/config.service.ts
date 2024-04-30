@@ -25,13 +25,11 @@ export class AppConfigService {
 
     loadConfig() {
         const baseUrl: string = this.appConfig.baseUrl;
-        console.log(baseUrl);
         return new Promise<void>((resolve, reject) => {
             this.httpClient = new HttpClient(this.handler);
 
             return lastValueFrom(this.httpClient.get(`${baseUrl}/ui-env/main_ui`))
                 .then((response: Object | undefined) => {
-                    console.log(response);
                     AppConfigService.env = {
                         ...<EnvironmentNamespace.MainConfig>response,
                         version: this.appConfig.version,
