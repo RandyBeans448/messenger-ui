@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { AccountService } from './shared/services/account.service';
 
 @Component({
   selector: 'app-root',
@@ -9,6 +10,12 @@ import { ActivatedRoute } from '@angular/router';
 export class AppComponent {
   title = 'messenger-ui';
 
-  constructor(private route: ActivatedRoute) { }
+  constructor(
+    private route: ActivatedRoute,
+    private _accountService: AccountService,
+  ) { }
+
+  ngOnInit(): void {
+  }
 
 }

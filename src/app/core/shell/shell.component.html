@@ -1,0 +1,9 @@
+<app-top-info-bar class="top-0" />
+
+<app-top-banner
+    [marginTop]="(topBarIsShowing() | async) === true ? '30px' : '0'"
+/>
+
+<div id="main-content" >
+    <ng-content></ng-content>
+</div>

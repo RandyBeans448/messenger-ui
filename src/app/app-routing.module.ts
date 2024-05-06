@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from '@auth0/auth0-angular';
+import { AccountResolver } from './shared/resolvers';
 
 const routes: Routes = [
   {
@@ -10,11 +11,13 @@ const routes: Routes = [
   },
   {
     path: 'home',
+    resolve: [AccountResolver],
     canActivate: [AuthGuard],
     loadChildren: () => import('./home/home.module').then(m => m.HomeModule),
   },
   {
     path: 'chat-room',
+    resolve: [AccountResolver],
     canActivate: [AuthGuard],
     loadChildren: () => import('./chat-room/chat-room.module').then(m => m.ChatRoomModule),
   },

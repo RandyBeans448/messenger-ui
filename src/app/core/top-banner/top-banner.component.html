@@ -1,0 +1,38 @@
+<nav
+    class="top-banner fixed top-0 z-50"
+    [style]="{ 'margin-top': marginTop }">
+
+    <div class="flex flex-wrap items-center justify-between flex-row">
+
+        <div class="flex items-center">
+
+            <h3>{{ name }}</h3>
+
+            <!-- <img
+                class="w-10 select-none main-logo"
+                src="/assets/imgs/logo-round-b&w.svg"
+                (click)="navigateTo(HOMEPAGE_ROUTE)"
+            /> -->
+        </div>
+
+        <div class="flex items-center">
+
+            <h3>{{ email }}</h3>
+
+            <!-- <img
+                class="w-10 select-none main-logo"
+                src="/assets/imgs/logo-round-b&w.svg"
+                (click)="navigateTo(HOMEPAGE_ROUTE)"
+            /> -->
+        </div>
+
+        <div class="flex justify-center items-center">
+
+            <!-- <app-avatar
+                data-test-id="nav-bar-avatar-button"
+                [initials]="getUserInitials()"
+                (avatarClicked)="navigateTo('/account')">
+            </app-avatar> -->
+        </div>
+    </div>
+</nav>

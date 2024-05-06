@@ -1,0 +1,33 @@
+:root {
+    --sb-white: #FFFFFF;
+    // We can not use var() inside rgba so please remember to change this color if we ever change our white
+    --sb-white-opacity-06: rgba(255, 255, 255, 0.6);
+    --sb-orange: #FF8812;
+    --sb-light-grey: #EDEDED;
+    --sb-grey: #D8D8D8;
+    --sb-mid-dark-grey: #A9A9A9;
+    --sb-mid-grey: #333333;
+    --sb-mid-grey-opacity-06: rgba(51, 51, 51, 0.6);
+    --sb-dark-grey: #212529;
+    --sb-red: #E23636;
+    --sb-green: #109632;
+    --sb-blue: #007bff;
+    --sb-yellow: #ffb300;
+
+    // UI Update 2023 colors 
+    --sb-oxford-blue: #0F1C30;
+    --sb-delft-blue: #2D364C;
+    --sb-yinmn-blue: #3D4966;
+    --sb-cool-grey: #999BA6;
+    --sb-custom-white: #FDFCFD;
+    --sb-anti-flash-white: #F2F3F7;
+    --sb-platinum: #E2E2E2;
+    --sb-timberwolf: #D1D2D5;
+    --sb-overlay-grey: #CFCFCF; //20%
+    --sb-persian-orange: #EB8E51;
+    --sb-sandy-brown: #F0AA7D;
+    --sb-apricot: #F5C7A8;
+    --sb-imperial-red: #F05252;
+    --sb-snow: #FDF2F2;
+    --sb-black: #000;
+}

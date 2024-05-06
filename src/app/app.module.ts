@@ -8,6 +8,7 @@ import { AuthHttpInterceptor, AuthModule } from '@auth0/auth0-angular';
 import { AppConfigService } from '../environments/services/config.service';
 import { ChatRoomModule } from './chat-room/chat-room.module';
 import { HomeModule } from './home/home.module';
+import { ShellComponent } from './core/shell/shell.component';
 
 export function initializeApp(appConfigService: AppConfigService) {
   return (): Promise<any> => {
@@ -20,6 +21,7 @@ export function initializeApp(appConfigService: AppConfigService) {
     AppComponent
   ],
   imports: [
+    ShellComponent,
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,

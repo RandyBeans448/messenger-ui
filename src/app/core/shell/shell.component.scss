@@ -1,0 +1,21 @@
+// @import 'breakpoints';
+
+#main-content {
+    margin-top: 65px;
+    width: 100%;
+    padding: var(--3, 12px) var(--7, 28px);
+}
+
+// .sidebar-content-wrapper {
+//     display: flex;
+
+//     // @include respond-to("small") {
+//     //    padding-bottom: 80px;
+//     // }
+
+
+// }
+
+.top-info-bar-showing {
+    margin-top: 65px;
+}

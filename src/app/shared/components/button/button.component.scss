@@ -1,0 +1,193 @@
+$rounded-full: 9999px;
+$flat: 0px;
+
+:host-context(.navigation-button) {
+    button {
+        .icon-container {
+            padding: 5px;
+            font-size: 7.5px;
+        }
+    }
+}
+
+.icon-wrapper {
+    padding: 0px;
+    margin: 0px;
+    display: flex;
+}
+
+.button {
+    // @extend .body-small;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Manrope;
+    font-style: normal;
+    border-radius: $rounded-full;
+    gap: var(--2, 8px);
+    white-space: nowrap;
+    // small
+    &--small {
+        font-size: 14px;
+        line-height: 21px; /* 150% */
+        letter-spacing: -0.35px;
+        padding: var(--2, 8px) var(--3, 12px);
+    }
+
+    // regular
+    &--regular {
+        font-size: 16px;
+        line-height: 24px; /* 150% */
+        letter-spacing: -0.4px;
+        padding: var(--25, 10px) var(--5, 20px);
+    }
+    
+    // large
+    &--large {
+        font-size: 18px;
+        line-height: 27px; /* 150% */
+        letter-spacing: -0.45px;
+        padding: var(--35, 14px) var(--6, 24px);
+    }
+
+    &--text {
+        color: var(--sb-cool-grey);
+
+        &:hover {
+            color: var(--sb-oxford-blue);
+        }
+    }
+
+    // primary
+    &--primary {
+        color: var(--sb-white);
+        background: var(--sb-oxford-blue);
+
+        &:hover {
+            background: var(--sb-delft-blue);
+        }
+        &:focus {
+            background: var(--sb-delft-blue);
+        }
+    }
+
+    // primary alternative
+    &--primary-alternative {
+        color: var(--sb-oxford-blue);
+        background: var(--sb-persian-orange);
+
+        &:hover {
+            background: var(--sb-sandy-brown);
+        }
+        &:focus {
+            background: var(--sb-sandy-brown);
+        }
+    }
+
+    // outline
+    &--outline {
+        color: var(--sb-oxford-blue);
+        border: 1px solid var(--sb-oxford-blue);
+
+        &:hover {
+            color: var(--sb-white);
+            background: var(--sb-delft-blue);
+        }
+        &:focus {
+            color: var(--sb-white);
+            background: var(--sb-delft-blue);
+        }   
+    
+    }
+
+    // outline-alternative
+    &--outline-alternative {
+        border: 1px solid var(--sb-persian-orange);
+        color: var(--sb-persian-orange);
+
+        &:hover {
+            background: var(--sb-anti-flash-white);
+        }
+        &:focus {
+            background: var(--sb-anti-flash-white);
+        }
+        &:disabled {
+            opacity: 0.5;
+        }
+    }
+
+    // underline
+    &--underline {
+        border-bottom: 1px solid var(--sb-oxford-blue);
+        border-radius: $flat;
+        line-height: 0px;
+        padding-left: 0px;
+        padding-right: 0px;
+
+        &:hover {
+            color: var(--sb-delft-blue);
+            border-bottom: 1px solid var(--sb-delft-blue);
+        }
+        &:focus {
+            color: var(--sb-yinmn-blue);
+            border-bottom: 1px solid var(--sb-yinmn-blue);
+        }
+    }
+
+    // underline-alternative
+    &--underline-alternative {
+        border-bottom: 1px solid var(--sb-cool-grey);
+        color: var(--sb-cool-grey);
+        border-radius: $flat;
+        line-height: 0px;
+        padding-left: 0px;
+        padding-right: 0px;
+
+        &:hover {
+            color: var(--sb-persian-orange);
+            border-bottom: 1px solid var(--sb-persian-orange);
+        }
+        &:focus {
+            color: var(--sb-sandy-brown);
+            border-bottom: 1px solid var(--sb-sandy-brown);
+        }
+    }
+
+    &--dropdown {
+        color: var(--sb-white);
+        white-space: nowrap; // added
+        background: var(--sb-delft-blue);
+    }
+
+    &.round {
+        border-radius: $rounded-full;
+        padding:var(--3, 12px);
+    }
+
+    &:disabled {
+        border-radius: $rounded-full;
+        background: var(--sb-platinum);
+        color: var(--sb-oxford-blue);
+    }
+}
+
+
+.dropdown-container {
+    width: 100%; 
+    height: 100%; 
+    border-radius: 9999px; 
+    justify-content: center; 
+    align-items: center; 
+    gap: 8px; 
+    display: inline-flex;
+}
+
+.rotate-dropdown {
+    animation: rotate 0.1s ease-in-out 0s;
+    transform: rotate(180deg);
+}
+
+@keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(180deg); }
+}

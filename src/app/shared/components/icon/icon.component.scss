@@ -1,0 +1,28 @@
+:host {
+    display: flex;
+    justify-content: center;
+}
+
+.material-symbols-outlined {
+    user-select: none;
+}
+
+.filled {
+    font-variation-settings:
+    'FILL' 1,
+}
+
+.circle-fill {
+    background-color: var(--sb-cool-grey);
+    color: var(--sb-oxford-blue);
+    padding: 0.1rem;
+    border-radius: 100%;
+}
+
+.orange {
+    color: var(--sb-persian-orange);
+}
+
+.red {
+    color: var(--sb-imperial-red);
+}

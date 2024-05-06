@@ -1,4 +1,6 @@
 import { Component } from "@angular/core";
+import { AccountService } from "../../shared/services/account.service";
+import { UserNamespace } from "../../shared/interfaces/user.interface";
 
 @Component({
     selector: 'app-home',
@@ -6,9 +8,17 @@ import { Component } from "@angular/core";
     styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent {
-    
+
+    constructor(private _accountService: AccountService) { }
+
+    public user: UserNamespace.UserInterface;
+
     ngOnInit() {
-        console.log('Home Component loaded');
+        this._accountService.getAccount().subscribe(account => {
+            this.user = account.user;
+        });
+
+        console.log(this.user.friends[0].pending)
     }
 
 }

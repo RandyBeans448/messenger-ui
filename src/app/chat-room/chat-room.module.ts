@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ChatRoomComponent } from './components/chat-room.component';
+import { ChatRoomRoutingModule } from './chat-room-routing.module';
 
 @NgModule({
     declarations: [
@@ -8,6 +9,7 @@ import { ChatRoomComponent } from './components/chat-room.component';
     ],
     imports: [
         CommonModule,
+        ChatRoomRoutingModule
     ],
     providers: [
     ],

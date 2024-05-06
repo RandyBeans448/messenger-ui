@@ -1,0 +1,49 @@
+@use "sass:math";
+
+.top-banner {
+    width: 100%;
+    padding: var(--3, 12px) var(--7, 28px);
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: var(--0, 0px); 
+    border-bottom: 1px solid var(--sb-timberwolf);
+    background: var(--sb-custom-white);
+
+    nav {
+        width: 100%;
+    }
+    
+    .item {
+        display: flex;
+        color: var(--sb-cool-grey);
+        margin-right: 1.5rem;
+        
+        &:hover {
+            color: var(--sb-delft-blue);
+            
+            app-badge {
+                background-color: var(--sb-delft-blue);
+            }
+        }
+    }
+}
+
+.main-logo {
+    cursor: pointer;
+}
+
+app-popover {
+
+    app-icon {
+
+        &.popover-icon {
+            color: var(--sb-cool-grey);
+        }
+    }
+
+    .pop-over-holding-text {
+        padding: 20px;
+        text-align: center;
+    }
+}

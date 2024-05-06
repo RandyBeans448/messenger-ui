@@ -1,0 +1,20 @@
+$breakpoints: (
+    "small": 780px, 
+    "medium": 992px, 
+    "medium-l": 1120px, 
+    "large": 1200px,  
+    "x-large": 1366px
+    ) !default;
+
+@mixin respond-to($breakpoint) {
+    // If the key exists in the map
+    @if map-has-key($breakpoints, $breakpoint) {
+        // Prints a media query based on the value
+        @media (max-width: map-get($breakpoints, $breakpoint)) {
+            @content;
+        }
+    }
+    @else {
+        @warn "Unfortunately, no value could be retrieved from `#{$breakpoint}`. " + "Available breakpoints are: #{map-keys($breakpoints)}.";
+    }
+}

@@ -1,1 +1,45 @@
 <h1 class="test">Home</h1>
+
+<div>
+    <h1 class="test">Friends: </h1>
+
+
+    <ul>
+        
+        @for (friend of user.friends; track $index) {
+            <li>
+                <div class="flex flex-row">
+                    <h3>{{ friend.friend.firstName }} {{ friend.friend.lastName }}</h3>
+
+                    {{ friend.friend.accepted }}
+                    {{ friend.friend.pending }}
+                    <!-- {{ friend.friend.firstName }}
+                    {{ friend.friend.firstName }} -->
+
+                    @if (friend.friend.pending === true) {
+
+                        <div>
+                            <app-button 
+                                iconType="check" 
+                                buttonSize="small" 
+                                buttonType="primary-round"/>
+                        </div>
+
+                        <div>
+                            <app-button 
+                                iconType="close" 
+                                buttonSize="small" 
+                                buttonType="primary-round"/>
+                        </div>
+
+                    }
+
+                </div>
+             
+            </li>
+        }
+
+    </ul>
+
+
+</div>
