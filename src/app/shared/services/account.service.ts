@@ -18,7 +18,7 @@ export class AccountService {
         email: '',
         firstName: '',
         lastName: '',
-        friends: [],
+        friendRequests: [],
         updatedAt: '',
         createdAt: '',
         deletedAt: null,

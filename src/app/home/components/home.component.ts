@@ -18,7 +18,7 @@ export class HomeComponent {
             this.user = account.user;
         });
 
-        console.log(this.user.friends[0].pending)
+        console.log(this.user)
     }
 
 }

@@ -6,7 +6,7 @@ export namespace UserNamespace {
         email: string;
         firstName: string;
         lastName: string;
-        friends: any[];
+        friendRequests: any[];
         updatedAt: string;
         createdAt: string;
         deletedAt: string | null;
