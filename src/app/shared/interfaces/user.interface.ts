@@ -1,3 +1,5 @@
+import { FriendRequestNamespace } from "./friend-request.interface";
+
 export namespace UserNamespace {
 
     // Interfaces for the FE
@@ -6,7 +8,7 @@ export namespace UserNamespace {
         email: string;
         firstName: string;
         lastName: string;
-        friendRequests: any[];
+        friendRequests: FriendRequestNamespace.FriendRequestInterface[];
         updatedAt: string;
         createdAt: string;
         deletedAt: string | null;

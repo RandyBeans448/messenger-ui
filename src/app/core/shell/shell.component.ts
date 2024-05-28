@@ -5,11 +5,12 @@ import { map } from 'rxjs/operators';
 import { TopBannerComponent } from '../top-banner/top-banner.component';
 import { TopInfoBarComponent } from '../top-info-bar/top-info-bar.component';
 import { TopBarService } from '../../shared/services/top-bar.service';
+import { SidebarComponent } from '../../shared/components/sidebar/sidebar.component';
 
 @Component({
     selector: 'app-shell',
     standalone: true,
-    imports: [CommonModule, TopBannerComponent, TopInfoBarComponent],
+    imports: [CommonModule, TopBannerComponent, TopInfoBarComponent, SidebarComponent],
     templateUrl: './shell.component.html',
     styleUrls: ['./shell.component.scss'],
 })

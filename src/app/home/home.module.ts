@@ -4,6 +4,7 @@ import { HomeComponent } from './components/home.component';
 import { HomeRoutingModule } from './home-routing.module';
 import { IconComponent } from '../shared/components/icon/icon.component';
 import { ButtonComponent } from '../shared/components/button/button.component';
+import { FriendRequestsCardComponent } from '../shared/friend-request/friend-request-card.component';
 
 @NgModule({
     declarations: [
@@ -12,6 +13,7 @@ import { ButtonComponent } from '../shared/components/button/button.component';
     imports: [
         ButtonComponent,
         IconComponent,
+        FriendRequestsCardComponent,
         CommonModule,
         HomeRoutingModule
     ],

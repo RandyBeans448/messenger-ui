@@ -1,0 +1,31 @@
+// @import 'fonts';
+
+.initials-btn {
+    // @extend .body-all-bold;
+
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 99999px;
+    background-color: var(--sb-platinum);
+    color: var(--sb-oxford-blue);
+}
+
+:not(.is-clickable) {
+    cursor: default;
+}
+
+.status-dot {
+    position: absolute;
+    top: 0px;
+    left: 28px;
+    width: 12px;
+    height: 12px;
+    background: var(--sb-green);
+    border-radius: 99px;
+    border: 2px solid var(--sb-white);
+}

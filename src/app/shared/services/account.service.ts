@@ -43,14 +43,6 @@ export class AccountService {
     //     return account.user.permissions.includes(permission);
     // }
 
-    public getPaymentLink(): Observable<any> {
-        return this._http.post(`${this.baseApi}/company/payment-link`, {});
-    }
-
-    public getManageBillingLink(): Observable<any> {
-        return this._http.post(`${this.baseApi}/company/manage-billing-link`, {});
-    }
-
     public getAccountInformationFromServer(): Observable<any> {
         return this._http
             .get<UserNamespace.UserInterface>(`${this.baseApi}/user`)
@@ -93,3 +85,4 @@ export class AccountService {
         this._account.next(this.initObject);
     }
 }
+ 

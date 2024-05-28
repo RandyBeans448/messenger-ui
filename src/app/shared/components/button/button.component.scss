@@ -28,6 +28,8 @@ $flat: 0px;
     white-space: nowrap;
     // small
     &--small {
+        width: 2.5rem;
+        height: 2.5rem;
         font-size: 14px;
         line-height: 21px; /* 150% */
         letter-spacing: -0.35px;

@@ -1,6 +1,6 @@
 import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
@@ -9,6 +9,7 @@ import { AppConfigService } from '../environments/services/config.service';
 import { ChatRoomModule } from './chat-room/chat-room.module';
 import { HomeModule } from './home/home.module';
 import { ShellComponent } from './core/shell/shell.component';
+import { ToastrModule } from 'ngx-toastr';
 
 export function initializeApp(appConfigService: AppConfigService) {
   return (): Promise<any> => {
@@ -27,6 +28,12 @@ export function initializeApp(appConfigService: AppConfigService) {
     HttpClientModule,
     HomeModule,
     ChatRoomModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot({
+      positionClass: 'toast-bottom-right',
+      preventDuplicates: true,
+      tapToDismiss: true,
+  }),
     AuthModule.forRoot(),
   ],
   providers: [

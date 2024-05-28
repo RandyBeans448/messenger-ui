@@ -1,0 +1,11 @@
+<button
+    class="initials-btn"
+    [ngClass]="{ 'is-clickable': !!avatarClicked.observers.length }"
+    (click)="onAvatarClicked($event)">
+    {{ initials }}
+</button>
+
+@if(active) {
+    <span class="status-dot">
+    </span>
+}

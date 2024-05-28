@@ -8,33 +8,8 @@
         
         @for (friend of user.friendRequests; track $index) {
             <li>
-                <div class="flex flex-row">
-                    <!-- <h3>{{ friend.friend.firstName }} {{ friend.friend.lastName }}</h3>
-    
-                    @if (friend.friend.pending === true) {
-
-                        <div>
-                            <app-button 
-                                iconType="check" 
-                                buttonSize="small" 
-                                buttonType="primary-round"/>
-                        </div>
-
-                        <div>
-                            <app-button 
-                                iconType="close" 
-                                buttonSize="small" 
-                                buttonType="primary-round"/>
-                        </div>
-
-                    } -->
-
-                </div>
-             
+                <app-friend-request-card [friendRequest]="friend" />
             </li>
         }
-
     </ul>
-
-
 </div>
