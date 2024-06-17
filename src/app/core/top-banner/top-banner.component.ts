@@ -9,7 +9,7 @@ import { NavigationEnd, Router } from "@angular/router";
 import { BehaviorSubject, Observable } from "rxjs";
 import { map } from "rxjs/operators";
 import { AccountService } from "../../shared/services/account.service";
-import { AccountNamespace } from "../../shared/interfaces/account.interface";
+import { AccountNamespace } from "../../shared/namespaces/account.namespace";
 
 @Component({
     selector: 'app-top-banner',

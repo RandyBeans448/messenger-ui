@@ -1,0 +1,16 @@
+.friend-container {
+    margin: 5px;
+    display: flex;
+    flex-direction: column;
+    background-color: #ffffff;
+    padding: 15px;
+    border: none;
+    border-radius: 10px;
+}
+
+.title-truncation {
+    width: 150px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

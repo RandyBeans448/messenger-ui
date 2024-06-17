@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { FriendRequestNamespace } from "../interfaces/friend-request.interface";
+import { FriendRequestNamespace } from "../namespaces/friend-request.namespace";
 import { HttpClient } from "@angular/common/http";
 import { ToastrService } from "ngx-toastr";
 import { catchError } from "rxjs";

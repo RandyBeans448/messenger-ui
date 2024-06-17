@@ -4,9 +4,9 @@ import { AuthService } from '@auth0/auth0-angular';
 import { BehaviorSubject, Observable, forkJoin } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { TopBarService } from './top-bar.service';
-import { UserNamespace } from '../interfaces/user.interface';
+import { UserNamespace } from '../namespaces/user.interface';
 import { AppConfigService } from '../../../environments/services/config.service';
-import { AccountNamespace } from '../interfaces/account.interface';
+import { AccountNamespace } from '../namespaces/account.namespace';
 
 @Injectable({
     providedIn: 'root',
@@ -18,6 +18,7 @@ export class AccountService {
         email: '',
         firstName: '',
         lastName: '',
+        friend: [],
         friendRequests: [],
         updatedAt: '',
         createdAt: '',

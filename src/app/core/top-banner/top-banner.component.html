@@ -2,33 +2,157 @@
     class="top-banner fixed top-0 z-50"
     [style]="{ 'margin-top': marginTop }">
 
-    <div class="flex flex-wrap items-center justify-between flex-row">
+    <div class="flex flex-wrap items-center justify-between">
 
         <div class="flex items-center">
-
-            <h3>{{ name }}</h3>
 
             <!-- <img
                 class="w-10 select-none main-logo"
                 src="/assets/imgs/logo-round-b&w.svg"
-                (click)="navigateTo(HOMEPAGE_ROUTE)"
-            /> -->
-        </div>
-
-        <div class="flex items-center">
-
-            <h3>{{ email }}</h3>
-
-            <!-- <img
-                class="w-10 select-none main-logo"
-                src="/assets/imgs/logo-round-b&w.svg"
+                data-test-id="home-logo"
                 (click)="navigateTo(HOMEPAGE_ROUTE)"
             /> -->
         </div>
 
         <div class="flex justify-center items-center">
 
-            <!-- <app-avatar
+            <!-- Popover/icon for downloads -->
+            <!-- @if (!(responserService.mobileSize | async)) {
+                <app-popover
+                    [config]="{
+                        id: 'top-banner-downloads',
+                        title: 'Downloads',
+                        width: '20rem'
+                    }">
+
+                    <div
+                        main
+                        class="item">
+
+                        <app-icon icon="download" />
+                    </div>
+    
+                    <div
+                        popoverContent
+                        class="w-full">
+
+                        <div class="flex flex-col">
+
+                            @for(download of (getUserDownloads() | async); track download.id) {
+
+                                <app-popover-list-item
+                                    class="w-full"
+                                    [mainTitle]="download.design.title" [leftIcon]="'design'"
+                                    [subTitle]="download.createdAt | date: 'mediumDate'"
+                                />
+                            }
+
+                            @if((getUserDownloads() | async)?.length === 0) {
+
+                                <div class="pop-over-holding-text">
+                                    No Downloads
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </app-popover>
+            }
+            -->
+
+            <!-- Notifications icon -->
+            <!-- @if(isSettingOn('notifications')) {
+                
+                <app-popover
+                    [config]="{
+                        id: 'top-banner-notifications',
+                        title: 'Notifications',
+                        width: '20rem'
+                    }"> -->
+
+                    <div
+                        main
+                        class="item">
+
+                        <!-- <app-icon icon="notification" />
+
+                        <app-badge
+                            class="badge"
+                            text="2"
+                        /> -->
+                    </div>
+
+                    <div
+                        popoverContent
+                        class="w-full">
+
+                        <div class="flex flex-col">
+
+                            <div class="pop-over-holding-text">
+                                No Notifications
+                            </div>
+                        </div>
+                    </div>
+                <!-- </app-popover> -->
+            <!-- }  -->
+
+
+            <!-- Popover/icon for credits -->
+            <!-- @if (!(responserService.mobileSize | async)) {
+
+                <app-popover
+                    [config]="{
+                        id: 'top-banner-credits',
+                        title: 'Credits',
+                        width: '20rem'
+                    }">
+
+                    <div
+                        main
+                        class="item">
+
+                        <app-icon icon="credits" />
+
+                        <app-badge
+                            class="badge"
+                            [text]="(getCredits() | async)"
+                        />
+                    </div>
+
+                    <div popoverContent>
+
+                        <div class="flex">
+
+                            <app-icon
+                                class="popover-icon mr-2"
+                                icon="credits"
+                            />
+
+                            <app-badge
+                                class="badge"
+                                [text]="(getCredits() | async)"
+                            />
+
+                            <div class="ml-5">
+                                Credits Remaining
+                            </div>
+                        </div>
+
+                        @if((accountData$ | async)?.user?.owner || (accountData$ | async)?.user?.isAdmin) {
+                            
+                            <div class="mt-5">
+
+                                <app-button
+                                    title="Purchase credits"
+                                    [isFullWidth]="true"
+                                    (click)="openCreditModal()"
+                                />
+                            </div>
+                        }
+                    </div>
+                </app-popover>
+            } -->
+<!-- 
+            <app-avatar
                 data-test-id="nav-bar-avatar-button"
                 [initials]="getUserInitials()"
                 (avatarClicked)="navigateTo('/account')">

@@ -3,26 +3,39 @@
     <app-avatar [initials]="friendRequest.receiver.firstName[0] + friendRequest.receiver.lastName[0]"></app-avatar>
 
     <div>
+
         <h3>
             {{ friendRequest.receiver.firstName }} {{ friendRequest.receiver.lastName }}
         </h3>
     </div>
 
     <div class="flex flex-row items-center">
-        <div class="mr-1">
-            <app-button 
-                iconType="check" 
-                buttonSize="small" 
-                buttonType="primary-round"
-                (click)="repsondeToFriendRequest(true)"/>
-        </div>
 
-        <div class="ml-1">
-            <app-button 
-                iconType="close" 
-                buttonSize="small" 
-                buttonType="primary-round"
-                (click)="repsondeToFriendRequest(false)"/>  
-        </div>
+
+        @if (friendRequest.receiver.id === user.id) {
+
+            <div class="mr-1">
+                <app-button 
+                    iconType="check" 
+                    buttonSize="small" 
+                    buttonType="primary-round"
+                    (click)="repsondeToFriendRequest(true)"/>
+            </div>
+    
+            <div class="ml-1">
+                <app-button 
+                    iconType="close" 
+                    buttonSize="small" 
+                    buttonType="primary-round"
+                    (click)="repsondeToFriendRequest(false)"/>  
+            </div>
+        } @else {
+
+            <div>
+
+                <h3> Friend request sent </h3>
+            </div>
+        }
+
     </div>
 </div>

@@ -4,7 +4,7 @@ import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { switchMap, take } from 'rxjs/operators';
 import { AccountService } from '../services/account.service';
-import { AccountNamespace } from '../interfaces/account.interface';
+import { AccountNamespace } from '../namespaces/account.namespace';
 
 @Injectable({
     providedIn: 'root',

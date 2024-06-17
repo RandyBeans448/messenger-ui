@@ -1,11 +1,12 @@
 import { Component, Input } from "@angular/core";
-import { AccountService } from "../services/account.service";
 import { CommonModule } from "@angular/common";
 import { ButtonComponent } from "../components/button/button.component";
 import { FriendRequestService } from "../services/friend-request.service";
-import { FriendRequestNamespace } from "../interfaces/friend-request.interface";
+import { FriendRequestNamespace } from "../namespaces/friend-request.namespace";
 import { ToastrService } from "ngx-toastr";
 import { AvatarComponent } from "../components/avatar/avatar.component";
+import { UserNamespace } from "../namespaces/user.interface";
+import { AccountService } from "../services/account.service";
 
 @Component({
     selector: 'app-friend-request-card',
@@ -19,15 +20,19 @@ export class FriendRequestsCardComponent {
     @Input()
     public friendRequest: any;
 
+    public user: UserNamespace.UserInterface;
+
     constructor(
+        private _accountService: AccountService,
         private _friendRequestService: FriendRequestService,
         private _toastService: ToastrService,
     ) { }
 
     public ngOnInit() {
-
+        this._accountService.getAccount().subscribe(account => {
+            this.user = account.user;
+        });
     }
-
 
     public async repsondeToFriendRequest(response: boolean) {
 

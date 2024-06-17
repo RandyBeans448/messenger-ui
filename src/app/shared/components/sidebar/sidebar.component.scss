@@ -1,4 +1,4 @@
-// @import 'fonts';
+
 
 $sidebar-width: 16rem;
 $sidebar-width-collapsed: 70px;
@@ -19,7 +19,6 @@ $top-bar-height: 65px;
         @include collapsed;
     }
 }
-
 
 .sidebar-nav {
     overflow-y: auto;

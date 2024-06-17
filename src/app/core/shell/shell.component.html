@@ -4,8 +4,15 @@
     [marginTop]="(topBarIsShowing() | async) === true ? '30px' : '0'"
 />
 
-<app-sidebar/>
+<div
+    class="sidebar-content-wrapper"
+    [style]="{ 'margin-top': (topBarIsShowing() | async) === true ? '30px' : '0' }">
 
-<div id="main-content" >
-    <ng-content></ng-content>
+    <div class="temp">
+        <app-sidebar/>
+    </div>
+    
+    <div id="main-content" >
+        <ng-content></ng-content>
+    </div>
 </div>

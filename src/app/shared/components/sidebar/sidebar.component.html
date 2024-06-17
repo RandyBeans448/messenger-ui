@@ -2,4 +2,15 @@
    id="app-sidebar" 
    aria-label="Sidebar"
    class="transition-transform -translate-x-full sm:translate-x-0">
+
+   <ul>
+
+      @for (friendItem of sidebarItems; track $index) {
+
+         <li class="m-1">
+            
+            <app-friend [friendArrayItem]="friendItem"/>
+         </li>
+      }
+   </ul>   
 </aside>

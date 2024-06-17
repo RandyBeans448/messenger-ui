@@ -1,6 +1,6 @@
 import { Component } from "@angular/core";
 import { AccountService } from "../../shared/services/account.service";
-import { UserNamespace } from "../../shared/interfaces/user.interface";
+import { UserNamespace } from "../../shared/namespaces/user.interface";
 
 @Component({
     selector: 'app-home',
@@ -15,9 +15,7 @@ export class HomeComponent {
 
     ngOnInit() {
         this._accountService.getAccount().subscribe(account => {
-            console.log(account)
             this.user = account.user;
         });
-        console.log(this.user);
     }
 }
