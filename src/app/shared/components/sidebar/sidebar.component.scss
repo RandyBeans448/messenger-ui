@@ -2,7 +2,7 @@
 
 $sidebar-width: 16rem;
 $sidebar-width-collapsed: 70px;
-$top-bar-height: 65px;
+$top-bar-height: 50px;
 
 @mixin collapsed {
     width: $sidebar-width-collapsed;

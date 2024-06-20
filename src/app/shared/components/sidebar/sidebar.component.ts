@@ -7,9 +7,8 @@ import { IconComponent } from "../icon/icon.component";
 import { SidebarItemComponent } from "./sidebar-item/sidebar-item.component";
 import { AccountService } from "../../services/account.service";
 import { FriendNamespace } from "../../namespaces/friend.namespace";
-import { AccountNamespace } from "../../namespaces/account.namespace";
-import { Observable } from "rxjs";
 import { FriendComponent } from "../../friend/friend.component";
+import { InputComponent } from "../input/input.component";
 
 @Component({
     selector: 'app-sidebar',
@@ -17,6 +16,7 @@ import { FriendComponent } from "../../friend/friend.component";
     imports: [
         CommonModule,
         IconComponent,
+        InputComponent,
         FriendComponent,
         RouterModule,
         SidebarItemComponent,
@@ -31,6 +31,8 @@ export class SidebarComponent {
     @Input()
     public sidebarItems: FriendNamespace.FriendArrayItemInterface[];
 
+    public findMyFriendsSearchForFriends: 'findMyFriend' | 'searchFriends' = 'findMyFriend';
+
     constructor(private _accountService: AccountService) {
 
     }
@@ -38,7 +40,6 @@ export class SidebarComponent {
     public ngOnInit() {
         this._accountService.getAccount().subscribe(account => {
             this.sidebarItems = account.user.friend;
-            console.log(account.user.friend, 'fick');
         });
     }
 

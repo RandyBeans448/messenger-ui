@@ -49,7 +49,6 @@ export class AccountService {
             .get<UserNamespace.UserInterface>(`${this.baseApi}/user`)
             .pipe(
                 tap((user) => {
-                    console.log(user)
                     return this.setAccount(user);
                 }),
                 catchError((error) => {
@@ -59,7 +58,6 @@ export class AccountService {
                     return error;
                 })
             );
-
     }
 
     public setAccount(user: UserNamespace.UserInterface): AccountNamespace.AccountInterface {

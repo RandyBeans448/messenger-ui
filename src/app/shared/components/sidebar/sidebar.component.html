@@ -3,14 +3,71 @@
    aria-label="Sidebar"
    class="transition-transform -translate-x-full sm:translate-x-0">
 
-   <ul>
 
-      @for (friendItem of sidebarItems; track $index) {
+   <div class="flex flex-row">
 
-         <li class="m-1">
-            
-            <app-friend [friendArrayItem]="friendItem"/>
-         </li>
-      }
-   </ul>   
+      <div 
+         id="current-friends-list"
+         class="flex justify-center w-full tab"
+         [ngClass]="{
+            'unselected-tab' : findMyFriendsSearchForFriends === 'searchFriends',
+         }">
+
+         <app-icon icon="save" />
+
+      </div>
+
+      <div 
+         id="search-for-friends"
+         class="flex justify-center w-full tab"
+         [ngClass]="{
+            'unselected-tab' : findMyFriendsSearchForFriends !== 'searchFriends',
+         }">
+
+         <app-icon icon="search" />
+         
+      </div>
+
+   </div>
+
+
+   @if (findMyFriendsSearchForFriends === 'findMyFriend') {
+
+      <div>
+         <h5> Your friends list </h5>
+      </div>
+
+   } @else {
+
+      <div>
+         <h5> Find more friends </h5>
+      </div>
+   }
+
+
+   <div class="m-2">
+
+      <app-input />
+   </div>
+
+   @if (findMyFriendsSearchForFriends === 'findMyFriend') {
+
+      <ul>
+
+         @for (friendItem of sidebarItems; track $index) {
+   
+            <li class="m-1">
+               
+               <app-friend [friendArrayItem]="friendItem"/>
+            </li>
+         }
+      </ul>
+   } @else {
+
+      <div>
+         <h5> Find more friends </h5>
+      </div>
+   }
+
+   
 </aside>
