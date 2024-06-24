@@ -29,6 +29,9 @@ export class FriendRequestsCardComponent {
     ) { }
 
     public ngOnInit() {
+
+        console.log(this.friendRequest, 'thing' )
+
         this._accountService.getAccount().subscribe(account => {
             this.user = account.user;
         });

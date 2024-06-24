@@ -4,6 +4,12 @@ $sidebar-width: 16rem;
 $sidebar-width-collapsed: 70px;
 $top-bar-height: 50px;
 
+ul {
+    list-style-type: none; /* Remove bullets */
+    padding: 0; /* Remove padding */
+    margin: 0;
+}
+
 @mixin collapsed {
     width: $sidebar-width-collapsed;
     padding: var(--0, 0px);

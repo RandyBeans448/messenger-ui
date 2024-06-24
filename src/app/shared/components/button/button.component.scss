@@ -26,6 +26,17 @@ $flat: 0px;
     border-radius: $rounded-full;
     gap: var(--2, 8px);
     white-space: nowrap;
+
+    // small
+    &--extra-small {
+        width: 2.2rem;
+        height: 2.2rem;
+        font-size: 14px;
+        line-height: 21px; /* 150% */
+        letter-spacing: -0.35px;
+        padding: var(--2, 8px) var(--3, 12px);
+    }
+
     // small
     &--small {
         width: 2.5rem;

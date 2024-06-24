@@ -9,6 +9,10 @@ import { AccountService } from "../../services/account.service";
 import { FriendNamespace } from "../../namespaces/friend.namespace";
 import { FriendComponent } from "../../friend/friend.component";
 import { InputComponent } from "../input/input.component";
+import { SimpleSearchBarComponent } from "../simple-search-bar/simple-search-bar.component";
+import { FriendRequestsCardComponent } from "../../friend-request/friend-request-card.component";
+import { SidebarAddFriendComponent } from "./sidebar-add-friend/sidebar-add-friend.component";
+
 
 @Component({
     selector: 'app-sidebar',
@@ -22,6 +26,9 @@ import { InputComponent } from "../input/input.component";
         SidebarItemComponent,
         AuthModule,
         ButtonComponent,
+        SimpleSearchBarComponent,
+        FriendRequestsCardComponent,
+        SidebarAddFriendComponent
     ],
     templateUrl: './sidebar.component.html',
     styleUrls: ['./sidebar.component.scss'],
@@ -33,14 +40,32 @@ export class SidebarComponent {
 
     public findMyFriendsSearchForFriends: 'findMyFriend' | 'searchFriends' = 'findMyFriend';
 
-    constructor(private _accountService: AccountService) {
+    public usersThatHaveNotBeenFriended: any[] = [];
 
+    constructor(private _accountService: AccountService) {
+        
     }
 
     public ngOnInit() {
         this._accountService.getAccount().subscribe(account => {
             this.sidebarItems = account.user.friend;
         });
+
+        this._accountService.getAviableUsers().subscribe(friends => {
+            this.usersThatHaveNotBeenFriended = friends;
+        });
+    }
+
+    public toggleSearch(): void {
+        this.findMyFriendsSearchForFriends = this.findMyFriendsSearchForFriends === 'findMyFriend' ? 'searchFriends' : 'findMyFriend';
+    }
+
+    public findMyFriends(searchQuery: string): void {
+
+    }
+
+    public searchFriends(searchQuery: string): void {
+
     }
 
 }

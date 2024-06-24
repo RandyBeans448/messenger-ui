@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 
 export type IconType =
-    'downloadTechDrawing' | 'savedDesigns' | 'privateDb' | 'cancel' | 'check_circle' | 'beta'
+    'add' | 'downloadTechDrawing' | 'savedDesigns' | 'privateDb' | 'cancel' | 'check_circle' | 'beta'
     | 'pro' | 'open_full' | 'toggle_menu' | 'team_files' | 'saved' | 'category'
     | 'search' | 'close' | 'download' | 'dropdown' | 'notification' | 'credits' | 'info'
     | 'tender' | 'help' | 'sign_out' | 'upload' | 'copy' | 'arrow_right' | 'arrow_left'
@@ -38,6 +38,7 @@ export class IconComponent {
     public iconString: string = 'emoticon';
 
     private iconMap: { [key in IconType]: string } = {
+        add: 'add',
         arrow_left: 'arrow_forward',
         arrow_right: 'arrow_back',
         beta: 'compost',

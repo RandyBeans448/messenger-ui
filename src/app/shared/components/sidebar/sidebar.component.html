@@ -3,57 +3,46 @@
    aria-label="Sidebar"
    class="transition-transform -translate-x-full sm:translate-x-0">
 
+   <div class="flex flex-row m-2">
 
-   <div class="flex flex-row">
+      @if (findMyFriendsSearchForFriends === 'findMyFriend') {
 
-      <div 
-         id="current-friends-list"
-         class="flex justify-center w-full tab"
-         [ngClass]="{
-            'unselected-tab' : findMyFriendsSearchForFriends === 'searchFriends',
-         }">
+         <div class="w-full justify-center">
 
-         <app-icon icon="save" />
+            <app-button title="Search for friends"  iconType="search" buttonType="outline" [isFullWidth]="true" (click)="toggleSearch()"/>
+         </div>
 
-      </div>
+      } @else {
 
-      <div 
-         id="search-for-friends"
-         class="flex justify-center w-full tab"
-         [ngClass]="{
-            'unselected-tab' : findMyFriendsSearchForFriends !== 'searchFriends',
-         }">
+         <div class="w-full justify-center">
 
-         <app-icon icon="search" />
-         
-      </div>
-
+            <app-button title="See your friends" iconType="save" buttonType="outline" [isFullWidth]="true" (click)="toggleSearch()" />
+         </div>
+      }
    </div>
 
+   <div class="m-2 justify-center text-center">
 
-   @if (findMyFriendsSearchForFriends === 'findMyFriend') {
+      @if (findMyFriendsSearchForFriends === 'findMyFriend') {
 
-      <div>
          <h5> Your friends list </h5>
-      </div>
+      } @else {
 
-   } @else {
-
-      <div>
          <h5> Find more friends </h5>
-      </div>
-   }
-
+      }
+   </div>
 
    <div class="m-2">
 
-      <app-input />
+      <app-simple-search-bar />
    </div>
+
+   <ul class="m-2">
+
 
    @if (findMyFriendsSearchForFriends === 'findMyFriend') {
 
-      <ul>
-
+  
          @for (friendItem of sidebarItems; track $index) {
    
             <li class="m-1">
@@ -61,13 +50,14 @@
                <app-friend [friendArrayItem]="friendItem"/>
             </li>
          }
-      </ul>
+
    } @else {
 
-      <div>
-         <h5> Find more friends </h5>
-      </div>
+      @for (user of usersThatHaveNotBeenFriended; track $index) {
+         <li>
+             <app-sidebar-add-friend [user]="user" />
+         </li>
+     }
    }
-
-   
+   </ul>
 </aside>

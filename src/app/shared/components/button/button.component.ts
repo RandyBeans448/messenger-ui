@@ -6,7 +6,7 @@ export type ButtonType = 'text' | 'primary' | 'outline' | 'underline' | 'dropdow
     | 'primary-alternative' | 'outline-alternative' | 'underline-alternative'
     | 'primary-round' | 'alternative-round' | 'outline-round' | 'outline-alternative-round' | 'dropdown-round';
 
-export type ButtonSize = 'small' | 'regular' | 'large';
+export type ButtonSize = 'extra-small' | 'small' | 'regular' | 'large';
 
 @Component({
     selector: 'app-button',

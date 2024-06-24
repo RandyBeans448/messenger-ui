@@ -83,5 +83,15 @@ export class AccountService {
     public clearData(): void {
         this._account.next(this.initObject);
     }
+
+    public getAviableUsers(): Observable<any> {
+        return this._http
+            .get(`${this.baseApi}/user/available-users`)
+            .pipe(
+                catchError((error) => {
+                    throw error;
+                })
+            );
+    }
 }
  
