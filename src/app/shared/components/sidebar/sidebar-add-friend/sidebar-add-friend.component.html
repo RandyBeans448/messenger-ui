@@ -5,9 +5,14 @@
     <div>
 
         <h3>
+            
             {{ user.username }}
         </h3>
     </div>
 
-    <app-button iconType="add" buttonType="outline-round" buttonSize="extra-small" />
+    <app-button 
+        iconType="add" 
+        buttonType="outline-round" 
+        buttonSize="extra-small"
+        (click)="addFriend()"/>
 </div>

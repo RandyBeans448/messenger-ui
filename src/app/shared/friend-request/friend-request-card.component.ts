@@ -29,22 +29,19 @@ export class FriendRequestsCardComponent {
     ) { }
 
     public ngOnInit() {
-
-        console.log(this.friendRequest, 'thing' )
-
         this._accountService.getAccount().subscribe(account => {
             this.user = account.user;
         });
     }
 
-    public async repsondeToFriendRequest(response: boolean) {
+    public async repsondToFriendRequest(response: boolean) {
 
         const responseFriendRequest: FriendRequestNamespace.FriendRequestResponseInterface = {
             friendRequestId: this.friendRequest.id,
             response: response,
         }
 
-        await this._friendRequestService.respondToFriendRequest(responseFriendRequest).subscribe(res => {
+        await (await this._friendRequestService.respondToFriendRequest(responseFriendRequest)).subscribe(res => {
             if (res === 'Friend Request Accepted') this._toastService.success(res);
         });
     }

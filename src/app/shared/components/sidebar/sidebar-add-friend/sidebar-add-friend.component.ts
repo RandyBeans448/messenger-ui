@@ -4,6 +4,8 @@ import { AuthModule } from "@auth0/auth0-angular";
 import { ButtonComponent } from "../../button/button.component";
 import { IconComponent } from "../../icon/icon.component";
 import { AvatarComponent } from "../../avatar/avatar.component";
+import { FriendRequestService } from "../../../services/friend-request.service";
+import { ToastrService } from "ngx-toastr";
 
 @Component({
     selector: 'app-sidebar-add-friend',
@@ -20,7 +22,18 @@ import { AvatarComponent } from "../../avatar/avatar.component";
 })
 export class SidebarAddFriendComponent {
 
+    constructor(
+        private _friendRequestService: FriendRequestService,
+        private _toastService: ToastrService,
+    ) { }
+
     @Input()
     public user: any;
+
+    public async addFriend(userId: string = this.user.id) {
+        await this._friendRequestService.sendFriendRequest(userId).subscribe(res => {
+            if (res === 'Friend Request Sent') this._toastService.success(res);
+        });
+    }
 
 }

@@ -16,6 +16,7 @@ export class HomeComponent {
     ngOnInit() {
         this._accountService.getAccount().subscribe(account => {
             this.user = account.user;
+            console.log(this.user)
         });
     }
 }

@@ -17,6 +17,23 @@ export class FriendRequestService {
 
     public baseApi: string = AppConfigService.env.baseApi;
 
+
+    public sendFriendRequest(userId: string) {
+        console.log(userId) 
+        
+        return this._http.post(`${this.baseApi}/friend-request/add-friend`, { addFriendId: userId }, {
+            responseType: 'text',
+        }).pipe(
+            catchError((error) => {
+                console.log(error)
+                this._toastService.error(
+                    error
+                );
+                throw error;
+            })
+        );
+    }
+
     public respondToFriendRequest(repsonse: FriendRequestNamespace.FriendRequestResponseInterface) {
         return this._http.patch(`${this.baseApi}/friend-request/resolve-friend-request`, repsonse, {
             responseType: 'text',
