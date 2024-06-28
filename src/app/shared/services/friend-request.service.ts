@@ -21,7 +21,7 @@ export class FriendRequestService {
     public sendFriendRequest(userId: string) {
         console.log(userId) 
         
-        return this._http.post(`${this.baseApi}/friend-request/add-friend`, { addFriendId: userId }, {
+        return this._http.post(`${this.baseApi}/friend-request/add-friend`, { newFriendId: userId }, {
             responseType: 'text',
         }).pipe(
             catchError((error) => {
