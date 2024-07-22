@@ -2,11 +2,12 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AuthService } from '@auth0/auth0-angular';
 import { BehaviorSubject, Observable, forkJoin } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators';
+import { catchError, map, tap } from 'rxjs/operators';
 import { TopBarService } from './top-bar.service';
 import { UserNamespace } from '../namespaces/user.interface';
 import { AppConfigService } from '../../../environments/services/config.service';
 import { AccountNamespace } from '../namespaces/account.namespace';
+import { FriendRequestNamespace } from '../namespaces/friend-request.namespace';
 
 @Injectable({
     providedIn: 'root',
@@ -86,12 +87,36 @@ export class AccountService {
 
     public getAviableUsers(): Observable<any> {
         return this._http
-            .get(`${this.baseApi}/user/available-users`)
+            .get(`${this.baseApi}/user/get-all-users-with-no-pending-requests`)
             .pipe(
                 catchError((error) => {
                     throw error;
                 })
             );
     }
+
+    public getReceivedFriendRequests(): Observable<any> {
+        return this._http
+            .get<FriendRequestNamespace.FriendRequestDTOInterface[]>(`${this.baseApi}/friend-request/get-received-friend-requests`)
+            .pipe(
+                map((requests: FriendRequestNamespace.FriendRequestDTOInterface[]) => {
+                    return requests.map((request) => {
+                        return {
+                            receiver: {
+                                id: request.requestSentBy_id,
+                                username: request.requestSentBy_username,
+                                createdAt: request.requestSentBy_createdAt,
+                                updatedAt: request.requestSentBy_updatedAt,
+                                deletedAt: request.requestSentBy_deletedAt,
+                                receiver: true,
+                            }
+
+                        };
+                    });
+                }),
+                catchError((error) => {
+                    return error;
+                })
+            );
+    }
 }
- 

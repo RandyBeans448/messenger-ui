@@ -8,7 +8,12 @@
         
         @for (friend of user.friendRequests; track $index) {
 
-    
+            <li>
+                <app-friend-request-card [friendRequest]="friend" />
+            </li>
+        }
+
+        @for (friend of receivedFriendRequests; track $index) {
 
             <li>
                 <app-friend-request-card [friendRequest]="friend" />

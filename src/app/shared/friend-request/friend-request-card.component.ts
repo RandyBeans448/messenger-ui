@@ -34,7 +34,7 @@ export class FriendRequestsCardComponent {
         });
     }
 
-    public async repsondToFriendRequest(response: boolean) {
+    public async respondToFriendRequest(response: boolean) {
 
         const responseFriendRequest: FriendRequestNamespace.FriendRequestResponseInterface = {
             friendRequestId: this.friendRequest.id,
