@@ -39,4 +39,8 @@ export namespace FriendRequestNamespace {
         deletedAt: string;
     }
 
+    export interface FriendRequestCardInputInterface {
+        
+    }
+
 }

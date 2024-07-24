@@ -101,14 +101,14 @@ export class AccountService {
             .pipe(
                 map((requests: FriendRequestNamespace.FriendRequestDTOInterface[]) => {
                     return requests.map((request) => {
+                        console.log(requests)
                         return {
                             receiver: {
-                                id: request.requestSentBy_id,
+                                id: request.friendRequest_receiverId,
                                 username: request.requestSentBy_username,
                                 createdAt: request.requestSentBy_createdAt,
                                 updatedAt: request.requestSentBy_updatedAt,
                                 deletedAt: request.requestSentBy_deletedAt,
-                                receiver: true,
                             }
 
                         };

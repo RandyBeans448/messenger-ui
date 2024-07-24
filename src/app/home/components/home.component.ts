@@ -22,7 +22,7 @@ export class HomeComponent {
         });
 
         this._accountService.getReceivedFriendRequests().subscribe(requests => {
-            console.log(requests, 'home component') 
+            console.log(requests);
             this.receivedFriendRequests = requests;
         });
     }
