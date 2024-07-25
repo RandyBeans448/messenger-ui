@@ -1,6 +1,6 @@
 import { CommonModule } from "@angular/common";
 import { Component, Input } from "@angular/core";
-import { RouterModule } from "@angular/router";
+import { ActivatedRoute, Router, RouterModule } from "@angular/router";
 import { AuthModule } from "@auth0/auth0-angular";
 import { ButtonComponent } from "../button/button.component";
 import { IconComponent } from "../icon/icon.component";
@@ -42,7 +42,10 @@ export class SidebarComponent {
 
     public usersThatHaveNotBeenFriended: any[] = [];
 
-    constructor(private _accountService: AccountService) {
+    constructor(
+        private _accountService: AccountService,
+        private _router: Router,
+    ) {
         
     }
 
@@ -66,6 +69,10 @@ export class SidebarComponent {
 
     public searchFriends(searchQuery: string): void {
 
+    }
+
+    public toChatRoom(): void {
+        this._router.navigate(['/chat-room']);
     }
 
 }

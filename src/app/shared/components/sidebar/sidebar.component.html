@@ -47,7 +47,10 @@
    
             <li class="m-1">
                
-               <app-friend [friendArrayItem]="friendItem"/>
+               <app-friend 
+                  [friendArrayItem]="friendItem"
+                  (click)="toChatRoom()"
+               />
             </li>
          }
 

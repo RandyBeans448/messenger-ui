@@ -2,24 +2,20 @@
 
     <div class="flex flex-row items-center">
 
-        <app-avatar [initials]="friendArrayItem.friend.firstName[0] + friendArrayItem.friend.lastName[0]"></app-avatar>
+        <app-avatar [initials]="friendArrayItem.friend.username[0]"></app-avatar>
 
         <div class="flex flex-col pl-5">
 
             <div class="flex flex-row">
 
-                <h3> {{ friendArrayItem.friend.firstName }} </h3>
-                <h3> {{ friendArrayItem.friend.lastName }} </h3>
+                <h3> {{ friendArrayItem.friend.username }} </h3>
             </div>
 
             <div>
 
                 <p class="text-xs title-truncation"> {{ friendArrayItem.friend.email }} </p>
-            </div>     
+            </div> 
         </div>
-
     </div>
-
-
 </div>    
 

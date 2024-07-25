@@ -14,8 +14,12 @@ import { FriendNamespace } from "../namespaces/friend.namespace";
 })
 export class FriendComponent {
 
+    ngOnInit(): void {
+        console.log(this.friendArrayItem, 'export class FriendComponent  export class FriendComponent ');
+    }
+    
+
     @Input()
     public friendArrayItem: FriendNamespace.FriendArrayItemInterface;
-
 
 }
