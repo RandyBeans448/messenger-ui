@@ -12,13 +12,13 @@ export class ChatRoomComponent {
     ngOnInit() {
       this.websocketService.sendMessage('Hello from Angular');
   
-      this.websocketService.onMessage().subscribe((message) => {
-        console.log('Message from server:', message);
-      });
+      // this.websocketService.onMessage().subscribe((message) => {
+      //   console.log('Message from server:', message);
+      // });
   
-      this.websocketService.onNotification().subscribe((notification) => {
-        console.log('Notification from server:', notification);
-      });
+      // this.websocketService.onNotification().subscribe((notification) => {
+      //   console.log('Notification from server:', notification);
+      // });
     }
 
     public async sendMessage(message: any) {
