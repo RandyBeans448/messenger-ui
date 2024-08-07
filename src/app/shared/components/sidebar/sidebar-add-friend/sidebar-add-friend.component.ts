@@ -32,8 +32,9 @@ export class SidebarAddFriendComponent {
 
     public async addFriend(userId: string = this.user.id) {
         await this._friendRequestService.sendFriendRequest(userId).subscribe(res => {
-            if (res === 'Friend Request Sent') this._toastService.success(res);
+            if (res === 'Friend Request Sent') {
+                this._toastService.success(res);
+            } 
         });
     }
-
 }

@@ -49,7 +49,8 @@ export class AccountService {
         return this._http
             .get<UserNamespace.UserInterface>(`${this.baseApi}/user`)
             .pipe(
-                tap((user) => {
+                tap((user: UserNamespace.UserInterface) => {
+                    console.log(user, 'user ---------------');
                     return this.setAccount(user);
                 }),
                 catchError((error) => {
@@ -101,10 +102,10 @@ export class AccountService {
             .pipe(
                 map((requests: FriendRequestNamespace.FriendRequestDTOInterface[]) => {
                     return requests.map((request) => {
-                        console.log(requests)
                         return {
                             receiver: {
                                 id: request.friendRequest_receiverId,
+                                friendRequestId: request.friendRequest_id,
                                 username: request.requestSentBy_username,
                                 createdAt: request.requestSentBy_createdAt,
                                 updatedAt: request.requestSentBy_updatedAt,

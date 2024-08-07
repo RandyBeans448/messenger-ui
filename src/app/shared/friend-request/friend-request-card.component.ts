@@ -35,14 +35,15 @@ export class FriendRequestsCardComponent {
     }
 
     public async respondToFriendRequest(response: boolean) {
-
         const responseFriendRequest: FriendRequestNamespace.FriendRequestResponseInterface = {
-            friendRequestId: this.friendRequest.id,
+            friendRequestId: this.friendRequest.receiver.friendRequestId,
             response: response,
         }
 
         await (await this._friendRequestService.respondToFriendRequest(responseFriendRequest)).subscribe(res => {
-            if (res === 'Friend Request Accepted') this._toastService.success(res);
+            if (res === 'Friend Request Accepted') {
+                this._toastService.success(res);
+            } 
         });
     }
 }

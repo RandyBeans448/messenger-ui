@@ -12,6 +12,7 @@ import { InputComponent } from "../input/input.component";
 import { SimpleSearchBarComponent } from "../simple-search-bar/simple-search-bar.component";
 import { FriendRequestsCardComponent } from "../../friend-request/friend-request-card.component";
 import { SidebarAddFriendComponent } from "./sidebar-add-friend/sidebar-add-friend.component";
+import { UserNamespace } from "../../namespaces/user.interface";
 
 
 @Component({
@@ -36,11 +37,13 @@ import { SidebarAddFriendComponent } from "./sidebar-add-friend/sidebar-add-frie
 export class SidebarComponent {
 
     @Input()
-    public sidebarItems: FriendNamespace.FriendArrayItemInterface[];
+    public sidebarFriendItems: FriendNamespace.FriendArrayItemInterface[];
 
     public findMyFriendsSearchForFriends: 'findMyFriend' | 'searchFriends' = 'findMyFriend';
 
     public usersThatHaveNotBeenFriended: any[] = [];
+
+    public user: UserNamespace.UserInterface;
 
     constructor(
         private _accountService: AccountService,
@@ -51,7 +54,8 @@ export class SidebarComponent {
 
     public ngOnInit() {
         this._accountService.getAccount().subscribe(account => {
-            this.sidebarItems = account.user.friend;
+            this.user = account.user;
+            this.sidebarFriendItems = account.user.friend;
         });
 
         this._accountService.getAviableUsers().subscribe(friends => {
@@ -71,8 +75,10 @@ export class SidebarComponent {
 
     }
 
-    public toChatRoom(): void {
-        this._router.navigate(['/chat-room']);
+    public toChatRoom(
+        conversationId: string,
+    ): void {
+        this._router.navigate([`/chat-room/${conversationId}`]);
     }
 
 }

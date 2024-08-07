@@ -17,5 +17,6 @@ export namespace FriendNamespace {
         username: string;
         id: string;
         updatedAt: string;
+        conversations: any;
     }
 }

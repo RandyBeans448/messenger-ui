@@ -43,13 +43,13 @@
    @if (findMyFriendsSearchForFriends === 'findMyFriend') {
 
   
-         @for (friendItem of sidebarItems; track $index) {
+         @for (friendItem of sidebarFriendItems; track $index) {
    
             <li class="m-1">
                
                <app-friend 
                   [friendArrayItem]="friendItem"
-                  (click)="toChatRoom()"
+                  (click)="toChatRoom(friendItem.conversations.id)"
                />
             </li>
          }

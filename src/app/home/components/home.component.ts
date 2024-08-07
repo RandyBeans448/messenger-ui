@@ -18,11 +18,9 @@ export class HomeComponent {
     ngOnInit() {
         this._accountService.getAccount().subscribe(account => {
             this.user = account.user;
-            console.log(this.user)
         });
-
         this._accountService.getReceivedFriendRequests().subscribe(requests => {
-            console.log(requests);
+            console.log(requests, 'requests ---------------');
             this.receivedFriendRequests = requests;
         });
     }

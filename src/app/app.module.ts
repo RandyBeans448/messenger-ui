@@ -12,44 +12,44 @@ import { ShellComponent } from './core/shell/shell.component';
 import { ToastrModule } from 'ngx-toastr';
 
 export function initializeApp(appConfigService: AppConfigService) {
-  return (): Promise<any> => {
-      return appConfigService.loadConfig();
-  }
+    return (): Promise<any> => {
+        return appConfigService.loadConfig();
+    }
 }
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
-  imports: [
-    ShellComponent,
-    BrowserModule,
-    AppRoutingModule,
-    HttpClientModule,
-    HomeModule,
-    ChatRoomModule,
-    BrowserAnimationsModule,
-    ToastrModule.forRoot({
-      positionClass: 'toast-bottom-right',
-      preventDuplicates: true,
-      tapToDismiss: true,
-  }),
-    AuthModule.forRoot(),
-  ],
-  providers: [
-    AppConfigService,
-    {
-        provide: APP_INITIALIZER,
-        useFactory: initializeApp,
-        deps: [AppConfigService],
-        multi: true,
-    },
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: AuthHttpInterceptor,
-      multi: true,
-    },
-  ],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent
+    ],
+    imports: [
+        ShellComponent,
+        BrowserModule,
+        AppRoutingModule,
+        HttpClientModule,
+        HomeModule,
+        ChatRoomModule,
+        BrowserAnimationsModule,
+        ToastrModule.forRoot({
+            positionClass: 'toast-bottom-right',
+            preventDuplicates: true,
+            tapToDismiss: true,
+        }),
+        AuthModule.forRoot(),
+    ],
+    providers: [
+        AppConfigService,
+        {
+            provide: APP_INITIALIZER,
+            useFactory: initializeApp,
+            deps: [AppConfigService],
+            multi: true,
+        },
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: AuthHttpInterceptor,
+            multi: true,
+        },
+    ],
+    bootstrap: [AppComponent]
 })
 export class AppModule { }

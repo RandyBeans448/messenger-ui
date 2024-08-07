@@ -16,7 +16,7 @@ const routes: Routes = [
     loadChildren: () => import('./home/home.module').then(m => m.HomeModule),
   },
   {
-    path: 'chat-room',
+    path: 'chat-room/:conversationId',
     resolve: [AccountResolver],
     canActivate: [AuthGuard],
     loadChildren: () => import('./chat-room/chat-room.module').then(m => m.ChatRoomModule),

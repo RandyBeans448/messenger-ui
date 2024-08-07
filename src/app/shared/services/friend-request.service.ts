@@ -19,13 +19,10 @@ export class FriendRequestService {
 
 
     public sendFriendRequest(userId: string) {
-        console.log(userId) 
-        
         return this._http.post(`${this.baseApi}/friend-request/add-friend`, { newFriendId: userId }, {
             responseType: 'text',
         }).pipe(
             catchError((error) => {
-                console.log(error)
                 this._toastService.error(
                     error
                 );
@@ -34,12 +31,11 @@ export class FriendRequestService {
         );
     }
 
-    public respondToFriendRequest(repsonse: FriendRequestNamespace.FriendRequestResponseInterface) {
-        return this._http.patch(`${this.baseApi}/friend-request/resolve-friend-request`, repsonse, {
+    public respondToFriendRequest(response: FriendRequestNamespace.FriendRequestResponseInterface) {
+        return this._http.patch(`${this.baseApi}/friend-request/resolve-friend-request`, response, {
             responseType: 'text',
         }).pipe(
             catchError((error) => {
-                console.log(error)
                 this._toastService.error(
                     error
                 );
