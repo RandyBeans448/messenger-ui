@@ -1,5 +1,6 @@
 import { CommonModule } from "@angular/common";
-import { Component, EventEmitter, HostListener, Input, Output } from "@angular/core";
+import { Component, EventEmitter, Input, Output } from "@angular/core";
+import { MessageNamespace } from "../../namespaces/messages.namespace";
 
 @Component({
     selector: 'app-chat-bar',
@@ -14,9 +15,17 @@ export class ChatBarComponent {
     public title: string = '';
 
     @Output()
-    messageValue: EventEmitter<string> = new EventEmitter<string>();
+    messageValue: EventEmitter<MessageNamespace.MessageInterface> = new EventEmitter<MessageNamespace.MessageInterface>();
 
     public sendMessage(message: string): void {
-        this.messageValue.emit(message);
+
+        const messageObject: MessageNamespace.MessageInterface = {
+            message: message,
+            senderId: 'user',
+            createdAt: new Date().toLocaleTimeString(),
+            updatedAt: new Date().toLocaleTimeString(),
+        };
+
+        this.messageValue.emit(messageObject);
     }
 }

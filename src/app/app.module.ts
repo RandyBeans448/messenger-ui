@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { AuthHttpInterceptor, AuthModule } from '@auth0/auth0-angular';
 import { AppConfigService } from '../environments/services/config.service';
 import { ChatRoomModule } from './chat-room/chat-room.module';
@@ -21,11 +21,11 @@ export function initializeApp(appConfigService: AppConfigService) {
     declarations: [
         AppComponent
     ],
+    bootstrap: [AppComponent],
     imports: [
         ShellComponent,
         BrowserModule,
         AppRoutingModule,
-        HttpClientModule,
         HomeModule,
         ChatRoomModule,
         BrowserAnimationsModule,
@@ -34,7 +34,7 @@ export function initializeApp(appConfigService: AppConfigService) {
             preventDuplicates: true,
             tapToDismiss: true,
         }),
-        AuthModule.forRoot(),
+        AuthModule.forRoot()
     ],
     providers: [
         AppConfigService,
@@ -49,7 +49,7 @@ export function initializeApp(appConfigService: AppConfigService) {
             useClass: AuthHttpInterceptor,
             multi: true,
         },
-    ],
-    bootstrap: [AppComponent]
+        provideHttpClient(withInterceptorsFromDi()),
+    ]
 })
 export class AppModule { }

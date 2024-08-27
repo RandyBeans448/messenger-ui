@@ -1,40 +1,39 @@
-// src/app/websocket.service.ts
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Injectable } from "@angular/core";
+import { Observable } from "rxjs";
 import { io, Socket } from 'socket.io-client';
+import { AppConfigService } from "../../../environments/services/config.service";
+import { MessageNamespace } from "../namespaces/messages.namespace";
 
 @Injectable({
     providedIn: 'root'
 })
 export class WebSocketService {
-    private socket: Socket;
+    private _socket: Socket;
+    private _baseApi: string = AppConfigService.env.baseApi;
 
     constructor() {
-        this.socket = io('http://localhost:8000'); // Ensure this matches your NestJS server address
-    }
-
-    public disconnectSocket() {
-        this.socket.disconnect();
-    }
-
-    public sendMessage(message: string) {
-        this.socket.emit('message', message);
-    }
-
-    public onMessage() {
-        return new Observable(observer => {
-            this.socket.on('message', (data: any) => {
-                console.log('oyoy')
-                console.log(data)
-                observer.next(data);
-            });
+        this._socket = io(`${this._baseApi}/chatroom`);
+        this._socket.on('connect', () => {
+            console.log('Connected to WebSocket server');
         });
     }
 
-    public onNotification() {
-        return new Observable(observer => {
-            this.socket.on('notification', (data: any) => {
-                observer.next(data);
+    public listen(eventName: string): Observable<unknown> {
+        return new Observable((subscriber) => {
+            this._socket.on(eventName, (data) => {
+                subscriber.next(data);
+            })
+        });
+    }
+
+    public sendMessage(message: MessageNamespace.MessageInterface): void {
+        this._socket.emit('message', message);
+    }
+
+    public receiveMessage(): Observable<MessageNamespace.MessageInterface> {
+        return new Observable<MessageNamespace.MessageInterface>((observer) => {
+            this._socket.on('message', (message: MessageNamespace.MessageInterface) => {
+                observer.next(message);
             });
         });
     }

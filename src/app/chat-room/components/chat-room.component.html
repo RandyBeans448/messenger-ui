@@ -1,9 +1,29 @@
 <div class="flex flex-col h-96">
-    <div class="h-4/5 border-2 border-gray-400 overflow-scroll">  
+    <div class="h-4/5 border-2 border-gray-400 overflow-scroll">
+
+        <ul>
+
+            @for (message of messages; track $index) {
+
+
+                @if (message.senderId == user.value.user.id) {
+                    <div class="chat-container chat-box-right">
+                        <p class="message">{{ message.message }}</p>
+                        <p class="">{{ message.createdAt }}</p>
+                    </div>
+                } @else {
+                    <div class="chat-container chat-box-left">
+                        <p class="message">{{ message.message }}</p>
+                        <p class="">{{ message.createdAt }}</p>
+                    </div>
+                }
+
+            
+            }
+        </ul>
     </div>
 
     <div>
         <app-chat-bar (messageValue)="sendMessage($event)"></app-chat-bar>
     </div>
-
 </div>
