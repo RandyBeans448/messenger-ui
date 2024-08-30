@@ -27,6 +27,7 @@ export class WebSocketService {
     }
 
     public sendMessage(message: MessageNamespace.MessageInterface): void {
+        console.log('message', message);
         this._socket.emit('message', message);
     }
 
