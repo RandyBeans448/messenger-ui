@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { ChangeDetectorRef, Component } from "@angular/core";
 import { WebSocketService } from "../../shared/services/web-socket.service";
 import { ChatService } from "../../shared/services/chat.service";
 import { ActivatedRoute } from "@angular/router";
@@ -24,11 +24,15 @@ export class ChatRoomComponent {
         private _chatService: ChatService,
         private _accountService: AccountService,
         private _activatedRoute: ActivatedRoute,
+        private cdr: ChangeDetectorRef,
     ) {
     }
 
     async ngOnInit(): Promise<void> {
+        this.user = await this._accountService.getAccount();
+
         this._activatedRoute.params.subscribe(params => {
+
             this._chatService.getConversationById(params['conversationId']).subscribe((data: any) => {
                 this.conversation = data;
                 this.messages = data.messages;
@@ -36,15 +40,16 @@ export class ChatRoomComponent {
         });
 
         this._websocketService.receiveMessage().subscribe((message: MessageNamespace.MessageInterface) => {
+            console.log('-----------------------------------------')
             this.messages.push(message);
+            console.log(message)
+            this.cdr.detectChanges();
         });
-
-        this.user = await this._accountService.getAccount();
-        console.log(this.user);
     }
 
     public async sendMessage(message: MessageNamespace.MessageInterface): Promise<void> {
         message.senderId = this.user.value.user.id;
         this._websocketService.sendMessage(message);
+
     }
 }

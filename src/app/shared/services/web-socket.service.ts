@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { Observable } from "rxjs";
+import { Observable, Subscriber } from "rxjs";
 import { io, Socket } from 'socket.io-client';
 import { AppConfigService } from "../../../environments/services/config.service";
 import { MessageNamespace } from "../namespaces/messages.namespace";
@@ -17,22 +17,13 @@ export class WebSocketService {
             console.log('Connected to WebSocket server');
         });
     }
-
-    public listen(eventName: string): Observable<unknown> {
-        return new Observable((subscriber) => {
-            this._socket.on(eventName, (data) => {
-                subscriber.next(data);
-            })
-        });
-    }
-
+    
     public sendMessage(message: MessageNamespace.MessageInterface): void {
-        console.log('message', message);
         this._socket.emit('message', message);
     }
 
     public receiveMessage(): Observable<MessageNamespace.MessageInterface> {
-        return new Observable<MessageNamespace.MessageInterface>((observer) => {
+        return new Observable<MessageNamespace.MessageInterface>((observer: Subscriber<MessageNamespace.MessageInterface>) => {
             this._socket.on('message', (message: MessageNamespace.MessageInterface) => {
                 observer.next(message);
             });

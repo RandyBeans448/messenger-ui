@@ -5,22 +5,12 @@
 
             @for (message of messages; track $index) {
 
+                <div 
+                    class="chat-container">
 
-                @if (message.senderId == user.value.user.id) {
-
-                    <div class="chat-container chat-box-right">
-
-                        <p class="message">{{ message.message }}</p>
-                        <p class="">{{ message.createdAt }}</p>
-                    </div>
-                } @else {
-
-                    <div class="chat-container chat-box-left">
-
-                        <p class="message">{{ message.message }}</p>
-                        <p class="">{{ message.createdAt }}</p>
-                    </div>
-                }
+                    <p class="message">{{ message.message }}</p>
+                    <p class="">{{ message.createdAt }}</p>
+                </div>
             }
         </ul>
     </div>
