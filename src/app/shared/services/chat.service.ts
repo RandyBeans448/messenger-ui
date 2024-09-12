@@ -18,7 +18,7 @@ export class ChatService {
     ) { }
 
     public getConversationById(id: string): Observable<Object> {
-        console.log(`${this.baseApi}/conversations/${id}`, 'getConversationById')
+        console.log(id)
         return this._http
             .get(`${this.baseApi}/conversations/${id}`)
             .pipe(

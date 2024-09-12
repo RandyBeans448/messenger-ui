@@ -6,6 +6,7 @@ import { MessageNamespace } from "../../shared/namespaces/messages.namespace";
 import { AccountService } from "../../shared/services/account.service";
 import { AccountNamespace } from "../../shared/namespaces/account.namespace";
 import { BehaviorSubject } from "rxjs";
+import { Conditional } from "@angular/compiler";
 
 @Component({
     selector: 'app-chat-room',
@@ -32,24 +33,21 @@ export class ChatRoomComponent {
         this.user = await this._accountService.getAccount();
 
         this._activatedRoute.params.subscribe(params => {
-
+            console.log(params['conversationId'])
             this._chatService.getConversationById(params['conversationId']).subscribe((data: any) => {
+                console.log(data, '<------------------------ getConversationById');
                 this.conversation = data;
                 this.messages = data.messages;
             });
         });
 
         this._websocketService.receiveMessage().subscribe((message: MessageNamespace.MessageInterface) => {
-            console.log('-----------------------------------------')
             this.messages.push(message);
-            console.log(message)
-            this.cdr.detectChanges();
         });
     }
 
     public async sendMessage(message: MessageNamespace.MessageInterface): Promise<void> {
         message.senderId = this.user.value.user.id;
         this._websocketService.sendMessage(message);
-
     }
 }
