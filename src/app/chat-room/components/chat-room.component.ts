@@ -7,6 +7,7 @@ import { AccountService } from "../../shared/services/account.service";
 import { AccountNamespace } from "../../shared/namespaces/account.namespace";
 import { BehaviorSubject } from "rxjs";
 import { Conditional } from "@angular/compiler";
+import { KeyService } from "../../shared/services/key.service";
 
 @Component({
     selector: 'app-chat-room',
@@ -25,17 +26,15 @@ export class ChatRoomComponent {
         private _chatService: ChatService,
         private _accountService: AccountService,
         private _activatedRoute: ActivatedRoute,
-        private cdr: ChangeDetectorRef,
-    ) {
-    }
+    ) {}
 
     async ngOnInit(): Promise<void> {
+        await this._websocketService.handleConnection(this._activatedRoute.snapshot.params['conversationId']);
+
         this.user = await this._accountService.getAccount();
 
         this._activatedRoute.params.subscribe(params => {
-            console.log(params['conversationId'])
             this._chatService.getConversationById(params['conversationId']).subscribe((data: any) => {
-                console.log(data, '<------------------------ getConversationById');
                 this.conversation = data;
                 this.messages = data.messages;
             });
