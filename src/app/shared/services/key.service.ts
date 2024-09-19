@@ -33,7 +33,8 @@ export class KeyService {
         message: string,
         secretKey: string,
     ): string {
-        return CryptoJS.AES.encrypt(message, secretKey).toString();
+        console.log('ENCRYPT MESSAGE -------------', secretKey, '++++++')
+        return CryptoJS.AES.encrypt(JSON.stringify({message}), secretKey).toString();
     }
 
     // AES decryption using the shared secret
@@ -41,6 +42,7 @@ export class KeyService {
         cipherText: string,
         secretKey: string,
     ): string {
+        console.log('decryptMessage -------------->', secretKey, 'shared secret')
         const bytes: CryptoJS.lib.WordArray = CryptoJS.AES.decrypt(cipherText, secretKey);
         return bytes.toString(CryptoJS.enc.Utf8);
     }
