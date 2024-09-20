@@ -28,22 +28,4 @@ export class KeyService {
         const otherKey: EC.KeyPair = this.ec.keyFromPublic(otherUserPublicKey, 'hex');
         return this.keyPair.derive(otherKey.getPublic()).toString(16);  // ECDH shared secret
     }
-
-    public encryptMessage(
-        message: string,
-        secretKey: string,
-    ): string {
-        console.log('ENCRYPT MESSAGE -------------', secretKey, '++++++')
-        return CryptoJS.AES.encrypt(JSON.stringify({message}), secretKey).toString();
-    }
-
-    // AES decryption using the shared secret
-    public decryptMessage(
-        cipherText: string,
-        secretKey: string,
-    ): string {
-        console.log('decryptMessage -------------->', secretKey, 'shared secret')
-        const bytes: CryptoJS.lib.WordArray = CryptoJS.AES.decrypt(cipherText, secretKey);
-        return bytes.toString(CryptoJS.enc.Utf8);
-    }
 }
