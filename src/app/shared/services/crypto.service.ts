@@ -14,40 +14,64 @@ export class CryptoService {
         this.keyPair = this._ec.genKeyPair();
     }
 
+    public getPublicKey(): string {
+        // Get the public key in uncompressed hex format
+        return this.keyPair.getPublic(false, 'hex');
+
+        // // Convert hex to a WordArray
+        // const publicKeyWordArray: CryptoJS.lib.WordArray = CryptoJS.enc.Hex.parse(publicKeyHex);
+
+        // // Convert WordArray to Base64 string
+        // const publicKeyBase64: string = CryptoJS.enc.Base64.stringify(publicKeyWordArray);
+
+        // return publicKeyBase64;
+    }
+
+    public getPrivateKey(): string {
+        return this.keyPair.getPrivate('hex');
+    }
+
     public async generateSharedSecret(
-        publicKey: string,
-        privateKey: string,
+        privateKeyHex: string,
+        publicKeyBase64: string,
     ): Promise<string> {
-        // Convert public key from string to elliptic curve key
-        const ecPublicKey: EC.KeyPair = this._ec.keyFromPublic(publicKey, 'hex');
-    
-        // Generate the elliptic curve key from the private key (already in hexadecimal format)
-        const ecPrivateKey: EC.KeyPair = this._ec.keyFromPrivate(privateKey, 'hex');
-        
+        // Generate the elliptic curve key from the private key
+        const ecPrivateKey: EC.KeyPair = this._ec.keyFromPrivate(privateKeyHex, 'hex');
+
+        // Decode the public key from Base64 to hex
+        const publicKeyWordArray: CryptoJS.lib.WordArray = CryptoJS.enc.Base64.parse(publicKeyBase64);
+        const publicKeyHex: string = CryptoJS.enc.Hex.stringify(publicKeyWordArray);
+
+        // Generate the elliptic curve key from the public key
+        const ecPublicKey: EC.KeyPair = this._ec.keyFromPublic(publicKeyHex, 'hex');
+
         // Derive the shared secret
         const sharedSecret = ecPrivateKey.derive(ecPublicKey.getPublic());
-    
+
         // Convert the shared secret to a hexadecimal string
         const sharedSecretHex: string = sharedSecret.toString(16);
-    
-        // Optionally, hash the shared secret using SHA-256 for further security
+        console.log('Shared Secret:', sharedSecretHex);
+        // Hash the shared secret using SHA-256
         return CryptoJS.SHA256(sharedSecretHex).toString(CryptoJS.enc.Hex);
     }
 
-    public encryptMessage(
-        message: string,
-        secretKey: string,
-    ): string {
-        return CryptoJS.AES.encrypt(JSON.stringify({message}), secretKey).toString();
+    public encryptMessage(message: string, secretKey: string): string {
+        console.log('Encrypting with Secret Key:', secretKey);
+        return CryptoJS.AES.encrypt(JSON.stringify({ message }), secretKey).toString();
     }
 
-    // AES decryption using the shared secret
     public decryptMessage(
         cipherText: string,
         secretKey: string,
     ): string {
-        console.log('decryptMessage -------------->', secretKey, 'shared secret')
         const bytes: CryptoJS.lib.WordArray = CryptoJS.AES.decrypt(cipherText, secretKey);
-        return bytes.toString(CryptoJS.enc.Utf8);
+        const decryptedData: string = bytes.toString(CryptoJS.enc.Utf8);
+
+        if (!decryptedData) {
+            throw new Error('Failed to decrypt message: Empty decrypted data');
+        }
+
+        const parsedData = JSON.parse(decryptedData);
+        return parsedData.message;
     }
 }
