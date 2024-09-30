@@ -32,8 +32,8 @@ export class WebSocketService {
             this._socket.emit('join', conversationId);
     
             // Get public and private keys
-            this._myPublicKey = this._cryptoService.getPublicKey(); // Base64-encoded
-            this._myPrivateKey = this._cryptoService.getPrivateKey(); // Hex string
+            this._myPublicKey = this._cryptoService.getPublicKey();
+            this._myPrivateKey = this._cryptoService.getPrivateKey();
     
             // Send the Base64-encoded public key
             this._socket.emit('send_public_key', { publicKey: this._myPublicKey });

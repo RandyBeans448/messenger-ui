@@ -9,22 +9,14 @@ export class CryptoService {
     private _ec: EC;
     private keyPair: EC.KeyPair;
 
+
     constructor() {
         this._ec = new EC('secp256k1');
         this.keyPair = this._ec.genKeyPair();
     }
 
     public getPublicKey(): string {
-        // Get the public key in uncompressed hex format
-        return this.keyPair.getPublic(false, 'hex');
-
-        // // Convert hex to a WordArray
-        // const publicKeyWordArray: CryptoJS.lib.WordArray = CryptoJS.enc.Hex.parse(publicKeyHex);
-
-        // // Convert WordArray to Base64 string
-        // const publicKeyBase64: string = CryptoJS.enc.Base64.stringify(publicKeyWordArray);
-
-        // return publicKeyBase64;
+        return this.keyPair.getPublic('hex');
     }
 
     public getPrivateKey(): string {
