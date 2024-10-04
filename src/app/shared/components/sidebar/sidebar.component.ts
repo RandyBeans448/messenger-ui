@@ -48,9 +48,7 @@ export class SidebarComponent {
     constructor(
         private _accountService: AccountService,
         private _router: Router,
-    ) {
-        
-    }
+    ) {}
 
     public ngOnInit() {
         this._accountService.getAccount().subscribe(account => {

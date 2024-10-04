@@ -17,4 +17,8 @@ export class FriendComponent {
     @Input()
     public friendArrayItem: FriendNamespace.FriendArrayItemInterface;
 
+    public ngOnInit() {
+        console.log(this.friendArrayItem, ' this is the friend array item');
+    }
+
 }

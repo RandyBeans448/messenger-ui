@@ -1,66 +1,79 @@
 <aside 
-   id="app-sidebar" 
-   aria-label="Sidebar"
-   class="transition-transform -translate-x-full sm:translate-x-0">
+    id="app-sidebar"
+    aria-label="Sidebar"
+    class="transition-transform -translate-x-full sm:translate-x-0">
 
-   <div class="flex flex-row m-2">
+    <div class="flex flex-row m-2">
 
-      @if (findMyFriendsSearchForFriends === 'findMyFriend') {
+        @if (findMyFriendsSearchForFriends === 'findMyFriend') {
 
-         <div class="w-full justify-center">
+            <div class="w-full justify-center">
 
-            <app-button title="Search for friends"  iconType="search" buttonType="outline" [isFullWidth]="true" (click)="toggleSearch()"/>
-         </div>
+                <app-button 
+                    title="Search for friends"
+                    iconType="search"
+                    buttonType="outline"
+                    [isFullWidth]="true"
+                    (click)="toggleSearch()"
+                />
+            </div>
 
-      } @else {
+        } @else {
 
-         <div class="w-full justify-center">
+            <div class="w-full justify-center">
 
-            <app-button title="See your friends" iconType="save" buttonType="outline" [isFullWidth]="true" (click)="toggleSearch()" />
-         </div>
-      }
-   </div>
+                <app-button 
+                    title="See your friends"
+                    iconType="save"
+                    buttonType="outline"
+                    [isFullWidth]="true"
+                    (click)="toggleSearch()"
+                />
+            </div>
+        }
+    </div>
 
-   <div class="m-2 justify-center text-center">
+    <div class="m-2 justify-center text-center">
 
-      @if (findMyFriendsSearchForFriends === 'findMyFriend') {
+        @if (findMyFriendsSearchForFriends === 'findMyFriend') {
 
-         <h5> Your friends list </h5>
-      } @else {
+            <h5> Your friends list </h5>
+        } @else {
 
-         <h5> Find more friends </h5>
-      }
-   </div>
+            <h5> Find more friends </h5>
+        }
+    </div>
 
-   <div class="m-2">
+    <div class="m-2">
 
-      <app-simple-search-bar />
-   </div>
+        <app-simple-search-bar />
+    </div>
 
-   <ul class="m-2">
+    <ul class="m-2">
 
 
-   @if (findMyFriendsSearchForFriends === 'findMyFriend') {
+        @if (findMyFriendsSearchForFriends === 'findMyFriend') {
 
-  
-         @for (friendItem of sidebarFriendItems; track $index) {
-   
-            <li class="m-1">
-               
-               <app-friend 
-                  [friendArrayItem]="friendItem"
-                  (click)="toChatRoom(friendItem.conversations.id)"
-               />
-            </li>
-         }
 
-   } @else {
+            @for (friendItem of sidebarFriendItems; track $index) {
 
-      @for (user of usersThatHaveNotBeenFriended; track $index) {
-         <li>
-             <app-sidebar-add-friend [user]="user" />
-         </li>
-     }
-   }
-   </ul>
+                <li class="m-1">
+
+                    <app-friend 
+                        [friendArrayItem]="friendItem"
+                        (click)="toChatRoom(friendItem.conversations.id)"
+                    />
+                </li>
+            }
+
+        } @else {
+
+            @for (user of usersThatHaveNotBeenFriended; track $index) {
+                
+                <li>
+                    <app-sidebar-add-friend [user]="user" />
+                </li>
+            }
+        }
+    </ul>
 </aside>

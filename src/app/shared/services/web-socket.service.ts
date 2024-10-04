@@ -15,9 +15,6 @@ import { CryptoService } from "./crypto.service";
 export class WebSocketService {
     private _socket: Socket;
     private _baseApi: string = AppConfigService.env.baseApi;
-    private _otherUserPublicKey: string;
-    private _myPublicKey: string;
-    private _myPrivateKey: string;
     private _sharedSecret: string;
 
     constructor(
@@ -30,36 +27,16 @@ export class WebSocketService {
     
         this._socket.on('connect', () => {
             this._socket.emit('join', conversationId);
-    
-            // Get public and private keys
-            this._myPublicKey = this._cryptoService.getPublicKey();
-            this._myPrivateKey = this._cryptoService.getPrivateKey();
-    
-            // Send the Base64-encoded public key
-            this._socket.emit('send_public_key', { publicKey: this._myPublicKey });
+            this._socket.on('receive_public_key', async (data: { publicKey: string }) => {
+                try {
+                    this._sharedSecret = data.publicKey;
+                } catch (error) {
+                    console.error('Error handling connection:', error);
+                }
+            });
         });
-    
-        this._socket.on('receive_public_key', async (data: { publicKey: string }) => {
-            try {
-
-                // Store the received Base64-encoded public key
-                this._otherUserPublicKey = data.publicKey;
-                console.log('this._otherUserPublicKey' ,this._otherUserPublicKey, 'this._otherUserPublicKey')
-                // Generate the shared secret
-                this._sharedSecret = await this._cryptoService.generateSharedSecret(
-                    this._otherUserPublicKey,
-                    this._myPrivateKey,
-                );
-                console.log('Shared secret established:', this._sharedSecret);
-            } catch (error) {
-                console.error('Error generating shared secret:', error);
-            }
-        });
-
-
     }
     
-
     public async sendMessage(message: MessageNamespace.MessageInterface): Promise<void> {
         try {
             message.message = await this._cryptoService.encryptMessage(message.message, this._sharedSecret);
@@ -73,15 +50,11 @@ export class WebSocketService {
         return new Observable((observer) => {
             this._socket.on('message', async (message: MessageNamespace.MessageInterface) => {
                 try {
-                    console.log(message)
                     const decryptedMessage: string = await this._cryptoService.decryptMessage(
                         message.message,
                         this._sharedSecret,
                     );
-
-                    console.log('decryptedMessage --------------->', decryptedMessage, '<--------------- decryptedMessage')
-
-                    // message.message = decryptedMessage;
+                    message.message = decryptedMessage;
                     observer.next(message);
                 } catch (error) {
                     console.error('Decryption failed:', error);
