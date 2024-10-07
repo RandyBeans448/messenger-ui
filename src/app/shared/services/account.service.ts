@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AuthService } from '@auth0/auth0-angular';
-import { BehaviorSubject, Observable, forkJoin } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { TopBarService } from './top-bar.service';
 import { UserNamespace } from '../namespaces/user.interface';
@@ -50,7 +50,6 @@ export class AccountService {
             .get<UserNamespace.UserInterface>(`${this.baseApi}/user`)
             .pipe(
                 tap((user: UserNamespace.UserInterface) => {
-                    console.log(user, 'user ---------------');
                     return this.setAccount(user);
                 }),
                 catchError((error) => {
