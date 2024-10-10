@@ -18,7 +18,7 @@ export class ChatRoomComponent {
     public receivedMessage: string = '';
     public conversation: any;
     public user: BehaviorSubject<AccountNamespace.AccountInterface>;
-    public sharedSecret: string;
+    public sharedSecret: string = '';
 
     constructor(
         private _websocketService: WebSocketService,
@@ -31,13 +31,17 @@ export class ChatRoomComponent {
         await this._websocketService.handleConnection(this._activatedRoute.snapshot.params['conversationId']);
 
         this.user = await this._accountService.getAccount();
-        this.sharedSecret = await this._websocketService.getSharedSecret();
+        console.log(this.user.value.user.id)
 
         this._activatedRoute.params.subscribe(params => {
+
             this._websocketService.getConversationById(params['conversationId']).subscribe((data: any) => {
-                console.log(data, '<----------- this is the conversation');
                 this.conversation = data;
-                this.sharedSecret = this._websocketService.getSharedSecret();
+
+                console.log(this.conversation.friend[0].cryptoKey.sharedSecret)
+                console.log(this.conversation.friend[1].cryptoKey.sharedSecret)
+
+                this.sharedSecret = this.conversation.friend[0].name === this.user.value.user.username ? this.conversation.friend[0].cryptoKey.sharedSecret : this.conversation.friend[1].cryptoKey.sharedSecret;
 
                 this.messages = data.messages.map((message: MessageNamespace.MessageInterface) => {
                     const decryptedMessage = this._cryptoService.decryptMessage(message.message, this.sharedSecret);
@@ -45,17 +49,24 @@ export class ChatRoomComponent {
                     return message;
                 });
 
-                console.log(this.messages, '<----------- this is the messages');
+                this._websocketService.receiveMessage(this.sharedSecret).subscribe((message: MessageNamespace.MessageInterface) => {
+                    this.messages.push(message);
+                });
             });
-        });
-
-        this._websocketService.receiveMessage().subscribe((message: MessageNamespace.MessageInterface) => {
-            this.messages.push(message);
         });
     }
 
-    public async sendMessage(message: MessageNamespace.MessageInterface): Promise<void> {
+    ngOnAfterViewInit() {
+   
+    }
+
+    ngOnDestroy() {
+        this._websocketService.handleDisconnection();
+    }
+
+    public async sendMessage(message: MessageNamespace.SendMessageInterface): Promise<void> {
         message.senderId = this.user.value.user.id;
-        this._websocketService.sendMessage(message);
+        message.conversation = this.conversation;
+        this._websocketService.sendMessage(message, this.sharedSecret);
     }
 }

@@ -20,7 +20,6 @@ export class HomeComponent {
             this.user = account.user;
         });
         this._accountService.getReceivedFriendRequests().subscribe(requests => {
-            console.log(requests, 'requests ---------------');
             this.receivedFriendRequests = requests;
         });
     }

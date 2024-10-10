@@ -15,13 +15,14 @@ export class ChatBarComponent {
     public title: string = '';
 
     @Output()
-    messageValue: EventEmitter<MessageNamespace.MessageInterface> = new EventEmitter<MessageNamespace.MessageInterface>();
+    messageValue: EventEmitter<MessageNamespace.SendMessageInterface> = new EventEmitter<MessageNamespace.SendMessageInterface>();
 
     public sendMessage(message: string): void {
 
-        const messageObject: MessageNamespace.MessageInterface = {
+        const messageObject: MessageNamespace.SendMessageInterface = {
             message: message,
             senderId: 'user',
+            conversation: null,
             createdAt: new Date().toLocaleTimeString(),
             updatedAt: new Date().toLocaleTimeString(),
         };

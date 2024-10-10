@@ -19,41 +19,38 @@ export class WebSocketService {
         private _http: HttpClient,
     ) { }
 
-    public async handleConnection(conversationId: string) {
+    public async handleConnection(conversation: any) {
         this._socket = io(`${this._baseApi}/chatroom`);
-
-        this._socket.on('connect', () => {
-            this._socket.emit('join', conversationId);
-            this._socket.on('join', async (data: string) => {
-                try {
-                    this._sharedSecret = data;
-                    console.log(this._sharedSecret, 'this is the shared secret');
-                } catch (error) {
-                    console.error('Error handling connection:', error);
-                }
-            });
-        });
+        this._socket.emit('join')
     }
 
-    public async sendMessage(message: MessageNamespace.MessageInterface): Promise<void> {
+    public async handleDisconnection(): Promise<void> {
+        this._socket.disconnect();
+        this._socket.emit('disconnectClient');
+    }
+
+    public async sendMessage(
+        message: MessageNamespace.SendMessageInterface,
+        sharedSecret: string,
+    ): Promise<void> {
         try {
-            message.message = await this._cryptoService.encryptMessage(message.message, this._sharedSecret);
+            message.message = await this._cryptoService.encryptMessage(message.message, sharedSecret);
             this._socket.emit('message', message);
         } catch (error) {
             console.error('Encryption failed:', error);
         }
     }
 
-    public receiveMessage(): Observable<MessageNamespace.MessageInterface> {
+    public receiveMessage(sharedSecret: string): Observable<MessageNamespace.MessageInterface> {
         return new Observable((observer) => {
             this._socket.on('message', async (message: MessageNamespace.MessageInterface) => {
                 try {
 
                     const decryptedMessage = await this._cryptoService.decryptMessage(
                         message.message,
-                        this._sharedSecret,
+                        sharedSecret,
                     );
-                    
+
                     message.message = decryptedMessage.message;
                     observer.next(message);
                 } catch (error) {
@@ -63,14 +60,18 @@ export class WebSocketService {
         });
     }
 
-    public getConversationById(id: string): Observable<Object> {
-        return this._http
-            .get(`${this._baseApi}/conversations/${id}`)
-            .pipe(
-                catchError((error) => {
-                    throw error;
-                })
-            );
+    public getConversationById(id: string): any {
+        try {
+            return this._http
+                .get(`${this._baseApi}/conversations/${id}`)
+                .pipe(
+                    catchError((error) => {
+                        throw error;
+                    })
+                );
+        } catch (error) {
+            console.error('Decryption failed:', error);
+        }
     }
 
     public getSharedSecret() {

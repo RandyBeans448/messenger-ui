@@ -47,7 +47,7 @@ export class TopBannerComponent {
 
     ngOnInit() {
         this.accountData$.subscribe(account => {
-          this.name = `${account.user.firstName} ${account.user.lastName}`;
+          this.name = `${account.user.username}`
           this.email = `${account.user.email}`;
         });
     }

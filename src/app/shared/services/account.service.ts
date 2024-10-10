@@ -17,8 +17,7 @@ export class AccountService {
     public userInitObject: UserNamespace.UserInterface = {
         id: '',
         email: '',
-        firstName: '',
-        lastName: '',
+        username: '',
         friend: [],
         friendRequests: [],
         updatedAt: '',

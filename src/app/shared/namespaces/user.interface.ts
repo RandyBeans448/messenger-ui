@@ -7,8 +7,7 @@ export namespace UserNamespace {
     export interface UserInterface {
         id: string;
         email: string;
-        firstName: string;
-        lastName: string;
+        username: string;
         friend: FriendNamespace.FriendArrayItemInterface[];
         friendRequests: FriendRequestNamespace.FriendRequestInterface[];
         updatedAt: string;

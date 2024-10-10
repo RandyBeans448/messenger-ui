@@ -6,4 +6,12 @@ export namespace MessageNamespace {
         createdAt: string;
         updatedAt: string;
     }
+
+    export interface SendMessageInterface {
+        message: string;
+        senderId: string;
+        conversation: any
+        createdAt: string;
+        updatedAt: string;
+    }
 }
