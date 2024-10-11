@@ -1,21 +1,29 @@
-<div class="flex flex-col h-96">
-    <div class="h-4/5 border-2 border-gray-400 overflow-scroll">
-
+<div class="flex flex-col bg-gray-100 rounded-lg shadow-lg">
+    <div class="h-96 border border-gray-300 rounded-t-lg overflow-y-scroll p-4">
         <ul>
-
             @for (message of messages; track $index) {
-
                 <div 
-                    class="chat-container">
+                    class="chat-container flex mb-2"
+                    [ngClass]="{
+                        'justify-end': message.senderId === this.user.value.user.id,
+                        'justify-start': message.senderId !== this.user.value.user.id
+                    }">
                     
-                    <p class="message">{{ message.message }}</p>
-                    <p class="">{{ message.createdAt }}</p>
+                    <div 
+                        class="message max-w-xs p-3 rounded-lg text-white"
+                        [ngClass]="{
+                            'bg-blue-500': message.senderId === this.user.value.user.id,
+                            'bg-gray-500': message.senderId !== this.user.value.user.id
+                        }">
+                        <p class="whitespace-pre-line">{{ message.message }}</p>
+                        <p class="text-xs mt-1 text-gray-200 text-right">{{ message.createdAt }}</p>
+                    </div>
                 </div>
             }
         </ul>
     </div>
 
-    <div>
+    <div class="border-t border-gray-300 p-2 rounded-b-lg">
         <app-chat-bar (messageValue)="sendMessage($event)"></app-chat-bar>
     </div>
 </div>

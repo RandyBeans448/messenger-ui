@@ -1,11 +1,13 @@
 import { Component } from "@angular/core";
 import { WebSocketService } from "../../shared/services/web-socket.service";
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, ActivatedRouteSnapshot, NavigationEnd, Router } from "@angular/router";
 import { MessageNamespace } from "../../shared/namespaces/messages.namespace";
 import { AccountService } from "../../shared/services/account.service";
 import { AccountNamespace } from "../../shared/namespaces/account.namespace";
-import { BehaviorSubject } from "rxjs";
+import { BehaviorSubject, filter, Subscription, } from "rxjs";
 import { CryptoService } from "../../shared/services/crypto.service";
+import { ToastrService } from "ngx-toastr";
+import { ConversationNamespace } from "../../shared/namespaces/conversations.namespace";
 
 @Component({
     selector: 'app-chat-room',
@@ -19,54 +21,120 @@ export class ChatRoomComponent {
     public conversation: any;
     public user: BehaviorSubject<AccountNamespace.AccountInterface>;
     public sharedSecret: string = '';
+    public receivedMessageSubscription: Subscription;
 
     constructor(
+        private _router: Router,
         private _websocketService: WebSocketService,
         private _accountService: AccountService,
         private _activatedRoute: ActivatedRoute,
         private _cryptoService: CryptoService,
-    ) {}
+        private _toastrService: ToastrService,
+    ) { }
 
     async ngOnInit(): Promise<void> {
-        await this._websocketService.handleConnection(this._activatedRoute.snapshot.params['conversationId']);
+        this.connectToChatroom();
 
-        this.user = await this._accountService.getAccount();
-        console.log(this.user.value.user.id)
+        this._router.events.pipe(
+            filter(event => event instanceof NavigationEnd)
+        ).subscribe(event => {
+            const conversationId: ActivatedRouteSnapshot = this._activatedRoute.snapshot.params['conversationId'];
 
-        this._activatedRoute.params.subscribe(params => {
-
-            this._websocketService.getConversationById(params['conversationId']).subscribe((data: any) => {
-                this.conversation = data;
-
-                console.log(this.conversation.friend[0].cryptoKey.sharedSecret)
-                console.log(this.conversation.friend[1].cryptoKey.sharedSecret)
-
-                this.sharedSecret = this.conversation.friend[0].name === this.user.value.user.username ? this.conversation.friend[0].cryptoKey.sharedSecret : this.conversation.friend[1].cryptoKey.sharedSecret;
-
-                this.messages = data.messages.map((message: MessageNamespace.MessageInterface) => {
-                    const decryptedMessage = this._cryptoService.decryptMessage(message.message, this.sharedSecret);
-                    message.message = decryptedMessage.message;
-                    return message;
-                });
-
-                this._websocketService.receiveMessage(this.sharedSecret).subscribe((message: MessageNamespace.MessageInterface) => {
-                    this.messages.push(message);
-                });
-            });
+            if (conversationId !== this.conversation.id) {
+                this._websocketService.disconnectFromChatroom();
+                this.connectToChatroom();
+            }
         });
     }
 
-    ngOnAfterViewInit() {
-   
+    ngOnDestroy(): void {
+        if (this.receivedMessageSubscription) {
+            this.receivedMessageSubscription.unsubscribe();
+        }
+        this._websocketService.disconnectFromChatroom();
     }
-
-    ngOnDestroy() {
-        this._websocketService.handleDisconnection();
-    }
-
     public async sendMessage(message: MessageNamespace.SendMessageInterface): Promise<void> {
-        message.senderId = this.user.value.user.id;
-        message.conversation = this.conversation;
-        this._websocketService.sendMessage(message, this.sharedSecret);
+        try {
+            message.senderId = this.user.value.user.id;
+            message.conversation = this.conversation;
+            await this._websocketService.sendMessage(message, this.sharedSecret);
+        } catch (error) {
+            console.error('Failed to send message:', error);
+            this._toastrService.error('Failed to send message');
+        }
+    }
+
+    public async connectToChatroom(): Promise<void> {
+        try {
+            const conversationId: string = this._activatedRoute.snapshot.params['conversationId'];
+            await this._initializeWebSocketConnection(conversationId);
+            this.user = this._accountService.getAccount();
+
+            this._activatedRoute.params.subscribe(params => {
+                this._websocketService.getConversationById(params['conversationId'])
+                    .subscribe((data: ConversationNamespace.ConversationInterface) => {
+                        this._setChatRoomData(data);
+                    });
+            });
+        } catch (error) {
+            console.error('Failed to reconnect to chatroom:', error);
+            this._toastrService.error('Failed to reconnect to chatroom');
+        }
+    }
+
+    private async _setChatRoomData(data: any) {
+        this.conversation = data;
+        this.sharedSecret = this._setSharedSecret();
+        this._loadMessages(data)
+        this._subscribeToMessages();
+    }
+
+    private async _loadMessages(data: any): Promise<any> {
+        try {
+            this.messages = data.messages.map((message: MessageNamespace.MessageInterface) => {
+                console.log(message);
+                const decryptedMessage = this._cryptoService.decryptMessage(message.message, this.sharedSecret);
+                message.message = decryptedMessage.message;
+                return message;
+            });
+        } catch (error) {
+            console.error('Failed to decrypt messages:', error);
+            this._toastrService.error('Failed to decrypt messages');
+        }
+    }
+
+    private async _initializeWebSocketConnection(conversationId: string): Promise<void> {
+        try {
+            await this._websocketService.connectToChatroom(conversationId);
+        } catch (error) {
+            console.error('Failed to connect to chatroom:', error);
+            this._toastrService.error('Failed to connect to chatroom');
+        }
+    }
+
+    private async _subscribeToMessages(): Promise<void> {
+        try {
+
+            if (this.receivedMessageSubscription) {
+                this.receivedMessageSubscription.unsubscribe();
+            }
+
+            this.receivedMessageSubscription =
+                this._websocketService
+                    .receiveMessages(this.sharedSecret)
+                    .subscribe((message: MessageNamespace.MessageInterface) => {
+                        this.messages.push(message);
+                    });
+        } catch (error) {
+            console.error('Failed to subscribe to messages:', error);
+            this._toastrService.error('Failed to subscribe to messages');
+        }
+    }
+
+    private _setSharedSecret(): any {
+        const [friend1, friend2] = this.conversation.friend;
+        return friend1.name === this.user.value.user.username
+            ? friend1.cryptoKey.sharedSecret
+            : friend2.cryptoKey.sharedSecret;
     }
 }

@@ -10,13 +10,14 @@ export namespace FriendNamespace {
     }
 
     export interface FriendInterface {
-        auth0Id: string;
+        id: string;
+        username: string;
+        email: string;
+        updatedAt: string;
         createdAt: string;
         deletedAt: null;
-        email: string;
-        username: string;
-        id: string;
-        updatedAt: string;
-        conversations: any;
+        auth0Id?: string;
+        conversations?: any;
+        cryptoKey?: any;
     }
 }
