@@ -13,7 +13,7 @@ import { SimpleSearchBarComponent } from "../simple-search-bar/simple-search-bar
 import { FriendRequestsCardComponent } from "../../friend-request/friend-request-card.component";
 import { SidebarAddFriendComponent } from "./sidebar-add-friend/sidebar-add-friend.component";
 import { UserNamespace } from "../../namespaces/user.interface";
-
+import { Subject, takeUntil } from "rxjs";
 
 @Component({
     selector: 'app-sidebar',
@@ -45,20 +45,32 @@ export class SidebarComponent {
 
     public user: UserNamespace.UserInterface;
 
+    private _destroyed$: Subject<void> = new Subject<void>();
+
     constructor(
         private _accountService: AccountService,
         private _router: Router,
     ) {}
 
     public ngOnInit() {
-        this._accountService.getAccount().subscribe(account => {
+        this._accountService.getAccount().pipe(
+            takeUntil(this._destroyed$)
+        )
+        .subscribe(account => {
             this.user = account.user;
             this.sidebarFriendItems = account.user.friend;
         });
 
-        this._accountService.getAviableUsers().subscribe(friends => {
+        this._accountService.getAvailableUsers().pipe(
+            takeUntil(this._destroyed$)
+        ).subscribe(friends => {
             this.usersThatHaveNotBeenFriended = friends;
         });
+    }
+
+    public ngOnDestroy(): void {
+        this._destroyed$.next();
+        this._destroyed$.complete();
     }
 
     public toggleSearch(): void {

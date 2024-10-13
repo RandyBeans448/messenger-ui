@@ -3,11 +3,11 @@ import { Injectable } from '@angular/core';
 import { AuthService } from '@auth0/auth0-angular';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
-import { TopBarService } from './top-bar.service';
 import { UserNamespace } from '../namespaces/user.interface';
 import { AppConfigService } from '../../../environments/services/config.service';
 import { AccountNamespace } from '../namespaces/account.namespace';
 import { FriendRequestNamespace } from '../namespaces/friend-request.namespace';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable({
     providedIn: 'root',
@@ -34,15 +34,8 @@ export class AccountService {
     constructor(
         private _http: HttpClient,
         private _authService: AuthService,
-        // private _toastService: ToastrService,
-        // private _modalService: ModalService,
-        private _topBarService: TopBarService
+        private _toastrService: ToastrService,
     ) { }
-
-    // public hasPermission(permission: AccountNamespace.PermissionType): boolean {
-    //     const account: AccountNamespace.AccountInterface = this._account.getValue();
-    //     return account.user.permissions.includes(permission);
-    // }
 
     public getAccountInformationFromServer(): Observable<any> {
         return this._http
@@ -52,7 +45,7 @@ export class AccountService {
                     return this.setAccount(user);
                 }),
                 catchError((error) => {
-                    // this._toastService.error('User could not be found');
+                    this._toastrService.error('User could not be found');
                     this._authService.logout();
                     this.clearData();
                     return error;
@@ -84,7 +77,7 @@ export class AccountService {
         this._account.next(this.initObject);
     }
 
-    public getAviableUsers(): Observable<any> {
+    public getAvailableUsers(): Observable<any> {
         return this._http
             .get(`${this.baseApi}/user/get-all-users-with-no-pending-requests`)
             .pipe(

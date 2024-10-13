@@ -1,9 +1,19 @@
 <aside 
     id="app-sidebar"
     aria-label="Sidebar"
-    class="transition-transform -translate-x-full sm:translate-x-0">
+    class="transition-transform -translate-x-full sm:translate-x-0 bg-gray-800">
 
     <div class="flex flex-row m-2">
+        
+        <!-- <li [ngClass]="(responderService.mobileLandscape | async) ? 'mb-1' : 'mb-6'">
+
+            <app-sidebar-item
+                [attr.data-test-id]="sideBarToggleItem.dataTestId"
+                [sideBarItem]="sideBarToggleItem"
+                [collapsed]="true"
+                (click)="toggleSidebar()"
+            />
+        </li> -->
 
         @if (findMyFriendsSearchForFriends === 'findMyFriend') {
 
@@ -37,10 +47,10 @@
 
         @if (findMyFriendsSearchForFriends === 'findMyFriend') {
 
-            <h5> Your friends list </h5>
+            <h5 class="find-more-friends"> Your friends list </h5>
         } @else {
 
-            <h5> Find more friends </h5>
+            <h5 class="find-more-friends"> Find more friends </h5>
         }
     </div>
 

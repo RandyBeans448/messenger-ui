@@ -71,7 +71,7 @@ export class ButtonComponent {
         }
     }
 
-    public toggleClicked() {
+    public toggleClicked(): void {
         this.clicked = !this.clicked;
     }
 

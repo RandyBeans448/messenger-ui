@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { FriendRequestNamespace } from "../namespaces/friend-request.namespace";
 import { HttpClient } from "@angular/common/http";
 import { ToastrService } from "ngx-toastr";
-import { catchError } from "rxjs";
+import { catchError, Observable } from "rxjs";
 import { AppConfigService } from "../../../environments/services/config.service";
 
 @Injectable({
@@ -18,7 +18,7 @@ export class FriendRequestService {
     public baseApi: string = AppConfigService.env.baseApi;
 
 
-    public sendFriendRequest(userId: string) {
+    public sendFriendRequest(userId: string): Observable<string> {
         return this._http.post(`${this.baseApi}/friend-request/add-friend`, { newFriendId: userId }, {
             responseType: 'text',
         }).pipe(
@@ -31,7 +31,7 @@ export class FriendRequestService {
         );
     }
 
-    public respondToFriendRequest(response: FriendRequestNamespace.FriendRequestResponseInterface) {
+    public respondToFriendRequest(response: FriendRequestNamespace.FriendRequestResponseInterface): Observable<string> {
         return this._http.patch(`${this.baseApi}/friend-request/resolve-friend-request`, response, {
             responseType: 'text',
         }).pipe(

@@ -40,10 +40,14 @@ export class FriendRequestsCardComponent {
             response: response,
         }
 
-        await (await this._friendRequestService.respondToFriendRequest(responseFriendRequest)).subscribe(res => {
-            if (res === 'Friend Request Accepted') {
-                this._toastService.success(res);
-            } 
-        });
+        try {
+            this._friendRequestService.respondToFriendRequest(responseFriendRequest).subscribe(res => {
+                if (res === 'Friend Request Accepted') {
+                    this._toastService.success(res);
+                }
+            });
+        } catch (error) {
+            this._toastService.error('Error responding friend request');
+        }
     }
 }

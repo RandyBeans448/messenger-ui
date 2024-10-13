@@ -24,17 +24,21 @@ export class SidebarAddFriendComponent {
 
     constructor(
         private _friendRequestService: FriendRequestService,
-        private _toastService: ToastrService,
+        private _toastrService: ToastrService,
     ) { }
 
     @Input()
     public user: any;
 
-    public async addFriend(userId: string = this.user.id) {
-        await this._friendRequestService.sendFriendRequest(userId).subscribe(res => {
-            if (res === 'Friend Request Sent') {
-                this._toastService.success(res);
-            } 
-        });
+    public async addFriend(
+        userId: string = this.user.id,
+    ): Promise<void> {
+        try {
+            this._friendRequestService.sendFriendRequest(userId).subscribe(() => {
+                this._toastrService.success('Friend request sent successfully');
+            });
+        } catch (error) {
+            this._toastrService.error('Error sending friend request');
+        }
     }
 }

@@ -2,9 +2,10 @@
     margin: 5px;
     display: flex;
     flex-direction: column;
-    background-color: #ffffff;
+    color: var(--sb-timberwolf);
     padding: 15px;
-    border: none;
+    border: solid;
+    border-color: var(--sb-timberwolf);
     border-radius: 10px;
 }
 

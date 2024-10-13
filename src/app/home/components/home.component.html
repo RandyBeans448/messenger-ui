@@ -1,23 +1,48 @@
-<h1 class="test">Home</h1>
+<div class="p-8 min-h-screen">
+    <!-- Header Section -->
+    <header class="flex items-center justify-between py-4 border-b border-gray-600">
+        <h1 class="text-4xl font-bold text-white">Home</h1>
+    </header>
 
-<div>
-    <h1 class="test">Friend Requests: </h1>
+    <!-- Main Content Section -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-8">
+        <!-- Account Details Section -->
+        <div class="bg-gray-800 shadow-md rounded-lg p-6">
+            <h2 class="text-3xl font-bold text-white mb-6">Account Details</h2>
 
+            <ul class="text-lg text-gray-300 space-y-3">
+                <li><strong>ID:</strong> {{ user.value.user.id }}</li>
+                <li><strong>Email:</strong> {{ user.value.user.email }}</li>
+                <li><strong>Username:</strong> {{ user.value.user.username }}</li>
+            </ul>
 
-    <ul>
-        
-        @for (friend of user.friendRequests; track $index) {
+            <button class="px-4 py-2 bg-gray-600 text-white font-semibold rounded-md hover:bg-gray-500 transition">
+                Update Account
+            </button>
+        </div>
 
-            <li>
-                <app-friend-request-card [friendRequest]="friend" />
-            </li>
-        }
+        <!-- Pending Friend Requests Section -->
+        <div class="bg-gray-800 shadow-md rounded-lg p-6">
+            <h2 class="text-3xl font-bold text-white mb-6">Pending Friend Requests</h2>
+            <ul class="space-y-4">
+                @for (friend of user.value.user.friendRequests; track $index) {
+                    <li class="bg-gray-700 p-4 rounded-md shadow-sm">
+                        <app-friend-request-card [friendRequest]="friend"></app-friend-request-card>
+                    </li>
+                }
+            </ul>
+        </div>
 
-        @for (friend of receivedFriendRequests; track $index) {
-
-            <li>
-                <app-friend-request-card [friendRequest]="friend" />
-            </li>
-        }
-    </ul>
+        <!-- Received Friend Requests Section -->
+        <div class="bg-gray-800 shadow-md rounded-lg p-6">
+            <h2 class="text-3xl font-bold text-white mb-6">Received Friend Requests</h2>
+            <ul class="space-y-4">
+                @for (friend of receivedFriendRequests; track $index) {
+                    <li class="bg-gray-700 p-4 rounded-md shadow-sm">
+                        <app-friend-request-card [friendRequest]="friend"></app-friend-request-card>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
 </div>

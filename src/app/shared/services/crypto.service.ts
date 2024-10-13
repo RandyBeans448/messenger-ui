@@ -14,7 +14,7 @@ export class CryptoService {
     public decryptMessage(
         cipherText: string,
         secretKey: string,
-    ) {
+    ): { message: string } {
         const bytes: CryptoJS.lib.WordArray = CryptoJS.AES.decrypt(cipherText, secretKey);
         const decryptedData: string = bytes.toString(CryptoJS.enc.Utf8);
 
@@ -22,7 +22,7 @@ export class CryptoService {
             throw new Error('Failed to decrypt message: Empty decrypted data');
         }
 
-        const parseString = JSON.parse(decryptedData);
+        const parseString: { message: string } = JSON.parse(decryptedData);
         return parseString
     }
 }

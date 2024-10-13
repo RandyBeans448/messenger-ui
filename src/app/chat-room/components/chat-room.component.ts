@@ -1,18 +1,20 @@
-import { Component } from "@angular/core";
+import { Component, ElementRef, ViewChild } from "@angular/core";
 import { WebSocketService } from "../../shared/services/web-socket.service";
 import { ActivatedRoute, ActivatedRouteSnapshot, NavigationEnd, Router } from "@angular/router";
 import { MessageNamespace } from "../../shared/namespaces/messages.namespace";
 import { AccountService } from "../../shared/services/account.service";
 import { AccountNamespace } from "../../shared/namespaces/account.namespace";
-import { BehaviorSubject, filter, Subscription, } from "rxjs";
+import { BehaviorSubject, filter, Subject, Subscription, takeUntil, } from "rxjs";
 import { CryptoService } from "../../shared/services/crypto.service";
 import { ToastrService } from "ngx-toastr";
 import { ConversationNamespace } from "../../shared/namespaces/conversations.namespace";
+import { DatePipe } from "@angular/common";
 
 @Component({
     selector: 'app-chat-room',
     templateUrl: './chat-room.component.html',
     styleUrls: ['./chat-room.component.scss'],
+    providers: [DatePipe]
 })
 export class ChatRoomComponent {
 
@@ -22,6 +24,9 @@ export class ChatRoomComponent {
     public user: BehaviorSubject<AccountNamespace.AccountInterface>;
     public sharedSecret: string = '';
     public receivedMessageSubscription: Subscription;
+    private _destroyed$: Subject<void> = new Subject<void>();
+
+    @ViewChild('chatContainer') private chatContainer: ElementRef;
 
     constructor(
         private _router: Router,
@@ -30,13 +35,15 @@ export class ChatRoomComponent {
         private _activatedRoute: ActivatedRoute,
         private _cryptoService: CryptoService,
         private _toastrService: ToastrService,
+        private _datePipe: DatePipe
     ) { }
 
     async ngOnInit(): Promise<void> {
         this.connectToChatroom();
 
         this._router.events.pipe(
-            filter(event => event instanceof NavigationEnd)
+            filter(event => event instanceof NavigationEnd),
+            takeUntil(this._destroyed$),
         ).subscribe(event => {
             const conversationId: ActivatedRouteSnapshot = this._activatedRoute.snapshot.params['conversationId'];
 
@@ -47,17 +54,33 @@ export class ChatRoomComponent {
         });
     }
 
+    ngAfterViewChecked() {
+        this.scrollToBottom();
+    }
+
+    scrollToBottom(): void {
+        this.chatContainer.nativeElement.scrollTop = this.chatContainer.nativeElement.scrollHeight;
+    }
+
+
     ngOnDestroy(): void {
         if (this.receivedMessageSubscription) {
             this.receivedMessageSubscription.unsubscribe();
         }
         this._websocketService.disconnectFromChatroom();
+        this._destroyed$.next();
+        this._destroyed$.complete();
     }
+
     public async sendMessage(message: MessageNamespace.SendMessageInterface): Promise<void> {
         try {
-            message.senderId = this.user.value.user.id;
+            message.sender = this.user.value.user;
             message.conversation = this.conversation;
-            await this._websocketService.sendMessage(message, this.sharedSecret);
+            await this._websocketService.sendMessage(
+                message,
+                this.sharedSecret,
+            );
+            this.scrollToBottom();
         } catch (error) {
             console.error('Failed to send message:', error);
             this._toastrService.error('Failed to send message');
@@ -82,7 +105,7 @@ export class ChatRoomComponent {
         }
     }
 
-    private async _setChatRoomData(data: any) {
+    private async _setChatRoomData(data: any): Promise<void> {
         this.conversation = data;
         this.sharedSecret = this._setSharedSecret();
         this._loadMessages(data)
@@ -92,9 +115,11 @@ export class ChatRoomComponent {
     private async _loadMessages(data: any): Promise<any> {
         try {
             this.messages = data.messages.map((message: MessageNamespace.MessageInterface) => {
-                console.log(message);
-                const decryptedMessage = this._cryptoService.decryptMessage(message.message, this.sharedSecret);
+                const decryptedMessage: {
+                    message: string;
+                } = this._cryptoService.decryptMessage(message.message, this.sharedSecret);
                 message.message = decryptedMessage.message;
+                message.createdAt = this._datePipe.transform(message.createdAt, 'yyyy-MM-dd  HH:mm') as string;
                 return message;
             });
         } catch (error) {
@@ -107,7 +132,6 @@ export class ChatRoomComponent {
         try {
             await this._websocketService.connectToChatroom(conversationId);
         } catch (error) {
-            console.error('Failed to connect to chatroom:', error);
             this._toastrService.error('Failed to connect to chatroom');
         }
     }

@@ -1,6 +1,5 @@
 import { FriendNamespace } from "./friend.namespace";
 import { MessageNamespace } from "./messages.namespace";
-import { UserNamespace } from "./user.interface";
 
 export namespace ConversationNamespace {
     

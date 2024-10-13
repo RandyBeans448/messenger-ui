@@ -1,3 +1,6 @@
+import { ConversationNamespace } from "./conversations.namespace";
+import { CryptoKeyNamespace } from "./crypto-key.namespace";
+
 export namespace FriendNamespace {
 
     export interface FriendArrayItemInterface {
@@ -17,7 +20,7 @@ export namespace FriendNamespace {
         createdAt: string;
         deletedAt: null;
         auth0Id?: string;
-        conversations?: any;
-        cryptoKey?: any;
+        conversations?: ConversationNamespace.ConversationInterface;
+        cryptoKey?: CryptoKeyNamespace.CryptoKeyInterface;
     }
 }

@@ -21,7 +21,6 @@ $flat: 0px;
     display: inline-flex;
     justify-content: center;
     align-items: center;
-    font-family: Manrope;
     font-style: normal;
     border-radius: $rounded-full;
     gap: var(--2, 8px);
@@ -67,7 +66,7 @@ $flat: 0px;
         color: var(--sb-cool-grey);
 
         &:hover {
-            color: var(--sb-oxford-blue);
+            color: green;
         }
     }
 
@@ -86,7 +85,7 @@ $flat: 0px;
 
     // primary alternative
     &--primary-alternative {
-        color: var(--sb-oxford-blue);
+        color: rgb(0, 139, 0);
         background: var(--sb-persian-orange);
 
         &:hover {
@@ -99,8 +98,8 @@ $flat: 0px;
 
     // outline
     &--outline {
-        color: var(--sb-oxford-blue);
-        border: 1px solid var(--sb-oxford-blue);
+        color: var(--sb-timberwolf);
+        border: 1px solid var(--sb-timberwolf);
 
         &:hover {
             color: var(--sb-white);
@@ -167,7 +166,7 @@ $flat: 0px;
     }
 
     &--dropdown {
-        color: var(--sb-white);
+        color: var(--sb-timberwolf);
         white-space: nowrap; // added
         background: var(--sb-delft-blue);
     }
@@ -180,7 +179,7 @@ $flat: 0px;
     &:disabled {
         border-radius: $rounded-full;
         background: var(--sb-platinum);
-        color: var(--sb-oxford-blue);
+        color: var(--sb-timberwolf);
     }
 }
 
