@@ -1,6 +1,6 @@
 import { CommonModule } from "@angular/common";
 import { Component, Input } from "@angular/core";
-import { ActivatedRoute, Router, RouterModule } from "@angular/router";
+import { Router, RouterModule } from "@angular/router";
 import { AuthModule } from "@auth0/auth0-angular";
 import { ButtonComponent } from "../button/button.component";
 import { IconComponent } from "../icon/icon.component";
@@ -9,7 +9,6 @@ import { AccountService } from "../../services/account.service";
 import { FriendNamespace } from "../../namespaces/friend.namespace";
 import { FriendComponent } from "../../friend/friend.component";
 import { InputComponent } from "../input/input.component";
-import { SimpleSearchBarComponent } from "../simple-search-bar/simple-search-bar.component";
 import { FriendRequestsCardComponent } from "../../friend-request/friend-request-card.component";
 import { SidebarAddFriendComponent } from "./sidebar-add-friend/sidebar-add-friend.component";
 import { UserNamespace } from "../../namespaces/user.interface";
@@ -27,7 +26,6 @@ import { Subject, takeUntil } from "rxjs";
         SidebarItemComponent,
         AuthModule,
         ButtonComponent,
-        SimpleSearchBarComponent,
         FriendRequestsCardComponent,
         SidebarAddFriendComponent
     ],

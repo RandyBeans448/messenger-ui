@@ -1,7 +1,7 @@
-<div class="flex flex-col bg-gray-900 rounded-lg shadow-lg">
+<div class="flex flex-col bg-gray-900 rounded-lg shadow-lg ">
     <div 
         #chatContainer 
-        class="h-96 rounded-t-lg overflow-y-scroll p-4 bg-gray-800">
+        class="chat-box rounded-t-lg overflow-y-scroll p-4 bg-gray-800 fade-in">
         <ul>
             @for (message of messages; track $index) {
                 <div 
@@ -14,11 +14,18 @@
                     <div 
                         class="message max-w-xs p-3 rounded-lg text-white"
                         [ngClass]="{
-                            'bg-blue-600': message.sender.id === this.user.value.user.id,
+                            'bg-green-600': message.sender.id === this.user.value.user.id,
                             'bg-gray-700': message.sender.id !== this.user.value.user.id
                         }">
                         <p class="whitespace-pre-line">{{ message.message }}</p>
-                        <p class="text-xs mt-1 text-gray-400 text-right">{{ message.createdAt }}</p>
+                        <p 
+                            class="text-xs mt-1 text-right"
+                            [ngClass]="{
+                                'text-green-100': message.sender.id === this.user.value.user.id,
+                                'text-gray-300': message.sender.id !== this.user.value.user.id
+                        }">
+                            {{ message.createdAt }}
+                        </p>
                     </div>
                 </div>
             }

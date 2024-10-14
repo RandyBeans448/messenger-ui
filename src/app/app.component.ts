@@ -14,8 +14,4 @@ export class AppComponent {
     private route: ActivatedRoute,
     private _accountService: AccountService,
   ) { }
-
-  ngOnInit(): void {
-  }
-
 }

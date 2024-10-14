@@ -1,12 +1,11 @@
 .friend-request-card-container {
-    margin: 5px;
+    margin: 5px 9px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    padding: 15px;
+    padding: 10px;
     color: var(--sb-timberwolf);
-    border: solid;
-    border-color: var(--sb-timberwolf);
+    border: 0.5px solid var(--sb-timberwolf);
     border-radius: 10px;
 }   
