@@ -1,4 +1,5 @@
 @import 'breakpoints';
+@import 'colors';
 
 #toast-container {
 
@@ -17,30 +18,30 @@
         @include respond-to("small") {
             width: 100%;
         }
-        background-color: white;
-        color: grey;
+        background-color: var(--messenger-ui-white);
+        color: var(--messenger-ui-cool-grey);
         transition: box-shadow .5s;
         border-radius: .25rem;
         &:hover {
-            box-shadow: 0 0 8px grey;
+            box-shadow: 0 0 8px var(--messenger-ui-cool-grey);
         }
         &.toast-error {
-            background-color: red;
-            color: white;
+            background-color: var(--messenger-ui-red);
+            color: var(--messenger-ui-white);
         }
 
         &.toast-success {
-            background-color: green;
-            color: white;
+            background-color: var(--messenger-ui-green);
+            color: var(--messenger-ui-white);
         }
     
         &.toast-info {
-            background-color: blue;
-            color: white;
+            background-color: var(--messenger-ui-blue);
+            color: var(--messenger-ui-white);
         }
         &.toast-warning {
-            background-color: rgb(255, 187, 0);
-            color: white;
+            background-color: var(--messenger-ui-yellow);
+            color: var(--messenger-ui-white);
         }
     }
 }

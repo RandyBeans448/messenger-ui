@@ -42,5 +42,4 @@ export namespace FriendRequestNamespace {
     export interface FriendRequestCardInputInterface {
         
     }
-
 }

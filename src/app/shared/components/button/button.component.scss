@@ -63,65 +63,65 @@ $flat: 0px;
     }
 
     &--text {
-        color: var(--sb-cool-grey);
+        color: var(--messenger-ui-cool-grey);
 
         &:hover {
-            color: green;
+            color: var(--messenger-ui-green);
         }
     }
 
     // primary
     &--primary {
-        color: var(--sb-white);
-        background: var(--sb-oxford-blue);
+        color: var(--messenger-ui-white);
+        background: var(--messenger-ui-oxford-blue);
 
         &:hover {
-            background: var(--sb-delft-blue);
+            background: var(--messenger-ui-delft-blue);
         }
         &:focus {
-            background: var(--sb-delft-blue);
+            background: var(--messenger-ui-delft-blue);
         }
     }
 
     // primary alternative
     &--primary-alternative {
-        color: rgb(0, 139, 0);
-        background: var(--sb-persian-orange);
+        color: var(--messenger-ui-green);
+        background: var(--messenger-ui-persian-orange);
 
         &:hover {
-            background: var(--sb-sandy-brown);
+            background: var(--messenger-ui-sandy-brown);
         }
         &:focus {
-            background: var(--sb-sandy-brown);
+            background: var(--messenger-ui-sandy-brown);
         }
     }
 
     // outline
     &--outline {
-        color: var(--sb-timberwolf);
-        border: 1px solid var(--sb-timberwolf);
+        color: var(--messenger-ui-timberwolf);
+        border: 1px solid var(--messenger-ui-timberwolf);
 
         &:hover {
-            color: var(--sb-white);
-            background: var(--sb-delft-blue);
+            color: var(--messenger-ui-white);
+            background: var(--messenger-ui-delft-blue);
         }
         &:focus {
-            color: var(--sb-white);
-            background: var(--sb-delft-blue);
+            color: var(--messenger-ui-white);
+            background: var(--messenger-ui-delft-blue);
         }   
     
     }
 
     // outline-alternative
     &--outline-alternative {
-        border: 1px solid var(--sb-persian-orange);
-        color: var(--sb-persian-orange);
+        border: 1px solid var(--messenger-ui-persian-orange);
+        color: var(--messenger-ui-persian-orange);
 
         &:hover {
-            background: var(--sb-anti-flash-white);
+            background: var(--messenger-ui-anti-flash-white);
         }
         &:focus {
-            background: var(--sb-anti-flash-white);
+            background: var(--messenger-ui-anti-flash-white);
         }
         &:disabled {
             opacity: 0.5;
@@ -130,45 +130,45 @@ $flat: 0px;
 
     // underline
     &--underline {
-        border-bottom: 1px solid var(--sb-oxford-blue);
+        border-bottom: 1px solid var(--messenger-ui-oxford-blue);
         border-radius: $flat;
         line-height: 0px;
         padding-left: 0px;
         padding-right: 0px;
 
         &:hover {
-            color: var(--sb-delft-blue);
-            border-bottom: 1px solid var(--sb-delft-blue);
+            color: var(--messenger-ui-delft-blue);
+            border-bottom: 1px solid var(--messenger-ui-delft-blue);
         }
         &:focus {
-            color: var(--sb-yinmn-blue);
-            border-bottom: 1px solid var(--sb-yinmn-blue);
+            color: var(--messenger-ui-yinmn-blue);
+            border-bottom: 1px solid var(--messenger-ui-yinmn-blue);
         }
     }
 
     // underline-alternative
     &--underline-alternative {
-        border-bottom: 1px solid var(--sb-cool-grey);
-        color: var(--sb-cool-grey);
+        border-bottom: 1px solid var(--messenger-ui-cool-grey);
+        color: var(--messenger-ui-cool-grey);
         border-radius: $flat;
         line-height: 0px;
         padding-left: 0px;
         padding-right: 0px;
 
         &:hover {
-            color: var(--sb-persian-orange);
-            border-bottom: 1px solid var(--sb-persian-orange);
+            color: var(--messenger-ui-persian-orange);
+            border-bottom: 1px solid var(--messenger-ui-persian-orange);
         }
         &:focus {
-            color: var(--sb-sandy-brown);
-            border-bottom: 1px solid var(--sb-sandy-brown);
+            color: var(--messenger-ui-sandy-brown);
+            border-bottom: 1px solid var(--messenger-ui-sandy-brown);
         }
     }
 
     &--dropdown {
-        color: var(--sb-timberwolf);
+        color: var(--messenger-ui-timberwolf);
         white-space: nowrap; // added
-        background: var(--sb-delft-blue);
+        background: var(--messenger-ui-delft-blue);
     }
 
     &.round {
@@ -178,8 +178,8 @@ $flat: 0px;
 
     &:disabled {
         border-radius: $rounded-full;
-        background: var(--sb-platinum);
-        color: var(--sb-timberwolf);
+        background: var(--messenger-ui-platinum);
+        color: var(--messenger-ui-timberwolf);
     }
 }
 

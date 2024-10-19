@@ -54,14 +54,13 @@ export class ChatRoomComponent {
         });
     }
 
-    ngAfterViewChecked() {
+    ngAfterViewChecked(): void {
         this.scrollToBottom();
     }
 
     scrollToBottom(): void {
         this.chatContainer.nativeElement.scrollTop = this.chatContainer.nativeElement.scrollHeight;
     }
-
 
     ngOnDestroy(): void {
         if (this.receivedMessageSubscription) {
@@ -112,7 +111,7 @@ export class ChatRoomComponent {
         this._subscribeToMessages();
     }
 
-    private async _loadMessages(data: any): Promise<any> {
+    private async _loadMessages(data: any): Promise<void> {
         try {
             this.messages = data.messages.map((message: MessageNamespace.MessageInterface) => {
                 const decryptedMessage: {
@@ -155,7 +154,7 @@ export class ChatRoomComponent {
         }
     }
 
-    private _setSharedSecret(): any {
+    private _setSharedSecret(): string {
         const [friend1, friend2] = this.conversation.friend;
         return friend1.name === this.user.value.user.username
             ? friend1.cryptoKey.sharedSecret

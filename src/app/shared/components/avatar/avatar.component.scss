@@ -1,5 +1,3 @@
-// @import 'fonts';
-
 .initials-btn {
     text-transform: uppercase;
     position: relative;
@@ -10,8 +8,8 @@
     width: 2.5rem;
     height: 2.5rem;
     border-radius: 99999px;
-    background-color: var(--sb-platinum);
-    color: var(--sb-oxford-blue);
+    background-color: var(--messenger-ui-platinum);
+    color: var(--messenger-ui-oxford-blue);
 }
 
 :not(.is-clickable) {
@@ -24,7 +22,7 @@
     left: 28px;
     width: 12px;
     height: 12px;
-    background: var(--sb-green);
+    background: var(--messenger-ui-green);
     border-radius: 99px;
-    border: 2px solid var(--sb-white);
+    border: 2px solid var(--messenger-ui-white);
 }

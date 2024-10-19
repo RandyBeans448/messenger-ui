@@ -1,9 +1,13 @@
 <div class="flex flex-col bg-gray-900 rounded-lg shadow-lg ">
+    
     <div 
         #chatContainer 
         class="chat-box rounded-t-lg overflow-y-scroll p-4 bg-gray-800 fade-in">
+
         <ul>
+
             @for (message of messages; track $index) {
+
                 <div 
                     class="chat-container flex mb-2"
                     [ngClass]="{

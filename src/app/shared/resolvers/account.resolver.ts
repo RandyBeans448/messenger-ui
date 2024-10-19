@@ -13,7 +13,10 @@ export class AccountResolver {
 
     constructor(private _accountService: AccountService) { }
 
-    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<AccountNamespace.AccountInterface> {
+    resolve(
+        route: ActivatedRouteSnapshot,
+        state: RouterStateSnapshot,
+    ): Observable<AccountNamespace.AccountInterface> {
 
         return this._accountService.getAccount().pipe(
             take(1),
