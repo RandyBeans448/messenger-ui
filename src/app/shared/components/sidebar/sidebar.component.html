@@ -1,91 +1,37 @@
 <aside 
     id="app-sidebar"
     aria-label="Sidebar"
-    class="transition-transform -translate-x-full sm:translate-x-0 bg-gray-800">
+    class="transition-transform -translate-x-full sm:translate-x-0 bg-gray-800"
+    [ngClass]="{ 
+        'collapsed': (responderService.sidebarIsCollapsed | async), 
+    }">
 
-    <div class="flex flex-row m-2">
-        
-        <!-- <li [ngClass]="(responderService.mobileLandscape | async) ? 'mb-1' : 'mb-6'">
+    <div class="wrapper-for-sidebar-items">
+        <ul class="">
 
-            <app-sidebar-item
-                [attr.data-test-id]="sideBarToggleItem.dataTestId"
-                [sideBarItem]="sideBarToggleItem"
-                [collapsed]="true"
-                (click)="toggleSidebar()"
-            />
-        </li> -->
+            <li [ngClass]="(responderService.mobileLandscape | async) ? 'mb-1' : 'mb-6'">
 
-        @if (findMyFriendsSearchForFriends === 'findMyFriend') {
+                <app-sidebar-item 
+                    [sideBarItem]="sideBarToggleMenuButton"
+                    [collapsed]="true"
+                    (click)="toggleSidebar()" />
+            </li>
 
-            <div class="w-full justify-center">
+            <li [ngClass]="(responderService.mobileLandscape | async) ? 'mb-1' : 'mb-6'">
 
-                <app-button 
-                    title="Search for friends"
-                    iconType="search"
-                    buttonType="outline"
-                    [isFullWidth]="true"
-                    (click)="toggleSearch()"
+                <app-sidebar-item 
+                    [sideBarItem]="sideBarAccountPage"
+                    [collapsed]="(responderService.sidebarIsCollapsed | async) === true"
                 />
-            </div>
-
-        } @else {
-
-            <div class="w-full justify-center">
-
-                <app-button 
-                    title="See your friends"
-                    iconType="save"
-                    buttonType="outline"
-                    [isFullWidth]="true"
-                    (click)="toggleSearch()"
-                />
-            </div>
-        }
+            </li>
+        </ul>
     </div>
-
-    <div class="m-2 justify-center text-center">
-
-        @if (findMyFriendsSearchForFriends === 'findMyFriend') {
-
-            <h5 class="find-more-friends">
-
-                Your friends list
-            </h5>
-        } @else {
-
-            <h5 class="find-more-friends">
-
-                Find more friends
-            </h5>
-        }
-    </div>
-
-    <ul class="m-2">
-
-
-        @if (findMyFriendsSearchForFriends === 'findMyFriend') {
-
-
-            @for (friendItem of sidebarFriendItems; track $index) {
-
-                <li class="m-1">
-
-                    <app-friend 
-                        [friendArrayItem]="friendItem"
-                        (click)="toChatRoom(friendItem.conversations.id)"
-                    />
-                </li>
-            }
-
-        } @else {
-
-            @for (user of usersThatHaveNotBeenFriended; track $index) {
-                
-                <li>
-                    
-                    <app-sidebar-add-friend [user]="user" />
-                </li>
-            }
-        }
-    </ul>
 </aside>
+
+@if (!(responderService.mobileSize | async)) {
+        
+    <div
+        class="ghost-sidebar"
+        [ngClass]="{'collapsed': (responderService.sidebarIsCollapsed | async)}">
+    </div>
+}

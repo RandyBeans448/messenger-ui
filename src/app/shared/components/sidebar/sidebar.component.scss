@@ -1,3 +1,5 @@
+@import '../../../../scss/breakpoints';
+
 $sidebar-width: 16rem;
 $sidebar-width-collapsed: 70px;
 $top-bar-height: 50px;
@@ -76,4 +78,8 @@ ul {
 
 .find-more-friends {
     color: var(--messenger-ui-timberwolf);
+}
+
+.wrapper-for-sidebar-items {
+    margin: 0px 10px;
 }

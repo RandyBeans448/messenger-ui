@@ -13,6 +13,8 @@ import { FriendRequestsCardComponent } from "../../friend-request/friend-request
 import { SidebarAddFriendComponent } from "./sidebar-add-friend/sidebar-add-friend.component";
 import { UserNamespace } from "../../namespaces/user.interface";
 import { Subject, takeUntil } from "rxjs";
+import { ResponderService } from "../../services/responder.service";
+import { SidebarNamespace } from "./namespaces/sidebar.namespace";
 
 @Component({
     selector: 'app-sidebar',
@@ -37,15 +39,27 @@ export class SidebarComponent {
     @Input()
     public sidebarFriendItems: FriendNamespace.FriendArrayItemInterface[];
 
-    public findMyFriendsSearchForFriends: 'findMyFriend' | 'searchFriends' = 'findMyFriend';
+    public findMyFriendsSearchForFriends: string = 'searchFriends';
 
     public usersThatHaveNotBeenFriended: any[] = [];
 
     public user: UserNamespace.UserInterface;
 
+    public sideBarToggleMenuButton: SidebarNamespace.ItemInterface = {
+        icon: 'toggle_menu',
+        label: 'Toggle Menu',
+    };
+
+    public sideBarAccountPage: SidebarNamespace.ItemInterface = {
+        icon: 'home',
+        label: 'Account Page',
+        function: () => this._router.navigate(['/home']),
+    }
+
     private _destroyed$: Subject<void> = new Subject<void>();
 
     constructor(
+        public responderService: ResponderService,
         private _accountService: AccountService,
         private _router: Router,
     ) {}
@@ -71,8 +85,12 @@ export class SidebarComponent {
         this._destroyed$.complete();
     }
 
-    public toggleSearch(): void {
-        this.findMyFriendsSearchForFriends = this.findMyFriendsSearchForFriends === 'findMyFriend' ? 'searchFriends' : 'findMyFriend';
+    public toggleSidebar(): void {
+        this.responderService.toggleSideBar();
+    }
+
+    public toggleSearch(searchToggle: string): void {
+        this.findMyFriendsSearchForFriends = searchToggle;
     }
 
     public findMyFriends(searchQuery: string): void {

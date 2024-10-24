@@ -1,13 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 
-export type IconType =
-    'add' | 'downloadTechDrawing' | 'savedDesigns' | 'privateDb' | 'cancel' | 'check_circle' | 'beta'
-    | 'pro' | 'open_full' | 'toggle_menu' | 'team_files' | 'saved' | 'category'
-    | 'search' | 'close' | 'download' | 'dropdown' | 'notification' | 'credits' | 'info'
-    | 'tender' | 'help' | 'sign_out' | 'upload' | 'copy' | 'arrow_right' | 'arrow_left'
-    | 'save' | 'warning' | 'design' | 'share' | 'send' | 'close_full' | 'paperWithMagnifyingGlass'
-    | 'delete' | 'check';
+export type IconType = 
+    'add' | 'add_friends' | 'arrow_left' | 'arrow_right' | 'beta' | 'cancel' | 'category' | 'check' | 
+    'check_circle' | 'close' | 'close_full' | 'copy' | 'credits' | 'delete' | 'design' | 'download' | 
+    'downloadTechDrawing' | 'dropdown' | 'group' | 'help' | 'home' | 'info' | 'notification' | 'open_full' | 
+    'paperWithMagnifyingGlass' | 'privateDb' | 'pro' | 'save' | 'saved' | 'savedDesigns' | 'search' | 
+    'send' | 'share' | 'sign_out' | 'team_files' | 'tender' | 'toggle_menu' | 'upload' | 'warning'
 
 @Component({
     selector: 'app-icon',
@@ -39,6 +38,7 @@ export class IconComponent {
 
     private iconMap: { [key in IconType]: string } = {
         add: 'add',
+        add_friends: 'group_add',
         arrow_left: 'arrow_forward',
         arrow_right: 'arrow_back',
         beta: 'compost',
@@ -55,7 +55,9 @@ export class IconComponent {
         download: 'download',
         downloadTechDrawing: 'architecture',
         dropdown: 'arrow_drop_down_circle',
+        group: 'group',
         help: 'help',
+        home: 'home',
         info: 'info',
         notification: 'notifications_active',
         open_full: 'open_in_full',
@@ -63,18 +65,19 @@ export class IconComponent {
         privateDb: 'database',
         pro: 'diamond',
         save: 'bookmark_add',
-        savedDesigns: 'description',
         saved: 'bookmark_added',
+        savedDesigns: 'description',
         search: 'search',
         send: 'send',
-        sign_out: 'logout',
         share: 'ios_share',
+        sign_out: 'logout',
         team_files: 'book_5',
         tender: 'gavel',
         toggle_menu: 'menu_open',
         upload: 'upload',
         warning: 'error',
     };
+    
 
     ngOnInit() {
         this.iconString = this.getIcon(this.icon);

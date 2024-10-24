@@ -1,2 +1,155 @@
+@if (selectedTemplate !== null) {
 
+    <div class="wrapper">
+     
+        <ng-container *ngTemplateOutlet="selectedTemplate" />
+    </div>
+}
 
+<ng-template #disabledTemplate>
+    <!-- If the Item has been disabled -->
+    <div
+        class="nav-item disabled" 
+        [ngClass]="{ 'collapsed': collapsed }">
+
+        <app-icon [icon]="sideBarItem.icon" />
+
+        @if (!collapsed) {
+
+            <span class="ml-3">
+
+                {{ sideBarItem.label }}
+            </span>
+        }
+    </div>
+</ng-template>
+
+<ng-template #functionTemplate>
+    <!-- If the item has a function  -->
+    @if (sideBarItem.function) {
+
+        <div
+            class="nav-item" 
+            [ngClass]="{ 
+                'collapsed': collapsed,
+                'active': sideBarItem.key === currentPath,
+            }"
+            (click)="sideBarItem.function()">
+
+            <app-icon [icon]="sideBarItem.icon" />
+
+            @if (!collapsed) {
+
+                <span class="ml-3">
+
+                    {{ sideBarItem.label }}
+                </span>
+            }
+
+            @if (sideBarItem.action && !collapsed) {
+
+                <app-icon 
+                    class="badge"
+                    [attr.data-test-id]="sideBarItem.action.dataTestId" 
+                    [icon]="sideBarItem.action.icon"
+                    (click)="sideBarItem.action.callback($event)" 
+                />
+            }
+
+        </div>
+    }    
+</ng-template>
+
+<ng-template #linkTemplate>
+    <!-- If the item has a link  -->
+    <a 
+        class="nav-item" 
+        [ngClass]="{ 
+            'collapsed': collapsed, 
+            'active': sideBarItem.link === currentPath,
+        }"
+        [routerLink]="sideBarItem.link">
+
+        <app-icon [icon]="sideBarItem.icon" />
+
+        @if (!collapsed) {
+
+            <span class="ml-3">
+
+                {{ sideBarItem.label }}
+            </span>
+        }
+
+        @if (sideBarItem.action && !collapsed) {
+
+            <app-icon 
+                class="badge"
+                [attr.data-test-id]="sideBarItem.action.dataTestId" 
+                [icon]="sideBarItem.action.icon"
+                (click)="sideBarItem.action.callback($event)" 
+            />
+        }
+     </a>
+</ng-template>
+
+<ng-template #externalLinkTemplate>
+    <!-- If the item has an external link  opens new tab -->
+    <a 
+        target="_blank" 
+        class="nav-item" 
+        [ngClass]="{
+            'collapsed': collapsed, 
+            'active': sideBarItem.link === currentPath 
+        }"
+        [href]="sideBarItem.link">
+
+        <app-icon [icon]="sideBarItem.icon" />
+
+        @if (!collapsed) {
+
+            <span class="ml-3">
+
+                {{ sideBarItem.label }}
+            </span>
+        }
+
+        @if (sideBarItem.action && !collapsed) {
+
+            <app-icon 
+                class="badge"
+                [attr.data-test-id]="sideBarItem.action.dataTestId" 
+                [icon]="sideBarItem.action.icon"
+                (click)="sideBarItem.action.callback($event)" 
+            />
+        }
+     </a>
+</ng-template>
+
+<ng-template #buttonTemplate>
+     <!-- If the item does not have a function or link -->
+    <div 
+        class="nav-item"
+        [ngClass]="{ 'collapsed': collapsed }"
+        [routerLink]="sideBarItem.link">
+
+        <app-icon [icon]="sideBarItem.icon" />
+
+        @if (!collapsed) {
+
+            <span class="ml-3">
+
+                {{ sideBarItem.label }}
+            </span>
+        }
+
+        @if (sideBarItem.action && !collapsed) {
+
+            <app-icon 
+                class="badge"
+                [attr.data-test-id]="sideBarItem.action.dataTestId" 
+                [icon]="sideBarItem.action.icon"
+                (click)="sideBarItem.action.callback($event)" 
+            />
+        }
+    </div>
+</ng-template>

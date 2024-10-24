@@ -5,6 +5,7 @@
 
 .material-symbols-outlined {
     user-select: none;
+    color: white;
 }
 
 .filled {
@@ -14,7 +15,6 @@
 
 .circle-fill {
     background-color: var(--messenger-ui-cool-grey);
-    color: var(--messenger-ui-oxford-blue);
     padding: 0.1rem;
     border-radius: 100%;
 }

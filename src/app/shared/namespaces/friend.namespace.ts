@@ -4,7 +4,7 @@ import { CryptoKeyNamespace } from "./crypto-key.namespace";
 export namespace FriendNamespace {
 
     export interface FriendArrayItemInterface {
-        conversations: any;
+        conversations: ConversationNamespace.ConversationInterface;
         createdAt: string;
         deletedAt: null | string;
         friend: FriendInterface;
