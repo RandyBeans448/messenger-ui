@@ -95,14 +95,14 @@ export class AccountService {
                     return requests.map((request) => {
                         return {
                             receiver: {
-                                id: request.friendRequest_receiverId,
                                 friendRequestId: request.friendRequest_id,
-                                username: request.requestSentBy_username,
-                                createdAt: request.requestSentBy_createdAt,
-                                updatedAt: request.requestSentBy_updatedAt,
-                                deletedAt: request.requestSentBy_deletedAt,
+                                friendRequestReceiverId: request.friendRequest_receiverId,
+                                friendRequestRequestSentById: request.friendRequest_requestSentById,
+                                receiverEmail: request.receiver_email,
+                                receiverUsername: request.receiver_username,
+                                requestSentByEmail: request.requestSentBy_email,
+                                requestSentByUsername: request.requestSentBy_username,
                             }
-
                         };
                     });
                 }),

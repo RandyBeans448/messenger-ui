@@ -16,18 +16,16 @@ export namespace FriendRequestNamespace {
     }
 
     export interface FriendRequestDTOInterface {
-        friendRequest_createdAt: string;
-        friendRequest_deletedAt: null;
         friendRequest_id: string;
         friendRequest_receiverId: string;
         friendRequest_requestSentById: string;
-        friendRequest_updatedAt: string;
-        requestSentBy_auth0Id: string;
-        requestSentBy_createdAt: string;
-        requestSentBy_deletedAt: null;
-        requestSentBy_email: string;
+        
+        receiver_id: string,
+        receiver_email: string,
+        receiver_username: string,
+
         requestSentBy_id: string;
-        requestSentBy_updatedAt: string;
+        requestSentBy_email: string;
         requestSentBy_username: string;
     }
 

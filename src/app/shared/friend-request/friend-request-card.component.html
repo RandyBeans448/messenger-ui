@@ -1,19 +1,36 @@
 <div class="friend-request-card-container">
 
-    <app-avatar [initials]="friendRequest.receiver.username[0]"></app-avatar>
+    @if (friendRequest.receiver.friendRequestReceiverId === user.id) {
+        
+        <app-avatar [initials]="friendRequest.receiver.requestSentByUsername[0]"/>
+    } @else {
+        
+        <app-avatar [initials]="friendRequest.receiver.receiverUsername[0]"/>
+    }
 
     <div>
 
-        <h3>
+        @if (friendRequest.receiver.friendRequestReceiverId === user.id) {
+
+            <h3>
             
-            {{ friendRequest.receiver.username }}
-        </h3>
+                {{ friendRequest.receiver.requestSentByUsername }}
+            </h3>
+
+        } @else {
+
+            <h3>
+            
+                {{ friendRequest.receiver.receiverUsername }}
+            </h3>
+        }
+
     </div>
 
     <div class="flex flex-row items-center">
 
 
-        @if (friendRequest.receiver.id === user.id) {
+        @if (friendRequest.receiver.friendRequestReceiverId === user.id) {
 
             <div class="mr-1">
 

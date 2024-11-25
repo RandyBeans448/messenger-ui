@@ -42,8 +42,6 @@ export class HomeComponent {
         ).subscribe(friends => {
             this.usersThatHaveNotBeenFriended = friends;
         });
-
-        console.log(this.user.value.user.friend);
     }
 
     ngOnDestroy(): void {
