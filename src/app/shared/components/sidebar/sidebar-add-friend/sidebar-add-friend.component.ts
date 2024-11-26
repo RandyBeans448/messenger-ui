@@ -1,11 +1,10 @@
 import { CommonModule } from "@angular/common";
-import { Component, Input } from "@angular/core";
+import { Component, EventEmitter, Input, Output } from "@angular/core";
 import { AuthModule } from "@auth0/auth0-angular";
 import { ButtonComponent } from "../../button/button.component";
 import { IconComponent } from "../../icon/icon.component";
 import { AvatarComponent } from "../../avatar/avatar.component";
-import { FriendRequestService } from "../../../services/friend-request.service";
-import { ToastrService } from "ngx-toastr";
+
 
 @Component({
     selector: 'app-sidebar-add-friend',
@@ -22,23 +21,17 @@ import { ToastrService } from "ngx-toastr";
 })
 export class SidebarAddFriendComponent {
 
-    constructor(
-        private _friendRequestService: FriendRequestService,
-        private _toastrService: ToastrService,
-    ) { }
+    constructor() { }
 
     @Input()
     public user: any;
 
+    @Output()
+    public addFriendByUserId: EventEmitter<string> = new EventEmitter<string>();
+
     public async addFriend(
         userId: string = this.user.id,
     ): Promise<void> {
-        try {
-            this._friendRequestService.sendFriendRequest(userId).subscribe(() => {
-                this._toastrService.success('Friend request sent successfully');
-            });
-        } catch (error) {
-            this._toastrService.error('Error sending friend request');
-        }
+        this.addFriendByUserId.emit(userId);
     }
 }

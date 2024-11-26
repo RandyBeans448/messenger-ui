@@ -81,7 +81,10 @@
 
                     <li class="bg-gray-700 p-2 rounded-md shadow-sm">
 
-                        <app-friend-request-card [friendRequest]="friend" />
+                        <app-friend-request-card
+                            [friendRequest]="friend"
+                            (requestRespond)="respondToFriendRequest($event)" 
+                        />
                     </li>
                 }
             </ul>
@@ -100,7 +103,10 @@
 
                     <li>
 
-                        <app-sidebar-add-friend [user]="user" />
+                        <app-sidebar-add-friend
+                            [user]="user"
+                            (addFriendByUserId)="addFriend($event)"
+                        />
                     </li>
                 }
             </ul>

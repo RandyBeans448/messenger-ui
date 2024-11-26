@@ -1,4 +1,4 @@
-import { Component, Input } from "@angular/core";
+import { Component, EventEmitter, Input, Output } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { ButtonComponent } from "../components/button/button.component";
 import { FriendRequestService } from "../services/friend-request.service";
@@ -20,34 +20,28 @@ export class FriendRequestsCardComponent {
     @Input()
     public friendRequest: any;
 
+    @Output()
+    public requestRespond: EventEmitter<FriendRequestNamespace.FriendRequestResponseInterface> = new EventEmitter<FriendRequestNamespace.FriendRequestResponseInterface>();
+
     public user: UserNamespace.UserInterface;
 
     constructor(
         private _accountService: AccountService,
-        private _friendRequestService: FriendRequestService,
-        private _toastService: ToastrService,
     ) { }
 
     public ngOnInit() {
-        this._accountService.getAccount().subscribe(account => {
-            this.user = account.user;
-        });
+        this._accountService.getAccount()
+            .subscribe(account => {
+                this.user = account.user;
+            });
     }
 
-    public async respondToFriendRequest(response: boolean) {
+    public async respondToFriendRequest(response: boolean): Promise<void> {
         const responseFriendRequest: FriendRequestNamespace.FriendRequestResponseInterface = {
             friendRequestId: this.friendRequest.receiver.friendRequestId,
             response: response,
-        }
+        };
 
-        try {
-            this._friendRequestService.respondToFriendRequest(responseFriendRequest).subscribe(res => {
-                if (res === 'Friend Request Accepted') {
-                    this._toastService.success(res);
-                }
-            });
-        } catch (error) {
-            this._toastService.error('Error responding friend request');
-        }
+        this.requestRespond.emit(responseFriendRequest);
     }
 }
