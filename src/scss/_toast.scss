@@ -1,13 +1,6 @@
 @import 'breakpoints';
 
 #toast-container {
-    // display: flex;
-    // position: absolute;
-    // justify-content: flex-end;
-    // z-index: 9999;
-    // width: 100%;
-    // height: 100%;
-    // border: solid 1px red;
 
     &.toast-bottom-right {
         top: 0px;
@@ -22,7 +15,6 @@
     }
 
     &>.ngx-toastr {
-        width: 300px;
 
         @include respond-to("small") {
             width: 100%;

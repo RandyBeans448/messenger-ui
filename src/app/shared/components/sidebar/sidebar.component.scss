@@ -4,6 +4,10 @@ $sidebar-width: 13rem;
 $sidebar-width-collapsed: 70px;
 $top-bar-height: 50px;
 
+.sidebar-translate {
+    transform: translateX(0);
+}
+
 ul {
     list-style-type: none; /* Remove bullets */
     padding: 0; /* Remove padding */
@@ -52,7 +56,7 @@ ul {
     top: 0;
     left: 0;
     z-index: 40;
-    height: 100vh;
+    height: 100%;
     width: $sidebar-width;
     display: flex;
     flex-direction: column;

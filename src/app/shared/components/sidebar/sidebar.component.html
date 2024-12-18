@@ -1,7 +1,7 @@
 <aside 
     id="app-sidebar"
     aria-label="Sidebar"
-    class="transition-transform -translate-x-full sm:translate-x-0 bg-gray-800"
+    class="transition-transform -translate-x-full sidebar-translate bg-gray-800"
     [ngClass]="{ 
         'collapsed': (responderService.sidebarIsCollapsed | async), 
     }">
@@ -9,19 +9,27 @@
     <div class="wrapper-for-sidebar-items">
         <ul class="">
 
-            <li [ngClass]="(responderService.mobileLandscape | async) ? 'mb-1' : 'mb-6'">
+            <li class="mb-6">
 
-                <app-sidebar-item 
+                <app-sidebar-item
                     [sideBarItem]="sideBarToggleMenuButton"
                     [collapsed]="true"
                     [disabled]="disabledCollapsedButton"
                     (click)="toggleSidebar()" />
             </li>
 
-            <li [ngClass]="(responderService.mobileLandscape | async) ? 'mb-1' : 'mb-6'">
+            <li class="mb-6">
 
                 <app-sidebar-item 
                     [sideBarItem]="sideBarAccountPage"
+                    [collapsed]="(responderService.sidebarIsCollapsed | async) === true"
+                />
+            </li>
+
+            <li class="mb-6">
+
+                <app-sidebar-item 
+                    [sideBarItem]="sideBarSignOut"
                     [collapsed]="(responderService.sidebarIsCollapsed | async) === true"
                 />
             </li>

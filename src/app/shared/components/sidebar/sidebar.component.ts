@@ -1,7 +1,7 @@
 import { CommonModule } from "@angular/common";
 import { Component, HostListener, Input } from "@angular/core";
 import { Router, RouterModule } from "@angular/router";
-import { AuthModule } from "@auth0/auth0-angular";
+import { AuthModule, AuthService } from "@auth0/auth0-angular";
 import { ButtonComponent } from "../button/button.component";
 import { IconComponent } from "../icon/icon.component";
 import { SidebarItemComponent } from "./sidebar-item/sidebar-item.component";
@@ -21,15 +21,9 @@ import { SidebarNamespace } from "./namespaces/sidebar.namespace";
     standalone: true,
     imports: [
         CommonModule,
-        IconComponent,
-        InputComponent,
-        FriendComponent,
         RouterModule,
         SidebarItemComponent,
         AuthModule,
-        ButtonComponent,
-        FriendRequestsCardComponent,
-        SidebarAddFriendComponent
     ],
     templateUrl: './sidebar.component.html',
     styleUrls: ['./sidebar.component.scss'],
@@ -56,6 +50,12 @@ export class SidebarComponent {
         function: () => this._router.navigate(['/home']),
     }
 
+    public sideBarSignOut: SidebarNamespace.ItemInterface = {
+        icon: 'sign_out',
+        label: 'Sign out',
+        function: () => this._authService.logout(),
+    }
+
     public disabledCollapsedButton: boolean = false;
 
     private _destroyed$: Subject<void> = new Subject<void>();
@@ -69,6 +69,7 @@ export class SidebarComponent {
         public responderService: ResponderService,
         private _accountService: AccountService,
         private _router: Router,
+        private _authService: AuthService,
     ) {}
 
     public ngOnInit() {

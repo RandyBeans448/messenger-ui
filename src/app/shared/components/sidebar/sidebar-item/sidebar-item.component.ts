@@ -59,10 +59,6 @@ export class SidebarItemComponent {
 
     constructor(private cdr: ChangeDetectorRef) { }
 
-    ngOnInit() {
-        console.log(this.sideBarItem)
-    }
-
     ngAfterViewChecked() {
         this._selectTemplate();
         this.cdr.detectChanges();
