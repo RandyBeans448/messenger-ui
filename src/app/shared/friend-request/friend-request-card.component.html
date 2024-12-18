@@ -32,6 +32,9 @@
 
         @if (friendRequest.receiver.friendRequestReceiverId === user.id) {
 
+
+            @if (!isLoading) {
+
             <div class="mr-1">
 
                 <app-button 
@@ -49,6 +52,14 @@
                     buttonType="primary-round"
                     (click)="respondToFriendRequest(false)"/>  
             </div>
+
+            } @else {
+                <div class="loading-results">
+    
+                    <app-spinner />
+                </div>   
+            } 
+
         } @else {
 
             <div>

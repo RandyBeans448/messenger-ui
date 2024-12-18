@@ -29,6 +29,10 @@ export class HomeComponent {
 
     public usersThatHaveNotBeenFriended: any[] = [];
 
+    public isLoadingFriendRequestResponse: boolean = false;
+
+    public isLoadingAddFriend: boolean = false;
+
     private _destroyed$: Subject<void> = new Subject<void>();
 
     ngOnInit() {
@@ -42,6 +46,8 @@ export class HomeComponent {
         this._accountService.getAvailableUsers().subscribe(friends => {
             this.usersThatHaveNotBeenFriended = friends;
         });
+
+        this._toastService.success('testing');
     }
 
     ngOnDestroy(): void {
@@ -52,6 +58,7 @@ export class HomeComponent {
     onUpdateAccount(): void {
         // Implement your update logic here, for example, open a modal or navigate to another page
         console.log('Update Account button clicked');
+        this._toastService.success('testing');
         // You can call the update service or open an update form modal
     }
 
@@ -62,27 +69,33 @@ export class HomeComponent {
     }
 
     public async respondToFriendRequest(event: FriendRequestNamespace.FriendRequestResponseInterface): Promise<void> {
+
+        this.isLoadingFriendRequestResponse = true;
+
         const responseFriendRequest: FriendRequestNamespace.FriendRequestResponseInterface = {
             friendRequestId: event.friendRequestId,
             response: event.response,
-        }
+        };
 
         try {
             this._friendRequestService
                 .respondToFriendRequest(responseFriendRequest)
-                .subscribe(res => {
-                    this._toastService.success(res);
+                .subscribe((res) => {
+                    this._toastService.success(res.message);
+
                     this._accountService.getReceivedFriendRequests().subscribe(requests => {
                         this.receivedFriendRequests = requests;
-                    }); 
+                    });
+
+                    this.friends = this.user.value.user.friend;
                 });
         } catch (error) {
+            this.isLoadingFriendRequestResponse = false;
             this._toastService.error('Error responding friend request');
         }
     }
 
     public async addFriend(userId: any): Promise<void> {
-        console.log(userId);
         try {
             this._friendRequestService
                 .sendFriendRequest(userId)
@@ -91,6 +104,10 @@ export class HomeComponent {
 
                     this._accountService.getAvailableUsers().subscribe(friends => {
                         this.usersThatHaveNotBeenFriended = friends;
+                    });
+
+                    this._accountService.getReceivedFriendRequests().subscribe(requests => {
+                        this.receivedFriendRequests = requests;
                     });
                 });
         } catch (error) {

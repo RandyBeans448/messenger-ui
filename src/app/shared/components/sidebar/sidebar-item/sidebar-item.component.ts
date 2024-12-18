@@ -35,6 +35,9 @@ export class SidebarItemComponent {
     @Input()
     public collapsed: boolean = false;
 
+    @Input()
+    public disabled: boolean = false;
+
     @ViewChild('disabledTemplate')
     public disabledTemplate: TemplateRef<any>;
 

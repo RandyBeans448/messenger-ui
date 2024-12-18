@@ -1,5 +1,5 @@
 import { CommonModule } from "@angular/common";
-import { Component, Input } from "@angular/core";
+import { Component, HostListener, Input } from "@angular/core";
 import { Router, RouterModule } from "@angular/router";
 import { AuthModule } from "@auth0/auth0-angular";
 import { ButtonComponent } from "../button/button.component";
@@ -56,7 +56,14 @@ export class SidebarComponent {
         function: () => this._router.navigate(['/home']),
     }
 
+    public disabledCollapsedButton: boolean = false;
+
     private _destroyed$: Subject<void> = new Subject<void>();
+
+    @HostListener("window:resize", [])
+    private onResize(): void {
+        this.detectScreenSize();
+    }
 
     constructor(
         public responderService: ResponderService,
@@ -78,6 +85,8 @@ export class SidebarComponent {
         ).subscribe(friends => {
             this.usersThatHaveNotBeenFriended = friends;
         });
+        
+        this.detectScreenSize();
     }
 
     public ngOnDestroy(): void {
@@ -107,4 +116,13 @@ export class SidebarComponent {
         this._router.navigate([`/chat-room/${conversationId}`]);
     }
 
+    private detectScreenSize(): void {
+
+        if (window.innerWidth < 1500) {
+            this.responderService.collapseSideBar();
+            return;
+        }
+
+        this.responderService.openSideBar();
+    }
 }

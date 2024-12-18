@@ -1,10 +1,17 @@
 @import 'breakpoints';
-@import 'colors';
 
 #toast-container {
+    // display: flex;
+    // position: absolute;
+    // justify-content: flex-end;
+    // z-index: 9999;
+    // width: 100%;
+    // height: 100%;
+    // border: solid 1px red;
 
     &.toast-bottom-right {
-        bottom: 80px;
+        top: 0px;
+        right: 0px;
     }
 
     @include respond-to("small") {
@@ -15,22 +22,29 @@
     }
 
     &>.ngx-toastr {
+        width: 300px;
+
         @include respond-to("small") {
             width: 100%;
         }
+
         background-color: var(--messenger-ui-white);
-        color: var(--messenger-ui-cool-grey);
+        color: var(--messenger-ui-dark-grey);
         transition: box-shadow .5s;
         border-radius: .25rem;
+
         &:hover {
-            box-shadow: 0 0 8px var(--messenger-ui-cool-grey);
+            box-shadow: 0 0 8px var(--messenger-ui-mid-grey);
         }
+
         &.toast-error {
             background-color: var(--messenger-ui-red);
             color: var(--messenger-ui-white);
         }
 
         &.toast-success {
+            width: 100px;
+            height: 100px;
             background-color: var(--messenger-ui-green);
             color: var(--messenger-ui-white);
         }
@@ -39,6 +53,7 @@
             background-color: var(--messenger-ui-blue);
             color: var(--messenger-ui-white);
         }
+
         &.toast-warning {
             background-color: var(--messenger-ui-yellow);
             color: var(--messenger-ui-white);

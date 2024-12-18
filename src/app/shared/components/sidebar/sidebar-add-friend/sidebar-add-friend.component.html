@@ -15,4 +15,12 @@
         buttonType="outline-round" 
         buttonSize="extra-small"
         (click)="addFriend()"/>
+
+        @if (isLoading) {
+            
+            <div class="loading-results">
+
+                <app-spinner />
+            </div>   
+        } 
 </div>

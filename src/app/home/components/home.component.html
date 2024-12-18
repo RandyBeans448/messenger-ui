@@ -83,6 +83,7 @@
 
                         <app-friend-request-card
                             [friendRequest]="friend"
+                            [isLoading]="isLoadingFriendRequestResponse"
                             (requestRespond)="respondToFriendRequest($event)" 
                         />
                     </li>

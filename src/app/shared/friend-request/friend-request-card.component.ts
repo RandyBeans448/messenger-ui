@@ -7,18 +7,22 @@ import { ToastrService } from "ngx-toastr";
 import { AvatarComponent } from "../components/avatar/avatar.component";
 import { UserNamespace } from "../namespaces/user.interface";
 import { AccountService } from "../services/account.service";
+import { SpinnerComponent } from "../components/spinner/spinner.component";
 
 @Component({
     selector: 'app-friend-request-card',
     templateUrl: './friend-request-card.component.html',
     styleUrls: ['./friend-request-card.component.scss'],
     standalone: true,
-    imports: [CommonModule, AvatarComponent, ButtonComponent],
+    imports: [CommonModule, AvatarComponent, ButtonComponent, SpinnerComponent,],
 })
 export class FriendRequestsCardComponent {
 
     @Input()
     public friendRequest: any;
+
+    @Input()
+    public isLoading: boolean = false;
 
     @Output()
     public requestRespond: EventEmitter<FriendRequestNamespace.FriendRequestResponseInterface> = new EventEmitter<FriendRequestNamespace.FriendRequestResponseInterface>();

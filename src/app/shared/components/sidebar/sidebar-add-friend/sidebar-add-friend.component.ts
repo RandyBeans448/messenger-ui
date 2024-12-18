@@ -4,6 +4,7 @@ import { AuthModule } from "@auth0/auth0-angular";
 import { ButtonComponent } from "../../button/button.component";
 import { IconComponent } from "../../icon/icon.component";
 import { AvatarComponent } from "../../avatar/avatar.component";
+import { SpinnerComponent } from "../../spinner/spinner.component";
 
 
 @Component({
@@ -14,7 +15,8 @@ import { AvatarComponent } from "../../avatar/avatar.component";
         IconComponent,
         AuthModule,
         ButtonComponent,
-        AvatarComponent
+        AvatarComponent,
+        SpinnerComponent,
     ],
     templateUrl: './sidebar-add-friend.component.html',
     styleUrls: ['./sidebar-add-friend.component.scss'],
@@ -25,6 +27,9 @@ export class SidebarAddFriendComponent {
 
     @Input()
     public user: any;
+
+    @Input()
+    public isLoading: boolean = false;
 
     @Output()
     public addFriendByUserId: EventEmitter<string> = new EventEmitter<string>();

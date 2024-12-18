@@ -31,10 +31,8 @@ export class FriendRequestService {
         );
     }
 
-    public respondToFriendRequest(response: FriendRequestNamespace.FriendRequestResponseInterface): Observable<string> {
-        return this._http.patch(`${this.baseApi}/friend-request/resolve-friend-request`, response, {
-            responseType: 'text',
-        }).pipe(
+    public respondToFriendRequest(response: FriendRequestNamespace.FriendRequestResponseInterface): Observable<any> {
+        return this._http.patch(`${this.baseApi}/friend-request/resolve-friend-request`, response).pipe(
             catchError((error) => {
                 this._toastService.error(
                     error
