@@ -35,21 +35,6 @@ ul {
     padding: 1rem 0.75rem;
 }
 
-#mobile-nav {
-    width: 90%;
-    z-index: 1000;
-    position: fixed;
-    margin: auto;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    border-radius:  1rem 1rem 0 0;
-    padding: 0.5rem;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-}
-
 #app-sidebar {
     padding-top: $top-bar-height;
     position: fixed;

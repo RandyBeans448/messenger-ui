@@ -1,12 +1,7 @@
 @import 'breakpoints';
 
 #toast-container {
-
-    &.toast-bottom-right {
-        top: 0px;
-        right: 0px;
-    }
-
+    
     @include respond-to("small") {
         width: 100%;
         right: 0;
@@ -35,8 +30,6 @@
         }
 
         &.toast-success {
-            width: 100px;
-            height: 100px;
             background-color: var(--messenger-ui-green);
             color: var(--messenger-ui-white);
         }
