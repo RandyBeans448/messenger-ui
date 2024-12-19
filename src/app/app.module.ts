@@ -9,7 +9,7 @@ import { AppConfigService } from '../environments/services/config.service';
 import { ChatRoomModule } from './chat-room/chat-room.module';
 import { HomeModule } from './home/home.module';
 import { ShellComponent } from './core/shell/shell.component';
-import { ToastrModule, ToastrService } from 'ngx-toastr';
+import { ToastrModule } from 'ngx-toastr';
 
 export function initializeApp(appConfigService: AppConfigService) {
     return (): Promise<any> => {

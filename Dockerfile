@@ -4,20 +4,24 @@ ARG BACKEND_URL
 
 WORKDIR /app
 
-RUN apk add --no-cache git
+RUN apk update
 
-COPY package*.json ./
+RUN npm install -g @angular/cli
+
+WORKDIR /usr/src/app
+
+COPY package.json ./
 
 RUN npm install
 
 COPY . .
 
-RUN npm run build --prod
+RUN ng build
 
-FROM nginx:stable-alpine
+FROM nginx:alpine
 
-COPY --from=build /app/dist/messenger-ui /usr/share/nginx/html
+COPY .ops/nginx.conf /etc/nginx/nginx.conf
+
+COPY --from=build /usr/src/app/dist/messenger-ui/browser /usr/share/nginx/html
 
 EXPOSE 80
-
-CMD ["nginx", "-g", "daemon off;"]
