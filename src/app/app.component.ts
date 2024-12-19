@@ -1,6 +1,4 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { AccountService } from './shared/services/account.service';
 
 @Component({
   selector: 'app-root',
@@ -10,8 +8,5 @@ import { AccountService } from './shared/services/account.service';
 export class AppComponent {
   title = 'messenger-ui';
 
-  constructor(
-    private route: ActivatedRoute,
-    private _accountService: AccountService,
-  ) { }
+  constructor() { }
 }
