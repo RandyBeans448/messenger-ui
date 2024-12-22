@@ -7,14 +7,13 @@ import { SidebarNamespace } from '../namespaces/sidebar.namespace';
 
 @Component({
     selector: 'app-sidebar-item',
-    standalone: true,
     imports: [
         CommonModule,
         RouterModule,
         IconComponent,
     ],
     templateUrl: './sidebar-item.component.html',
-    styleUrls: ['./sidebar-item.component.scss'],
+    styleUrls: ['./sidebar-item.component.scss']
 })
 export class SidebarItemComponent {
 

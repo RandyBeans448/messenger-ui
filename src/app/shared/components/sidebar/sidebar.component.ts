@@ -18,7 +18,6 @@ import { SidebarNamespace } from "./namespaces/sidebar.namespace";
 
 @Component({
     selector: 'app-sidebar',
-    standalone: true,
     imports: [
         CommonModule,
         RouterModule,
@@ -26,7 +25,7 @@ import { SidebarNamespace } from "./namespaces/sidebar.namespace";
         AuthModule,
     ],
     templateUrl: './sidebar.component.html',
-    styleUrls: ['./sidebar.component.scss'],
+    styleUrls: ['./sidebar.component.scss']
 })
 export class SidebarComponent {
 

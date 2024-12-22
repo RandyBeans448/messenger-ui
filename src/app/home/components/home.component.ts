@@ -11,6 +11,7 @@ import { ToastrService } from "ngx-toastr";
     selector: 'app-home',
     templateUrl: './home.component.html',
     styleUrls: ['./home.component.scss'],
+    standalone: false
 })
 export class HomeComponent {
 

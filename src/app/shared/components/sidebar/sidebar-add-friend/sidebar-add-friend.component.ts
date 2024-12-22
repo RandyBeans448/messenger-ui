@@ -9,7 +9,6 @@ import { SpinnerComponent } from "../../spinner/spinner.component";
 
 @Component({
     selector: 'app-sidebar-add-friend',
-    standalone: true,
     imports: [
         CommonModule,
         IconComponent,
@@ -19,7 +18,7 @@ import { SpinnerComponent } from "../../spinner/spinner.component";
         SpinnerComponent,
     ],
     templateUrl: './sidebar-add-friend.component.html',
-    styleUrls: ['./sidebar-add-friend.component.scss'],
+    styleUrls: ['./sidebar-add-friend.component.scss']
 })
 export class SidebarAddFriendComponent {
 

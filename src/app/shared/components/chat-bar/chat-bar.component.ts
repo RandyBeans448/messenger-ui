@@ -4,10 +4,9 @@ import { MessageNamespace } from "../../namespaces/messages.namespace";
 
 @Component({
     selector: 'app-chat-bar',
-    standalone: true,
     imports: [CommonModule],
     templateUrl: './chat-bar.component.html',
-    styleUrls: ['./chat-bar.component.scss'],
+    styleUrls: ['./chat-bar.component.scss']
 })
 export class ChatBarComponent {
 

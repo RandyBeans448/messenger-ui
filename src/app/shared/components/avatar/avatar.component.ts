@@ -5,8 +5,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
     selector: 'app-avatar',
     templateUrl: './avatar.component.html',
     styleUrls: ['./avatar.component.scss'],
-    standalone: true,
-    imports: [CommonModule],
+    imports: [CommonModule]
 })
 
 export class AvatarComponent {

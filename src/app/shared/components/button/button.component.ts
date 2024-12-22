@@ -12,11 +12,10 @@ export type ButtonSize = 'extra-small' | 'small' | 'regular' | 'large';
     selector: 'app-button',
     templateUrl: './button.component.html',
     styleUrls: ['./button.component.scss'],
-    standalone: true,
     imports: [
         CommonModule,
         IconComponent,
-    ],
+    ]
 })
 export class ButtonComponent {
 
