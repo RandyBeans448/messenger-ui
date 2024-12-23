@@ -12,7 +12,8 @@ export type IconType =
     selector: 'app-icon',
     imports: [CommonModule],
     templateUrl: './icon.component.html',
-    styleUrls: ['./icon.component.scss']
+    styleUrls: ['./icon.component.scss'],
+    standalone: true,
 })
 export class IconComponent {
     @Input()

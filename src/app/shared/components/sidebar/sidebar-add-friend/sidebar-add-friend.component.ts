@@ -18,7 +18,8 @@ import { SpinnerComponent } from "../../spinner/spinner.component";
         SpinnerComponent,
     ],
     templateUrl: './sidebar-add-friend.component.html',
-    styleUrls: ['./sidebar-add-friend.component.scss']
+    styleUrls: ['./sidebar-add-friend.component.scss'],
+    standalone: true,
 })
 export class SidebarAddFriendComponent {
 

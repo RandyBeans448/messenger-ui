@@ -25,7 +25,8 @@ import { SidebarNamespace } from "./namespaces/sidebar.namespace";
         AuthModule,
     ],
     templateUrl: './sidebar.component.html',
-    styleUrls: ['./sidebar.component.scss']
+    styleUrls: ['./sidebar.component.scss'],
+    standalone: true,
 })
 export class SidebarComponent {
 

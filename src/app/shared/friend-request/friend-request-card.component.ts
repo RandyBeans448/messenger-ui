@@ -13,7 +13,13 @@ import { SpinnerComponent } from "../components/spinner/spinner.component";
     selector: 'app-friend-request-card',
     templateUrl: './friend-request-card.component.html',
     styleUrls: ['./friend-request-card.component.scss'],
-    imports: [CommonModule, AvatarComponent, ButtonComponent, SpinnerComponent,]
+    imports: [
+        CommonModule,
+        AvatarComponent,
+        ButtonComponent, 
+        SpinnerComponent,
+    ],
+    standalone: true,
 })
 export class FriendRequestsCardComponent {
 

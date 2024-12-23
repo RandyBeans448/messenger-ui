@@ -15,7 +15,8 @@ export type ButtonSize = 'extra-small' | 'small' | 'regular' | 'large';
     imports: [
         CommonModule,
         IconComponent,
-    ]
+    ],
+    standalone: true,
 })
 export class ButtonComponent {
 

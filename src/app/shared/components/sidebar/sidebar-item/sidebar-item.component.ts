@@ -13,7 +13,8 @@ import { SidebarNamespace } from '../namespaces/sidebar.namespace';
         IconComponent,
     ],
     templateUrl: './sidebar-item.component.html',
-    styleUrls: ['./sidebar-item.component.scss']
+    styleUrls: ['./sidebar-item.component.scss'],
+    standalone: true,
 })
 export class SidebarItemComponent {
 

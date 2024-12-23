@@ -4,9 +4,13 @@ import { SidebarComponent } from '../../shared/components/sidebar/sidebar.compon
 
 @Component({
     selector: 'app-shell',
-    imports: [CommonModule, SidebarComponent],
+    imports: [
+        CommonModule,
+        SidebarComponent,
+    ],
     templateUrl: './shell.component.html',
-    styleUrls: ['./shell.component.scss']
+    styleUrls: ['./shell.component.scss'],
+    standalone: true,
 })
 export class ShellComponent {
     constructor() {}
