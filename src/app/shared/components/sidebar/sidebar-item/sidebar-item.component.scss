@@ -1,4 +1,4 @@
-@import '../../../../../scss/breakpoints';
+@use '../../../../../scss/breakpoints' as breakpoints;
 
 :host {
     user-select: none;
@@ -17,7 +17,7 @@
 
     .badge {
         
-        @include respond-to("small") {
+        @include breakpoints.respond-to("small") {
            display: none;
         } 
     }
@@ -30,7 +30,7 @@
         justify-content: center;
         width: 45px;
 
-        @include respond-to("small") {
+        @include breakpoints.respond-to("small") {
             width: 100%;
             height: 3.5rem;
             border-radius: 16px;
@@ -41,7 +41,7 @@
         border-radius: var(--rounded-full, 9999px);
         color: var(--messenger-ui-white);
 
-        @include respond-to("small") {
+        @include breakpoints.respond-to("small") {
             width: 100%;
             height: 3.5rem;
             border-radius: 16px;
@@ -72,7 +72,7 @@
 
 .wrapper {
 
-    @include respond-to("small") {
+    @include breakpoints.respond-to("small") {
         padding: 3px;
     } 
 }

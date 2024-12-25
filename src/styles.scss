@@ -1,6 +1,6 @@
-@import 'scss/colors';
-@import 'scss/toast';
-@import 'scss/breakpoints';
+@use 'scss/colors';
+@use 'scss/toast';
+@use 'scss/breakpoints';
 
 @import '@angular/cdk/overlay-prebuilt.css';
 

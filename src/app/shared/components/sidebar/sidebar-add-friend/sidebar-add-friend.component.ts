@@ -11,7 +11,6 @@ import { SpinnerComponent } from "../../spinner/spinner.component";
     selector: 'app-sidebar-add-friend',
     imports: [
         CommonModule,
-        IconComponent,
         AuthModule,
         ButtonComponent,
         AvatarComponent,

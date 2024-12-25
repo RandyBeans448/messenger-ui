@@ -9,7 +9,10 @@ import { FriendNamespace } from "../namespaces/friend.namespace";
     selector: 'app-friend',
     templateUrl: './friend.component.html',
     styleUrls: ['./friend.component.scss'],
-    imports: [CommonModule, AvatarComponent, ButtonComponent],
+    imports: [
+        CommonModule,
+        AvatarComponent,
+    ],
     standalone: true,
 })
 export class FriendComponent {

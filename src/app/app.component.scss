@@ -1,4 +1,4 @@
-@import '../scss/breakpoints';
+@use '../scss/breakpoints' as breakpoints;
 
 ul {
     list-style-type: none; /* Remove bullets */
@@ -14,7 +14,7 @@ body {
 .app-content-container {
     margin: 2rem;
 
-    @include respond-to("small") {
+    @include breakpoints.respond-to("small") {
         margin: 2rem 1rem 0rem 1rem;
     }
 }

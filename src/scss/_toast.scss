@@ -1,8 +1,8 @@
-@import 'breakpoints';
+@use 'breakpoints';
 
 #toast-container {
     
-    @include respond-to("small") {
+    @include breakpoints.respond-to("small") {
         width: 100%;
         right: 0;
         bottom: -5px;
@@ -11,7 +11,7 @@
 
     &>.ngx-toastr {
 
-        @include respond-to("small") {
+        @include breakpoints.respond-to("small") {
             width: 100%;
         }
 
