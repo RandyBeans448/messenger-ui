@@ -24,7 +24,6 @@
     "crypto-js": "^4.2.0",
     "elliptic": "^6.5.7",
     "ngx-device-detector": "^8.0.0",
-    "ngx-socket-io": "^4.7.0",
     "ngx-toastr": "^18.0.0",
     "rxjs": "~7.8.0",
     "socket.io-client": "^4.7.5",

@@ -14,7 +14,8 @@ import { DatePipe } from "@angular/common";
     selector: 'app-chat-room',
     templateUrl: './chat-room.component.html',
     styleUrls: ['./chat-room.component.scss'],
-    providers: [DatePipe]
+    providers: [DatePipe],
+    standalone: false,
 })
 export class ChatRoomComponent {
 

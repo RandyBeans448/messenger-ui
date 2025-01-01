@@ -28,7 +28,7 @@ export class AppConfigService {
         return new Promise<void>((resolve, reject) => {
             this.httpClient = new HttpClient(this.handler);
 
-            return lastValueFrom(this.httpClient.get(`${baseUrl}/ui-env/main_ui`))
+            return lastValueFrom(this.httpClient.get(`http://localhost:3000/ui-env/main_ui`))
                 .then((response: Object | undefined) => {
                     AppConfigService.env = {
                         ...<EnvironmentNamespace.MainConfig>response,

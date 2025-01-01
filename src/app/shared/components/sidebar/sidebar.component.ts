@@ -2,17 +2,11 @@ import { CommonModule } from "@angular/common";
 import { Component, HostListener, Input } from "@angular/core";
 import { Router, RouterModule } from "@angular/router";
 import { AuthModule, AuthService } from "@auth0/auth0-angular";
-import { ButtonComponent } from "../button/button.component";
-import { IconComponent } from "../icon/icon.component";
 import { SidebarItemComponent } from "./sidebar-item/sidebar-item.component";
 import { AccountService } from "../../services/account.service";
 import { FriendNamespace } from "../../namespaces/friend.namespace";
-import { FriendComponent } from "../../friend/friend.component";
-import { InputComponent } from "../input/input.component";
-import { FriendRequestsCardComponent } from "../../friend-request/friend-request-card.component";
-import { SidebarAddFriendComponent } from "./sidebar-add-friend/sidebar-add-friend.component";
 import { UserNamespace } from "../../namespaces/user.interface";
-import { Subject, takeUntil } from "rxjs";
+import { Subject } from "rxjs";
 import { ResponderService } from "../../services/responder.service";
 import { SidebarNamespace } from "./namespaces/sidebar.namespace";
 
@@ -73,20 +67,6 @@ export class SidebarComponent {
     ) {}
 
     public ngOnInit() {
-        this._accountService.getAccount().pipe(
-            takeUntil(this._destroyed$)
-        )
-        .subscribe(account => {
-            this.user = account.user;
-            this.sidebarFriendItems = account.user.friend;
-        });
-
-        this._accountService.getAvailableUsers().pipe(
-            takeUntil(this._destroyed$)
-        ).subscribe(friends => {
-            this.usersThatHaveNotBeenFriended = friends;
-        });
-        
         this.detectScreenSize();
     }
 
