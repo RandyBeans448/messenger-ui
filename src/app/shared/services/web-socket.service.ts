@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { catchError, Observable, throwError } from "rxjs";
+import { catchError, Observable } from "rxjs";
 import { io, Socket } from 'socket.io-client';
 import { AppConfigService } from "../../../environments/services/config.service";
 import { MessageNamespace } from "../namespaces/messages.namespace";
@@ -28,7 +28,15 @@ export class WebSocketService {
      */
     public connectToChatroom(conversationId: string): void {
         if (!this._socket || !this._socket.connected) {
-            this._socket = io(`${this._baseApi}/chatroom`, { query: { conversationId } });
+            let path = '/api/socket.io';
+            
+            if (this._baseApi.includes('localhost')) {
+                path = '/socket.io';
+            }
+
+            this._socket = io(`${this._baseApi}/chatroom`, { 
+                path: path,
+                query: { conversationId } });
             this._socket.emit('join', conversationId);
         }
     }
