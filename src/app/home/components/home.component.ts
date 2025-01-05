@@ -85,7 +85,9 @@ export class HomeComponent {
                         this.receivedFriendRequests = requests;
                     });
 
-                    this.friends = this.user.value.user.friend;
+                    this._accountService.getAccountInformationFromServer().subscribe(() => {
+                        this.friends = this.user.value.user.friend;
+                    });
                 });
         } catch (error) {
             this.isLoadingFriendRequestResponse = false;

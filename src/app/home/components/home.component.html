@@ -60,7 +60,7 @@
 
                 @for (friend of friends; track $index) {
 
-                    <li class="shadow-sm">
+                    <li class="cursor-pointer shadow-sm">
 
                         <app-friend [friendArrayItem]="friend" (click)="toChatRoom(friend.conversations.id)" />
                     </li>
