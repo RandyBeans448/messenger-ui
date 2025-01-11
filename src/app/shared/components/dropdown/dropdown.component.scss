@@ -1,0 +1,61 @@
+:host {
+    position: relative;
+}
+
+div {
+    color: var(--messenger-ui-white);
+}
+
+.dropdown-menu {
+    position: absolute;
+    z-index: 100;
+    background: var(--messenger-ui-delft-blue); 
+    box-shadow: 0px 2px 4px -2px rgba(var(--messenger-ui-black), 0.05); 
+    border-radius: 24px; 
+    overflow: hidden; 
+    border: 1px var(--messenger-ui-oxford-blue) solid; 
+    flex-direction: column; 
+    justify-content: flex-start; 
+    align-items: flex-start;
+    margin-top: 5px;
+}
+
+.dropdown-inner-menu {
+    align-self: stretch; 
+    flex-direction: column; 
+    justify-content: flex-start; 
+    align-items: flex-start; 
+    display: flex;
+}
+
+.dropdown-item-wrapper {
+    align-self: stretch;
+    padding: 8px 16px;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    display: inline-flex;
+
+    &:hover {
+        background: var(--messenger-ui-anti-flash-white);
+
+        .dropdown-item {
+            color: var(--messenger-ui-oxford-blue);
+        }
+    }
+
+    &--disabled {
+        cursor: not-allowed;
+        pointer-events: none;
+
+        .dropdown-item {
+            color: var(--messenger-ui-cool-grey);
+        }
+    }
+}
+
+.dropdown-item {
+    color: var(--sb-white);
+    word-wrap: break-word;
+}

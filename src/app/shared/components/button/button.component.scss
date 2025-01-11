@@ -25,6 +25,7 @@ $flat: 0px;
     border-radius: $rounded-full;
     gap: var(--2, 8px);
     white-space: nowrap;
+    color: var(--messenger-ui-white);
 
     // small
     &--extra-small {
@@ -166,9 +167,9 @@ $flat: 0px;
     }
 
     &--dropdown {
-        color: var(--messenger-ui-timberwolf);
+        color: var(--messenger-ui-white);
         white-space: nowrap; // added
-        background: var(--messenger-ui-delft-blue);
+        background: var(--messenger-ui-oxford-blue);
     }
 
     &.round {

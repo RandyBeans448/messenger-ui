@@ -1,0 +1,67 @@
+@if (label) {
+
+    <label class="form-label">{{ label }}</label>
+}
+
+<div id="the-clicker" (click)="toggleDropdown()">
+
+    <ng-content></ng-content>
+</div>
+
+<div
+    #dbDropdown
+    id="search-type-dropdown"
+    class="dropdown-menu"
+    [style.width]="dropdownWidth">
+
+    <div
+        class="dropdown-inner-menu"
+        aria-labelledby="dropdown-button">
+
+        @if (searchable) {
+
+            <app-simple-search-bar
+                #searchBar
+                class="w-full no-border"
+                [needsDebounce]="true"
+                (valueEmitted)="emitSearchTerm($event)"
+            />
+        }
+
+        @if (canMultiSelect) {
+
+            @for (option of options; track $index) {
+
+                <div
+                    id="dropdown"
+                    class="dropdown-item-wrapper"
+                    [ngClass]="{
+                        'dropdown-item-wrapper--disabled': !!option.isDisabled,
+                    }"
+                    [attr.data-test-id]="option.dataTestId"
+                    (click)="selectMultipleOptions($event, option)">
+
+                </div>
+            }
+        }
+        @else {
+            
+            @for (option of options; track $index) {
+
+                <div
+                    id="dropdown"
+                    class="dropdown-item-wrapper"
+                    [attr.data-test-id]="option.dataTestId"
+                    (click)="selectOption($event, option)">
+    
+                    <div 
+                        id="dropdown-item"
+                        class="dropdown-item">
+    
+                        {{ option.label | titlecase }}
+                    </div>
+                </div>
+            }
+        }
+    </div>
+</div>

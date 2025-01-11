@@ -6,7 +6,7 @@ export type IconType =
     'check_circle' | 'close' | 'close_full' | 'copy' | 'credits' | 'delete' | 'design' | 'download' | 
     'downloadTechDrawing' | 'dropdown' | 'group' | 'help' | 'home' | 'info' | 'notification' | 'open_full' | 
     'paperWithMagnifyingGlass' | 'privateDb' | 'pro' | 'save' | 'saved' | 'savedDesigns' | 'search' | 
-    'send' | 'share' | 'sign_out' | 'team_files' | 'tender' | 'toggle_menu' | 'upload' | 'warning'
+    'send' | 'share' | 'sign_out' | 'translate' | 'team_files' | 'tender' | 'toggle_menu' | 'upload' | 'warning'
 
 @Component({
     selector: 'app-icon',
@@ -71,6 +71,7 @@ export class IconComponent {
         send: 'send',
         share: 'ios_share',
         sign_out: 'logout',
+        translate: 'translate',
         team_files: 'book_5',
         tender: 'gavel',
         toggle_menu: 'menu_open',

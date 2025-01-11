@@ -1,8 +1,26 @@
 <div class="flex flex-col bg-gray-900 rounded-lg shadow-lg ">
+
+    <div class="flex justify-between items-center mb-1 p-2 bg-gray-800 rounded-t-lg w-full">
+
+
+        <app-dropdown 
+            [searchable]="true"
+            [options]="languages"
+            (optionSelected)="selectLanguage($event)"
+            (searchValue)="languageSearch($event)">
+
+            <app-button
+                buttonType="dropdown"
+                iconType="translate"
+                [title]="searchTerm"
+                [isFullWidth]="true"
+            />
+        </app-dropdown>
+    </div>
     
     <div 
         #chatContainer 
-        class="chat-box rounded-t-lg overflow-y-scroll p-4 bg-gray-800 fade-in">
+        class="chat-box overflow-y-scroll p-4 bg-gray-800 fade-in">
 
         <ul>
 

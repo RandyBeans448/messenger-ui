@@ -17,7 +17,6 @@ export class FriendRequestService {
 
     public baseApi: string = AppConfigService.env.baseApi;
 
-
     public sendFriendRequest(userId: string): Observable<string> {
         return this._http.post(`${this.baseApi}/friend-request/add-friend`, { newFriendId: userId }, {
             responseType: 'text',

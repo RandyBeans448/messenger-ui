@@ -9,6 +9,7 @@ import { CryptoService } from "../../shared/services/crypto.service";
 import { ToastrService } from "ngx-toastr";
 import { ConversationNamespace } from "../../shared/namespaces/conversations.namespace";
 import { DatePipe } from "@angular/common";
+import { ConversationService } from "../../shared/services/conversation.service";
 
 @Component({
     selector: 'app-chat-room',
@@ -26,6 +27,9 @@ export class ChatRoomComponent {
     public sharedSecret: string = '';
     public receivedMessageSubscription: Subscription;
     private _destroyed$: Subject<void> = new Subject<void>();
+    public searchTerm: string = 'Translate Conversation';
+    public languages: any[] = [];
+
 
     @ViewChild('chatContainer') private chatContainer: ElementRef;
 
@@ -36,7 +40,8 @@ export class ChatRoomComponent {
         private _activatedRoute: ActivatedRoute,
         private _cryptoService: CryptoService,
         private _toastrService: ToastrService,
-        private _datePipe: DatePipe
+        private _datePipe: DatePipe,
+        private _conversationService: ConversationService
     ) { }
 
     async ngOnInit(): Promise<void> {
@@ -102,6 +107,37 @@ export class ChatRoomComponent {
         } catch (error) {
             console.error('Failed to reconnect to chatroom:', error);
             this._toastrService.error('Failed to reconnect to chatroom');
+        }
+    }
+
+    public filterBySearchTerm(searchQuery: string): void {
+        if (searchQuery.length > 2) {
+            this.languages = this.languages.filter(language => language.value.toLowerCase().includes(searchQuery.toLowerCase()));
+        }
+    }
+
+    public selectLanguage(language: any): void {
+        this.searchTerm = language.data.label;
+    }
+
+    public async languageSearch(searchQuery: string): Promise<void> {
+        if (searchQuery.length >= 2) {
+            this.languages = [];
+            try {
+                this._conversationService
+                    .getLanguage(searchQuery)
+                    .subscribe((data: any) => {
+                        data.map((res: any) => {
+                            this.languages.push({
+                                value: `${res.code}`,
+                                label: `${res.name}`,
+                            });
+                        });
+                    });
+            } catch (error) {
+                console.error('Failed to search for language:', error);
+                this._toastrService.error('Failed to search for language');
+            }
         }
     }
 

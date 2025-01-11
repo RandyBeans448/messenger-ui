@@ -1,0 +1,31 @@
+<div
+    class="search-bar__container">
+
+    <div class="dropdown-trigger-container">
+        
+        <ng-content select="[slot=start]" />
+    </div>
+
+    <div
+        id="search-bar"
+        class="search-bar__input-container"> 
+
+        <input
+            id="searchInput"
+            data-test-id="simple-search-input"
+            class="search-bar__input-container__input"
+            spellcheck="false"
+            placeholder="Search..."
+            aria-label='Search'
+            autocomplete="off"
+            name="searchInput"
+            [formControl]="inputControl"
+            [placeholder]="placeholder"
+            (keyup.esc)="clearForm()"
+            (keydown)="onKeyDown($event)"
+            (focus)="onInputFocused($event)"
+        />
+    </div>
+
+    <ng-content select="[slot=end]" />
+</div>
