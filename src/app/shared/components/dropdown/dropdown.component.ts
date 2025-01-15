@@ -54,8 +54,6 @@ export class DropdownComponent {
 
     public selectedOptions: DropdownNamespace.OptionInterface[] = [];
 
-    private _destroyed$: Subject<void> = new Subject();
-
     @HostListener('document:click', ['$event'])
     clickOutside(event: any) {
         if (!this.eRef.nativeElement.contains(event.target) && !this.dbDropdown.nativeElement.classList.contains('hidden')) {
@@ -71,11 +69,6 @@ export class DropdownComponent {
         if (this.searchable) {
             this.emitSearchTerm('');
         }
-    }
-
-    public ngOnDestroy(): void {
-        this._destroyed$.next();
-        this._destroyed$.complete()
     }
 
     public selectOption(

@@ -4,7 +4,7 @@ import { ActivatedRoute, ActivatedRouteSnapshot, NavigationEnd, Router } from "@
 import { MessageNamespace } from "../../shared/namespaces/messages.namespace";
 import { AccountService } from "../../shared/services/account.service";
 import { AccountNamespace } from "../../shared/namespaces/account.namespace";
-import { BehaviorSubject, filter, Subject, Subscription, takeUntil, } from "rxjs";
+import { BehaviorSubject, filter, Subject, Subscription, takeUntil } from "rxjs";
 import { CryptoService } from "../../shared/services/crypto.service";
 import { ToastrService } from "ngx-toastr";
 import { ConversationNamespace } from "../../shared/namespaces/conversations.namespace";
@@ -30,7 +30,6 @@ export class ChatRoomComponent {
     public searchTerm: string = 'Translate Conversation';
     public languages: any[] = [];
 
-
     @ViewChild('chatContainer') private chatContainer: ElementRef;
 
     constructor(
@@ -42,7 +41,7 @@ export class ChatRoomComponent {
         private _toastrService: ToastrService,
         private _datePipe: DatePipe,
         private _conversationService: ConversationService
-    ) { }
+    ) {}
 
     async ngOnInit(): Promise<void> {
         this.connectToChatroom();
@@ -72,9 +71,9 @@ export class ChatRoomComponent {
         if (this.receivedMessageSubscription) {
             this.receivedMessageSubscription.unsubscribe();
         }
-        this._websocketService.disconnectFromChatroom();
         this._destroyed$.next();
         this._destroyed$.complete();
+        // this.chatContainer = null; // Clear reference to DOM element
     }
 
     public async sendMessage(message: MessageNamespace.SendMessageInterface): Promise<void> {
@@ -98,8 +97,11 @@ export class ChatRoomComponent {
             await this._initializeWebSocketConnection(conversationId);
             this.user = this._accountService.getAccount();
 
-            this._activatedRoute.params.subscribe(params => {
+            this._activatedRoute.params.pipe(
+                takeUntil(this._destroyed$)
+            ).subscribe(params => {
                 this._websocketService.getConversationById(params['conversationId'])
+                    .pipe(takeUntil(this._destroyed$))
                     .subscribe((data: ConversationNamespace.ConversationInterface) => {
                         this._setChatRoomData(data);
                     });
@@ -126,6 +128,7 @@ export class ChatRoomComponent {
             try {
                 this._conversationService
                     .getLanguage(searchQuery)
+                    .pipe(takeUntil(this._destroyed$))
                     .subscribe((data: any) => {
                         data.map((res: any) => {
                             this.languages.push({
@@ -144,7 +147,7 @@ export class ChatRoomComponent {
     private async _setChatRoomData(data: any): Promise<void> {
         this.conversation = data;
         this.sharedSecret = this._setSharedSecret();
-        this._loadMessages(data)
+        this._loadMessages(data);
         this._subscribeToMessages();
     }
 
@@ -174,7 +177,6 @@ export class ChatRoomComponent {
 
     private async _subscribeToMessages(): Promise<void> {
         try {
-
             if (this.receivedMessageSubscription) {
                 this.receivedMessageSubscription.unsubscribe();
             }
@@ -182,6 +184,7 @@ export class ChatRoomComponent {
             this.receivedMessageSubscription =
                 this._websocketService
                     .receiveMessages(this.sharedSecret)
+                    .pipe(takeUntil(this._destroyed$))
                     .subscribe((message: MessageNamespace.MessageInterface) => {
                         this.messages.push(message);
                     });

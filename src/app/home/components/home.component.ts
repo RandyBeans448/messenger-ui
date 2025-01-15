@@ -2,10 +2,11 @@ import { Component } from "@angular/core";
 import { AccountService } from "../../shared/services/account.service";
 import { BehaviorSubject, Subject } from "rxjs";
 import { AccountNamespace } from "../../shared/namespaces/account.namespace";
-import { Router, } from "@angular/router";
+import { Router } from "@angular/router";
 import { FriendRequestService } from "../../shared/services/friend-request.service";
 import { FriendRequestNamespace } from "../../shared/namespaces/friend-request.namespace";
 import { ToastrService } from "ngx-toastr";
+import { takeUntil, switchMap } from 'rxjs/operators';
 
 @Component({
     selector: 'app-home',
@@ -40,13 +41,17 @@ export class HomeComponent {
         this.user = this._accountService.getAccount();
         this.friends = this.user.value.user.friend;
 
-        this._accountService.getReceivedFriendRequests().subscribe(requests => {
-            this.receivedFriendRequests = requests;
-        });
+        this._accountService.getReceivedFriendRequests()
+            .pipe(takeUntil(this._destroyed$))
+            .subscribe(requests => {
+                this.receivedFriendRequests = requests;
+            });
 
-        this._accountService.getAvailableUsers().subscribe(friends => {
-            this.usersThatHaveNotBeenFriended = friends;
-        });
+        this._accountService.getAvailableUsers()
+            .pipe(takeUntil(this._destroyed$))
+            .subscribe(friends => {
+                this.usersThatHaveNotBeenFriended = friends;
+            });
     }
 
     ngOnDestroy(): void {
@@ -55,19 +60,14 @@ export class HomeComponent {
     }
 
     onUpdateAccount(): void {
-        // Implement your update logic here, for example, open a modal or navigate to another page
-        console.log('Update Account button clicked');;
-        // You can call the update service or open an update form modal
+        console.log('Update Account button clicked');
     }
 
-    public toChatRoom(
-        conversationId: string,
-    ): void {
+    public toChatRoom(conversationId: string): void {
         this._router.navigate([`/chat-room/${conversationId}`]);
     }
 
     public async respondToFriendRequest(event: FriendRequestNamespace.FriendRequestResponseInterface): Promise<void> {
-
         this.isLoadingFriendRequestResponse = true;
 
         const responseFriendRequest: FriendRequestNamespace.FriendRequestResponseInterface = {
@@ -75,43 +75,48 @@ export class HomeComponent {
             response: event.response,
         };
 
-        try {
-            this._friendRequestService
-                .respondToFriendRequest(responseFriendRequest)
-                .subscribe((res) => {
-                    this._toastService.success(res.message);
-
-                    this._accountService.getReceivedFriendRequests().subscribe(requests => {
-                        this.receivedFriendRequests = requests;
-                    });
-
-                    this._accountService.getAccountInformationFromServer().subscribe(() => {
-                        this.friends = this.user.value.user.friend;
-                    });
-                });
-        } catch (error) {
-            this.isLoadingFriendRequestResponse = false;
-            this._toastService.error('Error responding friend request');
-        }
+        this._friendRequestService
+            .respondToFriendRequest(responseFriendRequest)
+            .pipe(
+                takeUntil(this._destroyed$),
+                switchMap(() => this._accountService.getReceivedFriendRequests()),
+                switchMap(requests => {
+                    this.receivedFriendRequests = requests;
+                    return this._accountService.getAccountInformationFromServer();
+                })
+            )
+            .subscribe({
+                next: () => {
+                    this.friends = this.user.value.user.friend;
+                    this.isLoadingFriendRequestResponse = false;
+                    this._toastService.success('Friend request responded successfully');
+                },
+                error: () => {
+                    this.isLoadingFriendRequestResponse = false;
+                    this._toastService.error('Error responding to friend request');
+                },
+            });
     }
 
     public async addFriend(userId: any): Promise<void> {
-        try {
-            this._friendRequestService
-                .sendFriendRequest(userId)
-                .subscribe(() => {
+        this._friendRequestService
+            .sendFriendRequest(userId)
+            .pipe(
+                takeUntil(this._destroyed$),
+                switchMap(() => this._accountService.getAvailableUsers()),
+                switchMap(friends => {
+                    this.usersThatHaveNotBeenFriended = friends;
+                    return this._accountService.getReceivedFriendRequests();
+                })
+            )
+            .subscribe({
+                next: (requests) => {
+                    this.receivedFriendRequests = requests;
                     this._toastService.success('Friend request sent successfully');
-
-                    this._accountService.getAvailableUsers().subscribe(friends => {
-                        this.usersThatHaveNotBeenFriended = friends;
-                    });
-
-                    this._accountService.getReceivedFriendRequests().subscribe(requests => {
-                        this.receivedFriendRequests = requests;
-                    });
-                });
-        } catch (error) {
-            this._toastService.error('Error sending friend request');
-        }
+                },
+                error: () => {
+                    this._toastService.error('Error sending friend request');
+                },
+            });
     }
 }

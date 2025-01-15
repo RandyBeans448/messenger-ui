@@ -52,8 +52,6 @@ export class SidebarComponent {
 
     public disabledCollapsedButton: boolean = false;
 
-    private _destroyed$: Subject<void> = new Subject<void>();
-
     @HostListener("window:resize", [])
     private onResize(): void {
         this.detectScreenSize();
@@ -68,11 +66,6 @@ export class SidebarComponent {
 
     public ngOnInit() {
         this.detectScreenSize();
-    }
-
-    public ngOnDestroy(): void {
-        this._destroyed$.next();
-        this._destroyed$.complete();
     }
 
     public toggleSidebar(): void {

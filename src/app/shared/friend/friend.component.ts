@@ -10,7 +10,7 @@ import { FriendNamespace } from "../namespaces/friend.namespace";
     templateUrl: './friend.component.html',
     styleUrls: ['./friend.component.scss'],
     standalone: true,
-    imports: [CommonModule, AvatarComponent, ButtonComponent],
+    imports: [CommonModule, AvatarComponent],
 })
 export class FriendComponent {
 

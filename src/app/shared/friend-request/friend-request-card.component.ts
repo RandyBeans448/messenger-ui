@@ -8,6 +8,7 @@ import { AvatarComponent } from "../components/avatar/avatar.component";
 import { UserNamespace } from "../namespaces/user.interface";
 import { AccountService } from "../services/account.service";
 import { SpinnerComponent } from "../components/spinner/spinner.component";
+import { Subject, takeUntil } from "rxjs";
 
 @Component({
     selector: 'app-friend-request-card',
@@ -29,15 +30,23 @@ export class FriendRequestsCardComponent {
 
     public user: UserNamespace.UserInterface;
 
+    private _destroyed$: Subject<void> = new Subject<void>();
+
     constructor(
         private _accountService: AccountService,
     ) { }
 
     public ngOnInit() {
         this._accountService.getAccount()
+            .pipe(takeUntil(this._destroyed$))
             .subscribe(account => {
                 this.user = account.user;
             });
+    }
+
+    public ngOnDestroy(): void {
+        this._destroyed$.next();
+        this._destroyed$.complete();
     }
 
     public async respondToFriendRequest(response: boolean): Promise<void> {
