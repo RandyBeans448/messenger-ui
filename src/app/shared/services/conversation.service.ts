@@ -25,4 +25,22 @@ export class ConversationService {
             })
         );
     }
+
+    public translateMessage(
+        message: any,
+        searchTerm: string,
+    ) {
+        return this._http.post(`${this.baseApi}/conversations/translate`, {
+            message: message,
+            language: searchTerm
+        }).pipe(
+            catchError((error) => {
+                console.log(error);
+                this._toastService.error(
+                    error
+                );
+                throw error;
+            })
+        );
+    }
 }

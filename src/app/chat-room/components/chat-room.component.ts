@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild } from "@angular/core";
+import { Component, ElementRef, SimpleChanges, ViewChild } from "@angular/core";
 import { WebSocketService } from "../../shared/services/web-socket.service";
 import { ActivatedRoute, ActivatedRouteSnapshot, NavigationEnd, Router } from "@angular/router";
 import { MessageNamespace } from "../../shared/namespaces/messages.namespace";
@@ -10,6 +10,7 @@ import { ToastrService } from "ngx-toastr";
 import { ConversationNamespace } from "../../shared/namespaces/conversations.namespace";
 import { DatePipe } from "@angular/common";
 import { ConversationService } from "../../shared/services/conversation.service";
+import { SearchBarNamespace } from "../../shared/namespaces/search-bar.namespace";
 
 @Component({
     selector: 'app-chat-room',
@@ -26,9 +27,12 @@ export class ChatRoomComponent {
     public user: BehaviorSubject<AccountNamespace.AccountInterface>;
     public sharedSecret: string = '';
     public receivedMessageSubscription: Subscription;
+    public searchTerm: SearchBarNamespace.SearchBarResultsInterface = {
+        value: 'Translate Conversation',
+        label: 'Translate Conversation',
+    };
+    public languages: SearchBarNamespace.SearchBarResultsInterface[] = [];
     private _destroyed$: Subject<void> = new Subject<void>();
-    public searchTerm: string = 'Translate Conversation';
-    public languages: any[] = [];
 
     @ViewChild('chatContainer') private chatContainer: ElementRef;
 
@@ -41,9 +45,9 @@ export class ChatRoomComponent {
         private _toastrService: ToastrService,
         private _datePipe: DatePipe,
         private _conversationService: ConversationService
-    ) {}
+    ) { }
 
-    async ngOnInit(): Promise<void> {
+    ngOnInit() {
         this.connectToChatroom();
 
         this._router.events.pipe(
@@ -57,6 +61,9 @@ export class ChatRoomComponent {
                 this.connectToChatroom();
             }
         });
+    }
+
+    ngOnChanges(changes: SimpleChanges): void {
     }
 
     ngAfterViewChecked(): void {
@@ -73,7 +80,6 @@ export class ChatRoomComponent {
         }
         this._destroyed$.next();
         this._destroyed$.complete();
-        // this.chatContainer = null; // Clear reference to DOM element
     }
 
     public async sendMessage(message: MessageNamespace.SendMessageInterface): Promise<void> {
@@ -119,7 +125,8 @@ export class ChatRoomComponent {
     }
 
     public selectLanguage(language: any): void {
-        this.searchTerm = language.data.label;
+        this.searchTerm = language.data;
+        this._translateMessage();
     }
 
     public async languageSearch(searchQuery: string): Promise<void> {
@@ -158,6 +165,8 @@ export class ChatRoomComponent {
                     message: string;
                 } = this._cryptoService.decryptMessage(message.message, this.sharedSecret);
                 message.message = decryptedMessage.message;
+
+
                 message.createdAt = this._datePipe.transform(message.createdAt, 'yyyy-MM-dd  HH:mm') as string;
                 return message;
             });
@@ -191,6 +200,16 @@ export class ChatRoomComponent {
         } catch (error) {
             console.error('Failed to subscribe to messages:', error);
             this._toastrService.error('Failed to subscribe to messages');
+        }
+    }
+
+    private _translateMessage() {
+        for (const message of this.messages) {
+            this._conversationService
+                .translateMessage(message.message, this.searchTerm.value)
+                .subscribe((data: any) => {
+                    message.message = data.translatedText;
+                });
         }
     }
 
