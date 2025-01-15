@@ -4,7 +4,7 @@ import { ActivatedRoute, ActivatedRouteSnapshot, NavigationEnd, Router } from "@
 import { MessageNamespace } from "../../shared/namespaces/messages.namespace";
 import { AccountService } from "../../shared/services/account.service";
 import { AccountNamespace } from "../../shared/namespaces/account.namespace";
-import { BehaviorSubject, filter, Subject, Subscription, takeUntil } from "rxjs";
+import { BehaviorSubject, filter, Subject, Subscription, take, takeUntil } from "rxjs";
 import { CryptoService } from "../../shared/services/crypto.service";
 import { ToastrService } from "ngx-toastr";
 import { ConversationNamespace } from "../../shared/namespaces/conversations.namespace";
@@ -207,6 +207,7 @@ export class ChatRoomComponent {
         for (const message of this.messages) {
             this._conversationService
                 .translateMessage(message.message, this.searchTerm.value)
+                .pipe(take(1))
                 .subscribe((data: any) => {
                     message.message = data.translatedText;
                 });
